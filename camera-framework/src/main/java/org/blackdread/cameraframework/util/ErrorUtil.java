@@ -47,13 +47,27 @@ public final class ErrorUtil {
      * @return edsdk error from native long
      */
     public static EdsdkError toEdsdkError(final NativeLong value) {
+        return toEdsdkError(value.intValue());
+    }
+
+    /**
+     * Convert an int value to its corresponding EDSDK error.
+     * <p>
+     * This overload supports the cross-platform int-based EDSDK methods that use
+     * fixed 32-bit integers instead of NativeLong.
+     * </p>
+     *
+     * @param value int error code returned by a method from {@link org.blackdread.camerabinding.jna.EdsdkLibrary}
+     * @return edsdk error from int value
+     */
+    public static EdsdkError toEdsdkError(final int value) {
         for (EdsdkError error : EdsdkError.values()) {
-            if (error.value().equals(value.intValue()))
+            if (error.value().equals(value))
                 return error;
         }
-        log.error("Unknown native error value: {}, {}", value.intValue(), value.longValue());
+        log.error("Unknown native error value: {}", value);
         // either we throw or maybe a default error like EDS_ERR_UNEXPECTED_EXCEPTION or another
-        throw new IllegalArgumentException("Unknown native error value: " + value.intValue() + ", " + value.longValue());
+        throw new IllegalArgumentException("Unknown native error value: " + value);
     }
 
     /**
