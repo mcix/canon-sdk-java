@@ -33,7 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -107,7 +109,7 @@ class CanonLibraryImpl implements CanonLibrary {
     }
 
     /**
-     * @return path to lib to load
+     * @return path to lib to load (Windows)
      */
     protected Optional<String> getLibPath() {
         final String jnaPath = System.getProperty(LIBRARY_PATH_PROPERTY);
@@ -137,25 +139,86 @@ class CanonLibraryImpl implements CanonLibrary {
     }
 
     /**
+     * @return path to lib to load (macOS)
+     */
+    protected Optional<String> getLibPathMac() {
+        final String jnaPath = System.getProperty(LIBRARY_PATH_PROPERTY);
+        if (jnaPath != null) {
+            // user has specified himself the path, we follow what he gave
+            log.info("Using user-specified library path: {}", jnaPath);
+            return Optional.of(jnaPath);
+        }
+
+        // Standard framework locations (in order of preference)
+        final String[] paths = {
+            // Working directory (for development/testing)
+            System.getProperty("user.dir") + "/EDSDK.framework/EDSDK",
+            "/Library/Frameworks/EDSDK.framework/EDSDK",
+            System.getProperty("user.home") + "/Library/Frameworks/EDSDK.framework/EDSDK",
+            "/System/Library/Frameworks/EDSDK.framework/EDSDK"
+        };
+
+        for (String path : paths) {
+            File file = new File(path);
+            if (file.exists()) {
+                log.info("Found EDSDK framework at: {}", path);
+                return Optional.of(path);
+            }
+            log.debug("EDSDK not found at: {}", path);
+        }
+
+        // No path found
+        log.warn("EDSDK framework not found in standard locations");
+        return Optional.empty();
+    }
+
+    /**
      * <p>Method is called at every call of {@link #edsdkLibrary()}</p>
      */
     protected void initLibrary() {
         if (EDSDK == null) {
             synchronized (initLibraryLock) {
                 if (EDSDK == null) {
-                    final String libPath = getLibPath()
-                        .orElseThrow(() -> new IllegalStateException("Could not init library, lib path not found"));
                     if (Platform.isWindows()) {
+                        final String libPath = getLibPath()
+                            .orElseThrow(() -> new IllegalStateException("Could not init library, lib path not found"));
                         // no options for now
-                        EDSDK = Native.loadLibrary(libPath, EdsdkLibrary.class, new HashMap<>());
+                        EDSDK = Native.loadLibrary(libPath, EdsdkLibrary.class, getOptions());
                         registerCanonShutdownHook();
                         log.info("Library successfully loaded");
+                        return;
+                    } else if (Platform.isMac()) {
+                        final String libPath = getLibPathMac()
+                            .orElseThrow(() -> new IllegalStateException("Could not init library, lib path not found"));
+                        EDSDK = Native.loadLibrary(libPath, EdsdkLibrary.class, getOptions());
+                        registerCanonShutdownHook();
+                        log.info("Library successfully loaded on MacOS");
                         return;
                     }
                     throw new IllegalStateException("Not supported OS: " + Platform.getOSType());
                 }
             }
         }
+    }
+
+    /**
+     * Returns JNA loading options with platform-specific configurations.
+     * On macOS, overrides the StdCall convention (Windows-only) with standard C convention.
+     *
+     * @return JNA options map with platform-appropriate calling convention
+     */
+    private static Map<String, Object> getOptions() {
+        Map<String, Object> options = new HashMap<>();
+
+        // On macOS, override StdCallLibrary's Windows-specific calling convention
+        // EDSDK on macOS uses standard C calling convention, not StdCall
+        if (Platform.isMac()) {
+            options.put(com.sun.jna.Library.OPTION_CALLING_CONVENTION,
+                com.sun.jna.Function.C_CONVENTION);
+        }
+        // On Windows, StdCallLibrary's default convention is used automatically
+
+        return options;
     }
 
     private void registerCanonShutdownHook() {
