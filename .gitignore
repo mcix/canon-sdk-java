@@ -8,8 +8,13 @@
 /camera-binding/target
 /camera-framework/EDSDK
 /camera-framework/EDSDK_64
+/camera-framework/EDSDK.framework/
 /camera-framework/target
 /camera-sdk/target
+/camera-binding/windows-monitor-package/
+/camera-binding/windows-test-package/
+/docs/
+*.code-workspace
 
 
 ######################
