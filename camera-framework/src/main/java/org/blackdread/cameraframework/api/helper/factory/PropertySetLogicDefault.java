@@ -24,7 +24,6 @@
 package org.blackdread.cameraframework.api.helper.factory;
 
 import com.sun.jna.Memory;
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
@@ -105,7 +104,10 @@ public class PropertySetLogicDefault implements PropertySetLogic {
                 recalculatedSize = 4;
                 log.debug(DEBUG_RETURNED_SIZE_AND_PRESET_ONE, propertySize, recalculatedSize);
                 data = new Memory(recalculatedSize);
-                data.setNativeLong(0, new NativeLong((Long) value));
+                // EDSDK uses fixed 32-bit integers for EdsInt32/EdsUInt32 on all platforms.
+                // Using setInt writes exactly 4 bytes, avoiding a buffer overrun on platforms
+                // where JNA NativeLong is 8 bytes (e.g. macOS).
+                data.setInt(0, ((Long) value).intValue());
                 break;
             case kEdsDataType_Int64:
             case kEdsDataType_UInt64:

@@ -100,7 +100,10 @@ public class PropertyGetLogicDefault implements PropertyGetLogic {
                 return (T) (Short) propertyData.getShort(0);
             case kEdsDataType_Int32:
             case kEdsDataType_UInt32:
-                return (T) (Long) propertyData.getNativeLong(0).longValue();
+                // EDSDK uses fixed 32-bit integers for EdsInt32/EdsUInt32 on all platforms.
+                // Using getInt reads exactly 4 bytes, avoiding an out-of-bounds read on platforms
+                // where JNA NativeLong is 8 bytes (e.g. macOS).
+                return (T) (Long) (long) propertyData.getInt(0);
             case kEdsDataType_Int64:
             case kEdsDataType_UInt64:
                 return (T) (Long) propertyData.getLong(0);
