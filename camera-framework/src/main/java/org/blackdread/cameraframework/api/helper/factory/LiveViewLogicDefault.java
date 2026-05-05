@@ -62,8 +62,13 @@ public class LiveViewLogicDefault implements LiveViewLogic {
 
     @Override
     public void beginLiveView(final EdsCameraRef camera, final EdsEvfOutputDevice edsEvfOutputDevice) {
-        // Force to set evf mode to enabled
-        enableLiveView(camera);
+        // Evf_Mode only exists on DSLRs (mirror-up for live view).
+        // Mirrorless R-series bodies return EDS_ERR_INVALID_HANDLE — skip.
+        try {
+            enableLiveView(camera);
+        } catch (EdsdkErrorException e) {
+            log.debug("enableLiveView skipped ({}): camera is likely mirrorless", e.getMessage());
+        }
 
         CanonFactory.propertySetLogic().setPropertyData(camera, EdsPropertyID.kEdsPropID_Evf_OutputDevice, edsEvfOutputDevice);
     }
@@ -72,8 +77,12 @@ public class LiveViewLogicDefault implements LiveViewLogic {
     public void endLiveView(final EdsCameraRef camera) {
         CanonFactory.propertySetLogic().setPropertyData(camera, EdsPropertyID.kEdsPropID_Evf_OutputDevice, EdsEvfOutputDevice.kEdsEvfOutputDevice_TFT);
 
-        // disable live view so to set normal mode back to camera
-        disableLiveView(camera);
+        // Evf_Mode only exists on DSLRs — mirrorless bodies return EDS_ERR_INVALID_HANDLE.
+        try {
+            disableLiveView(camera);
+        } catch (EdsdkErrorException e) {
+            log.debug("disableLiveView skipped ({}): camera is likely mirrorless", e.getMessage());
+        }
     }
 
     @Override
