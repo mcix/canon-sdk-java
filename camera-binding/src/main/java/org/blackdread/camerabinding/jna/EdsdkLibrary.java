@@ -3438,7 +3438,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
-    public interface EdsProgressCallback extends StdCallCallback {
+    public interface EdsProgressCallback extends com.sun.jna.Callback {
 
         NativeLong apply(NativeLong inPercent, Pointer inContext, IntByReference outCancel);
 
@@ -3450,7 +3450,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
-    public interface EdsCameraAddedHandler extends StdCallCallback {
+    public interface EdsCameraAddedHandler extends com.sun.jna.Callback {
         NativeLong apply(Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
@@ -3461,7 +3461,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
-    public interface EdsPropertyEventHandler extends StdCallCallback {
+    public interface EdsPropertyEventHandler extends com.sun.jna.Callback {
         NativeLong apply(NativeLong inEvent, NativeLong inPropertyID, NativeLong inParam, Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
@@ -3472,7 +3472,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
-    public interface EdsObjectEventHandler extends StdCallCallback {
+    public interface EdsObjectEventHandler extends com.sun.jna.Callback {
         NativeLong apply(NativeLong inEvent, EdsBaseRef inRef, Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
@@ -3484,7 +3484,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
-    public interface EdsStateEventHandler extends StdCallCallback {
+    public interface EdsStateEventHandler extends com.sun.jna.Callback {
         NativeLong apply(NativeLong inEvent, NativeLong inEventData, Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
@@ -3496,7 +3496,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * ----------------------------------------------------------------------------<br>
      * <i>native declaration : sdk-header\EDSDKTypes.h:1368</i>
      */
-    public interface EdsReadStream extends StdCallCallback {
+    public interface EdsReadStream extends com.sun.jna.Callback {
         NativeLong apply(Pointer inContext, NativeLong inReadSize, Pointer outBuffer, NativeLongByReference outReadSize);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
@@ -3507,7 +3507,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1369</i>
      */
-    public interface EdsWriteStream extends StdCallCallback {
+    public interface EdsWriteStream extends com.sun.jna.Callback {
         NativeLong apply(Pointer inContext, NativeLong inWriteSize, Pointer inBuffer, NativeLongByReference outWrittenSize);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
@@ -3518,21 +3518,21 @@ public interface EdsdkLibrary extends StdCallLibrary {
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1370</i>
      */
-    public interface EdsSeekStream extends StdCallCallback {
+    public interface EdsSeekStream extends com.sun.jna.Callback {
         NativeLong apply(Pointer inContext, NativeLong inSeekOffset, int inSeekOrigin);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1371</i>
      */
-    public interface EdsTellStream extends StdCallCallback {
+    public interface EdsTellStream extends com.sun.jna.Callback {
         NativeLong apply(Pointer inContext, NativeLongByReference outPosition);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1372</i>
      */
-    public interface EdsGetStreamLength extends StdCallCallback {
+    public interface EdsGetStreamLength extends com.sun.jna.Callback {
         NativeLong apply(Pointer inContext, NativeLongByReference outLength);
     }
 
