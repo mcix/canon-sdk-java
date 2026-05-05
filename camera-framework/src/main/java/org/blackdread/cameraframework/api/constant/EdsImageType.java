@@ -37,7 +37,8 @@ public enum EdsImageType implements NativeEnum<Integer> {
     kEdsImageType_Jpeg("JPEG"),
     kEdsImageType_CRW("CRW"),
     kEdsImageType_RAW("RAW"),
-    kEdsImageType_CR2("CR2");
+    kEdsImageType_CR2("CR2"),
+    kEdsImageType_HEIF("HEIF");
 
     private final int value;
     private final String description;

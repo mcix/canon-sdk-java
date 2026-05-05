@@ -86,9 +86,9 @@ class LiveViewLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void beginLiveView1() {
-        MockFactory.initialCanonFactory.getLiveViewLogic().beginLiveView(fakeCamera, EdsEvfOutputDevice.kEdsEvfOutputDevice_MOBILE);
+        MockFactory.initialCanonFactory.getLiveViewLogic().beginLiveView(fakeCamera, EdsEvfOutputDevice.kEdsEvfOutputDevice_PC_Small);
 
-        verify(CanonFactory.propertySetLogic()).setPropertyData(fakeCamera, EdsPropertyID.kEdsPropID_Evf_OutputDevice, EdsEvfOutputDevice.kEdsEvfOutputDevice_MOBILE);
+        verify(CanonFactory.propertySetLogic()).setPropertyData(fakeCamera, EdsPropertyID.kEdsPropID_Evf_OutputDevice, EdsEvfOutputDevice.kEdsEvfOutputDevice_PC_Small);
 
     }
 

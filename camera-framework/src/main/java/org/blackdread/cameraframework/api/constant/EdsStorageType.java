@@ -38,7 +38,8 @@ public enum EdsStorageType implements NativeEnum<Integer> {
     kEdsStorageType_CF("Compact Flash"),
     kEdsStorageType_SD("SD Flash"),
     kEdsStorageType_HD("Hard Drive"),
-    kEdsStorageType_CFast("C Fast");
+    kEdsStorageType_CFast("C Fast"),
+    kEdsStorageType_CFe("CFexpress");
 
     private final int value;
     private final String description;

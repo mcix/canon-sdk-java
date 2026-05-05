@@ -40,14 +40,7 @@ import org.blackdread.cameraframework.util.LibraryFieldUtil;
 public enum EdsEvfOutputDevice implements NativeEnum<Integer> {
     kEdsEvfOutputDevice_TFT("Live view is displayed on the camera’s TFT"),
     kEdsEvfOutputDevice_PC("The live view image can be transferred to the PC"),
-    /**
-     * Unknown enum
-     */
-    kEdsEvfOutputDevice_MOBILE("Unknown enum"),
-    /**
-     * Unknown enum
-     */
-    kEdsEvfOutputDevice_MOBILE2("Unknown enum");
+    kEdsEvfOutputDevice_PC_Small("Downscaled live view stream to PC");
 
     private final int value;
     private final String description;

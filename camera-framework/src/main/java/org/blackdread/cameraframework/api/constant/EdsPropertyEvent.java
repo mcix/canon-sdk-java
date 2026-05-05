@@ -75,7 +75,13 @@ public enum EdsPropertyEvent implements NativeEnum<Integer> {
      * <br>
      * See API Reference - 4.2.3 kEdsPropertyEvent_PropertyDescChanged
      */
-    kEdsPropertyEvent_PropertyDescChanged("Notification of state changes in configurable property values");
+    kEdsPropertyEvent_PropertyDescChanged("Notification of state changes in configurable property values"),
+
+    /**
+     * Notifies of changes in the extended property descriptor list returned
+     * by EdsGetPropertyDescEx (introduced in EDSDK 13.20.10).
+     */
+    kEdsPropertyEvent_PropertyDescExChanged("Notification of state changes in extended configurable property values");
 
     private final int value;
     private final String description;

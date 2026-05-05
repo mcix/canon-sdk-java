@@ -1355,11 +1355,6 @@ public interface EdsdkLibrary extends StdCallLibrary {
          */
         public static final int kEdsWhiteBalance_Tungsten = 3;
         /**
-         * @deprecated typo, use {@link #kEdsWhiteBalance_Tungsten} instead.
-         */
-        @Deprecated
-        public static final int kEdsWhiteBalance_Tangsten = kEdsWhiteBalance_Tungsten;
-        /**
          * <i>native declaration : sdk-header\EDSDKTypes.h:879</i>
          */
         public static final int kEdsWhiteBalance_Fluorescent = 4;
@@ -1941,19 +1936,9 @@ public interface EdsdkLibrary extends StdCallLibrary {
          */
         public static final int kEdsEvfOutputDevice_PC = 2;
         /**
-         * @deprecated removed by Canon; the value (4) is no longer reserved.
-         */
-        @Deprecated
-        public static final int kEdsEvfOutputDevice_MOBILE = 4;
-        /**
          * EDSDK 13.20.10 (downscaled live view stream to PC).
          */
         public static final int kEdsEvfOutputDevice_PC_Small = 8;
-        /**
-         * @deprecated removed by Canon; the value (8) is now {@link #kEdsEvfOutputDevice_PC_Small}.
-         */
-        @Deprecated
-        public static final int kEdsEvfOutputDevice_MOBILE2 = 8;
     }
 
     /**

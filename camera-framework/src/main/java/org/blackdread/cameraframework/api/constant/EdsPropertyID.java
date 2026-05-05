@@ -596,7 +596,75 @@ public enum EdsPropertyID implements NativeEnum<Integer> {
      * @since edsdk 13.11.10
      * @since 1.2.1
      */
-    kEdsPropID_MovieSoundRecord("Movie sound recording", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE);
+    kEdsPropID_MovieSoundRecord("Movie sound recording", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+
+    // -------------------------------------------------------------------------
+    // EDSDK 13.20.10 — types are best-effort defaults (mostly UInt32);
+    // refine to ByteBlock/etc. when verified against camera responses.
+    // -------------------------------------------------------------------------
+
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_AfLockState("AF lock state", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_AFTrackingObject("AF tracking object", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_ApertureLockSetting("Aperture lock setting", EdsDataType.kEdsDataType_ByteBlock, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_BrightnessSetting("Screen brightness setting", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_ColorFilter("Color filter", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_ContinuousAfMode("Continuous AF mode", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_DigitalZoomSetting("Digital zoom setting", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_DriveFocusToEdge("Drive focus to edge", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_Evf_FocalLength("EVF focal length", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_EVF_IMAGE_READ),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_Flash_Firing("Flash firing", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_Flash_Target("Flash target", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_FocusPosition("Focus position", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_IBIS_HighResoShot("IBIS high-resolution shot", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_LensIsSetting("Lens IS setting", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieFileNameClipNo("Movie file name clip number", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieFileNameIndex("Movie file name index", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieFileNameReelNo("Movie file name reel number", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieFileNameUserDef("Movie file name user-defined string", EdsDataType.kEdsDataType_String, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 — uses EdsGetPropertyDescEx for the descriptor list */
+    kEdsPropID_MovieParamEx("Extended movie parameters", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieRecVolume_Acc("Movie record volume (accessory)", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieRecVolume_ExtMic("Movie record volume (external mic)", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_MovieRecVolume_IntMic("Movie record volume (internal mic)", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_RegisterFocusEdge("Register focus edge", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_ScreenDimmerTime("Screen dimmer time", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_ScreenOffTime("Screen off time", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_SlowFastMode("Slow / fast capture mode", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_StillFileNameSetting("Still file name setting", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_StillFileNameUserSet1("Still file name user-defined #1", EdsDataType.kEdsDataType_String, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_StillFileNameUserSet2("Still file name user-defined #2", EdsDataType.kEdsDataType_String, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_StillFolderName("Still folder name", EdsDataType.kEdsDataType_String, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    /** @since edsdk 13.20.10 */
+    kEdsPropID_ViewfinderOffTime("Viewfinder off time", EdsDataType.kEdsDataType_UInt32, TargetRefAccessType.GROUP_CAMERA_READ_WRITE);
 
     private final int value;
     private final String description;

@@ -133,7 +133,13 @@ public enum EdsStateEvent implements NativeEnum<Integer> {
     /**
      * Not specified in API Reference
      */
-    kEdsStateEvent_AfResult("AF Result");
+    kEdsStateEvent_AfResult("AF Result"),
+
+    /**
+     * Notifies that the camera's power-zoom information has changed
+     * (introduced in EDSDK 13.20.10).
+     */
+    kEdsStateEvent_PowerZoomInfoChanged("Power-zoom information changed");
 
     private final int value;
     private final String description;

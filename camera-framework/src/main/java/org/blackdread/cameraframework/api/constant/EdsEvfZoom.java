@@ -40,7 +40,9 @@ import org.blackdread.cameraframework.util.LibraryFieldUtil;
 public enum EdsEvfZoom implements NativeEnum<Integer> {
     kEdsEvfZoom_Fit("Entire Screen"),
     kEdsEvfZoom_x5("5 times"),
-    kEdsEvfZoom_x10("10 times");
+    kEdsEvfZoom_x6("6 times"),
+    kEdsEvfZoom_x10("10 times"),
+    kEdsEvfZoom_x15("15 times");
 
     private final int value;
     private final String description;
