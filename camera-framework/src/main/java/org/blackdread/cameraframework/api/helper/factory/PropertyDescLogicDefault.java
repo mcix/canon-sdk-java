@@ -48,68 +48,87 @@ public class PropertyDescLogicDefault implements PropertyDescLogic {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends NativeEnum<Integer>> List<T> getPropertyDesc(final EdsBaseRef camera, final EdsPropertyID property) {
-        final List<Integer> propertyDescValues = getPropertyDescValues(camera, property);
+        // Validate property up-front so callers still get a clear error for properties
+        // that have no enum mapping. Per-value unknown enum values are skipped below.
+        rejectUnsupportedProperty(property);
 
+        final List<Integer> propertyDescValues = getPropertyDescValues(camera, property);
         final List<NativeEnum<Integer>> nativeEnums = new ArrayList<>(propertyDescValues.size());
 
         for (final Integer propertyDescValue : propertyDescValues) {
-            switch (property) {
-                case kEdsPropID_AEMode: // added this one as seems more logical but to check (not in documentation 3.9.0)
-                    // TODO to remove if not possible in fact
-                    nativeEnums.add(EdsAEMode.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_AEModeSelect: // in documentation it is this property but maybe was a typo? need to check later
-                    // TODO to remove if not possible in fact
-                    nativeEnums.add(EdsAEModeSelect.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_ISOSpeed:
-                    nativeEnums.add(EdsISOSpeed.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_MeteringMode:
-                    nativeEnums.add(EdsMeteringMode.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_Av:
-                    nativeEnums.add(EdsAv.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_Tv:
-                    nativeEnums.add(EdsTv.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_ExposureCompensation:
-                    nativeEnums.add(EdsExposureCompensation.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_ImageQuality:
-                    nativeEnums.add(EdsImageQuality.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_WhiteBalance:
-                    nativeEnums.add(EdsWhiteBalance.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_PictureStyle:
-                    nativeEnums.add(EdsPictureStyle.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_DriveMode:
-                    nativeEnums.add(EdsDriveMode.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_Evf_WhiteBalance:
-                    nativeEnums.add(EdsWhiteBalance.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_Evf_AFMode:
-                    nativeEnums.add(EdsEvfAFMode.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_DC_Strobe:
-                    nativeEnums.add(EdsDcStrobe.ofValue(propertyDescValue));
-                    break;
-                case kEdsPropID_DC_Zoom:
-                case kEdsPropID_ColorTemperature:
-                case kEdsPropID_Evf_ColorTemperature:
-                    log.error("Cannot get desc values of {} as those are not defined in an enum. Need to use other methods", property);
-                    throw new IllegalArgumentException("Cannot get desc values of " + property + " as those are not defined in an enum.  Need to use other methods");
-                default:
-                    log.error("Property {} is not supported to get property desc", property);
-                    throw new IllegalArgumentException("Property " + property + " is not supported to get property desc");
+            try {
+                nativeEnums.add(mapDescValue(property, propertyDescValue));
+            } catch (final IllegalArgumentException unknownValue) {
+                // Newer bodies (R8, etc.) report values not yet in the framework's enum
+                // for an otherwise-supported property. Skip rather than abort the list.
+                log.debug("Skipping unknown {} value 0x{}", property, Integer.toHexString(propertyDescValue));
             }
         }
 
         return (List<T>) nativeEnums;
+    }
+
+    private static void rejectUnsupportedProperty(final EdsPropertyID property) {
+        switch (property) {
+            case kEdsPropID_AEMode:
+            case kEdsPropID_AEModeSelect:
+            case kEdsPropID_ISOSpeed:
+            case kEdsPropID_MeteringMode:
+            case kEdsPropID_Av:
+            case kEdsPropID_Tv:
+            case kEdsPropID_ExposureCompensation:
+            case kEdsPropID_ImageQuality:
+            case kEdsPropID_WhiteBalance:
+            case kEdsPropID_PictureStyle:
+            case kEdsPropID_DriveMode:
+            case kEdsPropID_Evf_WhiteBalance:
+            case kEdsPropID_Evf_AFMode:
+            case kEdsPropID_DC_Strobe:
+                return;
+            case kEdsPropID_DC_Zoom:
+            case kEdsPropID_ColorTemperature:
+            case kEdsPropID_Evf_ColorTemperature:
+                throw new IllegalArgumentException("Cannot get desc values of " + property + " as those are not defined in an enum.  Need to use other methods");
+            default:
+                throw new IllegalArgumentException("Property " + property + " is not supported to get property desc");
+        }
+    }
+
+    private NativeEnum<Integer> mapDescValue(final EdsPropertyID property, final Integer propertyDescValue) {
+        switch (property) {
+            case kEdsPropID_AEMode: // added this one as seems more logical but to check (not in documentation 3.9.0)
+                // TODO to remove if not possible in fact
+                return EdsAEMode.ofValue(propertyDescValue);
+            case kEdsPropID_AEModeSelect: // in documentation it is this property but maybe was a typo? need to check later
+                // TODO to remove if not possible in fact
+                return EdsAEModeSelect.ofValue(propertyDescValue);
+            case kEdsPropID_ISOSpeed:
+                return EdsISOSpeed.ofValue(propertyDescValue);
+            case kEdsPropID_MeteringMode:
+                return EdsMeteringMode.ofValue(propertyDescValue);
+            case kEdsPropID_Av:
+                return EdsAv.ofValue(propertyDescValue);
+            case kEdsPropID_Tv:
+                return EdsTv.ofValue(propertyDescValue);
+            case kEdsPropID_ExposureCompensation:
+                return EdsExposureCompensation.ofValue(propertyDescValue);
+            case kEdsPropID_ImageQuality:
+                return EdsImageQuality.ofValue(propertyDescValue);
+            case kEdsPropID_WhiteBalance:
+                return EdsWhiteBalance.ofValue(propertyDescValue);
+            case kEdsPropID_PictureStyle:
+                return EdsPictureStyle.ofValue(propertyDescValue);
+            case kEdsPropID_DriveMode:
+                return EdsDriveMode.ofValue(propertyDescValue);
+            case kEdsPropID_Evf_WhiteBalance:
+                return EdsWhiteBalance.ofValue(propertyDescValue);
+            case kEdsPropID_Evf_AFMode:
+                return EdsEvfAFMode.ofValue(propertyDescValue);
+            case kEdsPropID_DC_Strobe:
+                return EdsDcStrobe.ofValue(propertyDescValue);
+            default:
+                throw new IllegalStateException("rejectUnsupportedProperty failed to filter " + property);
+        }
     }
 
 }
