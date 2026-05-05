@@ -345,21 +345,6 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
     }
 
     @Override
-    public int EdsSaveImage(final EdsImageRef inImageRef, final int inImageType, final EdsSaveImageSetting.ByValue inSaveSetting, final EdsStreamRef outStreamRef) {
-        return 0;
-    }
-
-    @Override
-    public int EdsCacheImage(final EdsImageRef inImageRef, final int inUseCache) {
-        return 0;
-    }
-
-    @Override
-    public int EdsReflectImageProperty(final EdsImageRef inImageRef) {
-        return 0;
-    }
-
-    @Override
     public int EdsCreateEvfImageRef(final EdsStreamRef inStreamRef, final EdsEvfImageRef.ByReference outEvfImageRef) {
         return 0;
     }
