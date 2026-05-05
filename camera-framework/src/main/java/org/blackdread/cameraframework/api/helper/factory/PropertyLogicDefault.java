@@ -23,8 +23,7 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.api.constant.EdsDataType;
 import org.blackdread.cameraframework.api.constant.EdsPropertyID;
@@ -55,10 +54,10 @@ public class PropertyLogicDefault implements PropertyLogic {
     public PropertyInfo getPropertyTypeAndSize(final EdsdkLibrary.EdsBaseRef ref, final EdsPropertyID property, final long inParam) {
         final int bufferSize = 1;
         final IntBuffer outDataType = IntBuffer.allocate(bufferSize);
-        final NativeLongByReference outSize = new NativeLongByReference(new NativeLong(bufferSize));
-        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertySize(ref, new NativeLong(property.value()), new NativeLong(inParam), outDataType, outSize));
+        final IntByReference outSize = new IntByReference(bufferSize);
+        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertySize(ref, property.value(), (int) inParam, outDataType, outSize));
         if (error == EdsdkError.EDS_ERR_OK) {
-            return new PropertyInfo(EdsDataType.ofValue(outDataType.get(0)), outSize.getValue().longValue());
+            return new PropertyInfo(EdsDataType.ofValue(outDataType.get(0)), outSize.getValue() & 0xFFFFFFFFL);
         }
         log.error("Failed  to get property type and size of {} ({}), inParam {}. Probably not supported by camera", property, error, inParam);
         throw error.getException();
@@ -68,8 +67,8 @@ public class PropertyLogicDefault implements PropertyLogic {
     public EdsDataType getPropertyType(final EdsdkLibrary.EdsBaseRef ref, final EdsPropertyID property, final long inParam) {
         final int bufferSize = 1;
         final IntBuffer outDataType = IntBuffer.allocate(bufferSize);
-        final NativeLongByReference outSize = new NativeLongByReference(new NativeLong(bufferSize));
-        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertySize(ref, new NativeLong(property.value()), new NativeLong(inParam), outDataType, outSize));
+        final IntByReference outSize = new IntByReference(bufferSize);
+        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertySize(ref, property.value(), (int) inParam, outDataType, outSize));
         if (error == EdsdkError.EDS_ERR_OK) {
             return EdsDataType.ofValue(outDataType.get(0));
         }
@@ -81,10 +80,10 @@ public class PropertyLogicDefault implements PropertyLogic {
     public long getPropertySize(final EdsdkLibrary.EdsBaseRef ref, final EdsPropertyID property, final long inParam) {
         final int bufferSize = 1;
         final IntBuffer outDataType = IntBuffer.allocate(bufferSize);
-        final NativeLongByReference outSize = new NativeLongByReference(new NativeLong(bufferSize));
-        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertySize(ref, new NativeLong(property.value()), new NativeLong(inParam), outDataType, outSize));
+        final IntByReference outSize = new IntByReference(bufferSize);
+        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertySize(ref, property.value(), (int) inParam, outDataType, outSize));
         if (error == EdsdkError.EDS_ERR_OK) {
-            return outSize.getValue().longValue();
+            return outSize.getValue() & 0xFFFFFFFFL;
         }
         log.error("Failed to get property size of {} ({}), inParam {}. Probably not supported by camera", property, error, inParam);
         throw error.getException();

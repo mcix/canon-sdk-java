@@ -1,7 +1,6 @@
 package org.blackdread.cameraframework.api.command;
 
 import com.google.common.collect.ImmutableSet;
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsDirectoryItemRef;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsEvfImageRef;
@@ -66,9 +65,9 @@ class CommandExecutionMockTest extends AbstractMockTest {
 
     private EdsDirectoryItemRef fakeDirItem;
 
-    private final NativeLong noErrorLong = new NativeLong(0);
+    private final int noErrorLong = (int)(0);
 
-    private NativeLong expectedErrorLong;
+    private int expectedErrorLong;
 
     private EdsdkError expectedError;
 
@@ -84,7 +83,7 @@ class CommandExecutionMockTest extends AbstractMockTest {
         fakeVolume = new EdsVolumeRef();
         fakeDirItem = new EdsDirectoryItemRef();
 
-        expectedErrorLong = new NativeLong(EdsdkError.EDS_ERR_DEVICE_INTERNAL_ERROR.value());
+        expectedErrorLong = (int)(EdsdkError.EDS_ERR_DEVICE_INTERNAL_ERROR.value());
         expectedError = EdsdkError.EDS_ERR_DEVICE_INTERNAL_ERROR;
         expectedErrorType = EdsdkDeviceInternalErrorException.class;
     }

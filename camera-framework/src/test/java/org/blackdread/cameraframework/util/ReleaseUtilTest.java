@@ -1,6 +1,5 @@
 package org.blackdread.cameraframework.util;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsBaseRef;
 import org.blackdread.cameraframework.AbstractMockTest;
 import org.blackdread.cameraframework.api.helper.factory.CanonFactory;
@@ -45,8 +44,8 @@ class ReleaseUtilTest extends AbstractMockTest {
         final EdsBaseRef edsBaseRef = new EdsBaseRef();
 
         when(CanonFactory.edsdkLibrary().EdsRelease(edsBaseRef))
-            .thenReturn(new NativeLong(0))
-            .thenReturn(new NativeLong(-1));
+            .thenReturn((int)(0))
+            .thenReturn((int)(-1));
 
         ReleaseUtil.release(edsBaseRef, edsBaseRef);
 
@@ -61,7 +60,7 @@ class ReleaseUtilTest extends AbstractMockTest {
         final EdsBaseRef edsBaseRef = new EdsBaseRef();
 
         when(CanonFactory.edsdkLibrary().EdsRelease(edsBaseRef))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(0));
 
         ReleaseUtil.release(edsBaseRef);
 

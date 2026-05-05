@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.AbstractMockTest;
@@ -102,7 +101,7 @@ class CameraStateEventLogicDefaultMockTest extends AbstractMockTest {
             throw new IllegalStateException("can not reach");
         }
 
-        final NativeLong apply = handler.apply(new NativeLong(EdsStateEvent.kEdsStateEvent_Shutdown.value()), new NativeLong(0L), new Pointer(0));
+        final int apply = handler.apply((int)(EdsStateEvent.kEdsStateEvent_Shutdown.value()), (int)(0L), new Pointer(0));
 
         fakeCamera = null;
 
@@ -114,7 +113,7 @@ class CameraStateEventLogicDefaultMockTest extends AbstractMockTest {
 
         // Let's hope gc actually happened...
 
-        Assertions.assertThrows(IllegalStateException.class, () -> handler.apply(new NativeLong(EdsStateEvent.kEdsStateEvent_Shutdown.value()), new NativeLong(0L), new Pointer(0)));
+        Assertions.assertThrows(IllegalStateException.class, () -> handler.apply((int)(EdsStateEvent.kEdsStateEvent_Shutdown.value()), (int)(0L), new Pointer(0)));
     }
 
     @Test
@@ -146,38 +145,38 @@ class CameraStateEventLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void registerCameraStateEvent() {
-        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull())).thenReturn((int)(0));
 
         spyCameraStateEventLogic.registerCameraStateEvent(fakeCamera);
 
-        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull());
+        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull());
     }
 
     @Test
     void registerCameraStateEventThrowsOnError() {
-        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraStateEventLogic.registerCameraStateEvent(fakeCamera));
 
-        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull());
+        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull());
     }
 
     @Test
     void unregisterCameraStateEvent() {
-        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull())).thenReturn((int)(0));
 
         spyCameraStateEventLogic.unregisterCameraStateEvent(fakeCamera);
 
-        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull());
+        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull());
     }
 
     @Test
     void unregisterCameraStateEventThrowsOnError() {
-        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraStateEventLogic.unregisterCameraStateEvent(fakeCamera));
 
-        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), any(), any(), (Pointer) isNull());
+        verify(edsdkLibrary(), times(1)).EdsSetCameraStateEventHandler(eq(fakeCamera), anyInt(), any(), (Pointer) isNull());
     }
 
     @Test

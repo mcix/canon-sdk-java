@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,15 +37,15 @@ import java.util.List;
  */
 public class EdsFrameDesc extends Structure {
 	/** C type : EdsUInt32 */
-	public NativeLong valid;
+	public int valid;
 	/** C type : EdsUInt32 */
-	public NativeLong selected;
+	public int selected;
 	/** C type : EdsUInt32 */
-	public NativeLong justFocus;
+	public int justFocus;
 	/** C type : EdsRect */
 	public EdsRect rect;
 	/** C type : EdsUInt32 */
-	public NativeLong reserved;
+	public int reserved;
 	public EdsFrameDesc() {
 		super();
 	}
@@ -61,7 +60,7 @@ public class EdsFrameDesc extends Structure {
 	 * @param rect C type : EdsRect<br>
 	 * @param reserved C type : EdsUInt32
 	 */
-	public EdsFrameDesc(NativeLong valid, NativeLong selected, NativeLong justFocus, EdsRect rect, NativeLong reserved) {
+	public EdsFrameDesc(int valid, int selected, int justFocus, EdsRect rect, int reserved) {
 		super();
 		this.valid = valid;
 		this.selected = selected;

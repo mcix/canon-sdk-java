@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,9 +37,9 @@ import java.util.List;
  */
 public class EdsSize extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong width;
+	public int width;
 	/** C type : EdsInt32 */
-	public NativeLong height;
+	public int height;
 	public EdsSize() {
 		super();
 	}
@@ -52,7 +51,7 @@ public class EdsSize extends Structure {
 	 * @param width C type : EdsInt32<br>
 	 * @param height C type : EdsInt32
 	 */
-	public EdsSize(NativeLong width, NativeLong height) {
+	public EdsSize(int width, int height) {
 		super();
 		this.width = width;
 		this.height = height;

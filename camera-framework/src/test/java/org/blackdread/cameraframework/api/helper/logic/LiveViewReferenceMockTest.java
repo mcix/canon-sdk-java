@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.logic;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.AbstractMockTest;
 import org.blackdread.cameraframework.api.helper.factory.CanonFactory;
@@ -74,8 +73,8 @@ class LiveViewReferenceMockTest extends AbstractMockTest {
         final EdsdkLibrary.EdsEvfImageRef evfImageRef = new EdsdkLibrary.EdsEvfImageRef();
         when(evfMock.getValue()).thenReturn(evfImageRef);
 
-        when(CanonFactory.edsdkLibrary().EdsRelease(streamRef)).thenReturn(new NativeLong(0L));
-        when(CanonFactory.edsdkLibrary().EdsRelease(evfImageRef)).thenReturn(new NativeLong(0L));
+        when(CanonFactory.edsdkLibrary().EdsRelease(streamRef)).thenReturn((int)(0L));
+        when(CanonFactory.edsdkLibrary().EdsRelease(evfImageRef)).thenReturn((int)(0L));
 
         try (LiveViewReference ref = new LiveViewReference(refMock, evfMock)) {
             // nothing

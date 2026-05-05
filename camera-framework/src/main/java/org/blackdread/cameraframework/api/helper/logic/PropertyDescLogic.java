@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.logic;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsPropertyDesc;
 import org.blackdread.cameraframework.api.constant.EdsPropertyID;
 import org.blackdread.cameraframework.api.constant.EdsdkError;
@@ -49,7 +48,7 @@ public interface PropertyDescLogic {
     /**
      * Gets a list of property data that can be set for the object designated in inRef, as well as maximum and minimum values.
      * <br>
-     * <p>Be sure before executing <b>EdsSetPropertyData</b>, use this API to get the values that can be set for the Properties supported by {@link org.blackdread.camerabinding.jna.EdsdkLibrary#EdsGetPropertyDesc(EdsBaseRef, NativeLong, EdsPropertyDesc)}.</p>
+     * <p>Be sure before executing <b>EdsSetPropertyData</b>, use this API to get the values that can be set for the Properties supported by {@link org.blackdread.camerabinding.jna.EdsdkLibrary#EdsGetPropertyDesc(EdsBaseRef, int, EdsPropertyDesc)}.</p>
      * <br>
      * Known property id supported are
      * <ul>
@@ -109,7 +108,7 @@ public interface PropertyDescLogic {
     default List<Integer> getPropertyDescValues(final EdsBaseRef camera, final EdsPropertyID property) {
         final EdsPropertyDesc propertyDesc = getPropertyDescStructure(camera, property);
 
-        final int descCount = propertyDesc.numElements.intValue();
+        final int descCount = propertyDesc.numElements;
 
         if (descCount <= 0) {
             return Collections.emptyList();
@@ -117,7 +116,7 @@ public interface PropertyDescLogic {
 
         final List<Integer> values = new ArrayList<>(descCount);
         for (int i = 0; i < descCount; i++) {
-            values.add(propertyDesc.propDesc[i].intValue());
+            values.add(propertyDesc.propDesc[i]);
         }
 
         return values;
@@ -126,7 +125,7 @@ public interface PropertyDescLogic {
     /**
      * Gets a list of property data that can be set for the object designated in inRef, as well as maximum and minimum values.
      * This API is intended for only some shooting-related properties.
-     * <p>Be sure before executing <b>EdsSetPropertyData</b>, use this API to get the values that can be set for the Properties supported by {@link org.blackdread.camerabinding.jna.EdsdkLibrary#EdsGetPropertyDesc(EdsBaseRef, NativeLong, EdsPropertyDesc)}.</p>
+     * <p>Be sure before executing <b>EdsSetPropertyData</b>, use this API to get the values that can be set for the Properties supported by {@link org.blackdread.camerabinding.jna.EdsdkLibrary#EdsGetPropertyDesc(EdsBaseRef, int, EdsPropertyDesc)}.</p>
      *
      * @param ref      the target object. Designate EdsCameraRef
      * @param property the property ID (see Reference API for possible values)
@@ -135,7 +134,7 @@ public interface PropertyDescLogic {
      */
     default EdsPropertyDesc getPropertyDescStructure(final EdsBaseRef ref, final EdsPropertyID property) {
         final EdsPropertyDesc propertyDesc = new EdsPropertyDesc();
-        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertyDesc(ref, new NativeLong(property.value()), propertyDesc));
+        final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetPropertyDesc(ref, property.value(), propertyDesc));
         if (error == EdsdkError.EDS_ERR_OK) {
             return propertyDesc;
         }

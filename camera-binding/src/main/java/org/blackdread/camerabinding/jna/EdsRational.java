@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,9 +37,9 @@ import java.util.List;
  */
 public class EdsRational extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong numerator;
+	public int numerator;
 	/** C type : EdsUInt32 */
-	public NativeLong denominator;
+	public int denominator;
 	public EdsRational() {
 		super();
 	}
@@ -52,7 +51,7 @@ public class EdsRational extends Structure {
 	 * @param numerator C type : EdsInt32<br>
 	 * @param denominator C type : EdsUInt32
 	 */
-	public EdsRational(NativeLong numerator, NativeLong denominator) {
+	public EdsRational(int numerator, int denominator) {
 		super();
 		this.numerator = numerator;
 		this.denominator = denominator;

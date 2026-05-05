@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import org.blackdread.cameraframework.AbstractMockTest;
 import org.blackdread.cameraframework.MockFactory;
@@ -105,7 +104,7 @@ class CameraAddedEventLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void registerCameraAddedEvent() {
-        when(edsdkLibrary().EdsSetCameraAddedHandler(any(), (Pointer) isNull())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSetCameraAddedHandler(any(), (Pointer) isNull())).thenReturn((int)(0));
 
         spyCameraAddedEventLogic.registerCameraAddedEvent();
 
@@ -114,7 +113,7 @@ class CameraAddedEventLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void registerCameraAddedEventThrowsOnError() {
-        when(edsdkLibrary().EdsSetCameraAddedHandler(any(), (Pointer) isNull())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsSetCameraAddedHandler(any(), (Pointer) isNull())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraAddedEventLogic.registerCameraAddedEvent());
 

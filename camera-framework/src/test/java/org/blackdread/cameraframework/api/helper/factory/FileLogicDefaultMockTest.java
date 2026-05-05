@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsDirectoryItemInfo;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsDirectoryItemRef;
 import org.blackdread.cameraframework.AbstractMockTest;
@@ -73,13 +72,13 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadDefault() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn((int)(0));
 
         final File downloadedFile = spyFileLogic.download(fakeItemRef);
 
@@ -99,13 +98,13 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadDefaultWithFilename() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn((int)(0));
 
         final File downloadedFile = spyFileLogic.download(fakeItemRef, "filename.jpg");
 
@@ -125,13 +124,13 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadDefaultWithFolder() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn((int)(0));
 
         final File downloadedFile = spyFileLogic.download(fakeItemRef, new File("./dest"));
 
@@ -154,9 +153,9 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadThrowsOnErrorStream() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyFileLogic.download(fakeItemRef, null, null));
 
@@ -170,11 +169,11 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadThrowsOnErrorDownload() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsCreateFileStream(any(byte[].class), eq(EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways.value()), eq(EdsAccess.kEdsAccess_ReadWrite.value()), any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsDownload(eq(fakeItemRef), eq(0L), any())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyFileLogic.download(fakeItemRef, null, null));
 
@@ -192,7 +191,7 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getDirectoryItemInfo() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(0));
 
         spyFileLogic.getDirectoryItemInfo(fakeItemRef);
 
@@ -201,7 +200,7 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getDirectoryItemInfoThrowsOnError() {
-        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsGetDirectoryItemInfo(eq(fakeItemRef), any(EdsDirectoryItemInfo.class))).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyFileLogic.getDirectoryItemInfo(fakeItemRef));
 
@@ -210,7 +209,7 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadComplete() {
-        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn((int)(0));
 
         spyFileLogic.downloadComplete(fakeItemRef);
 
@@ -219,7 +218,7 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadCompleteThrowsOnError() {
-        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsDownloadComplete(fakeItemRef)).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyFileLogic.downloadComplete(fakeItemRef));
 
@@ -228,7 +227,7 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadCancel() {
-        when(edsdkLibrary().EdsDownloadCancel(fakeItemRef)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsDownloadCancel(fakeItemRef)).thenReturn((int)(0));
 
         spyFileLogic.downloadCancel(fakeItemRef);
 
@@ -237,7 +236,7 @@ class FileLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void downloadCancelThrowsOnError() {
-        when(edsdkLibrary().EdsDownloadCancel(fakeItemRef)).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsDownloadCancel(fakeItemRef)).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyFileLogic.downloadCancel(fakeItemRef));
 

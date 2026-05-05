@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.CameraIsConnected;
 import org.blackdread.cameraframework.api.constant.EdsPropertyEvent;
@@ -86,11 +85,11 @@ class ShootCameraTest {
         final EdsdkLibrary.EdsCameraRef cameraRef = camera.getValue();
         TestShortcutUtil.registerObjectEventHandler(cameraRef, (inEvent, inRef, inContext) -> {
             log.warn("Camera object called {}, {}, {}", inEvent, inRef, inContext);
-            return new NativeLong(0);
+            return (int)(0);
         });
         TestShortcutUtil.registerPropertyEventHandler(cameraRef, (inEvent, inPropertyID, inParam, inContext) -> {
-            log.warn("Camera property called {}, {}, {}", EdsPropertyEvent.ofValue(inEvent.intValue()), EdsPropertyID.ofValue(inPropertyID.intValue()), inContext);
-            return new NativeLong(0);
+            log.warn("Camera property called {}, {}, {}", EdsPropertyEvent.ofValue(inEvent), EdsPropertyID.ofValue(inPropertyID), inContext);
+            return (int)(0);
         });
         liveViewLogic().beginLiveView(cameraRef);
 

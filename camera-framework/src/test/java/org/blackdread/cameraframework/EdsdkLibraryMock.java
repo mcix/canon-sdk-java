@@ -24,11 +24,9 @@
 package org.blackdread.cameraframework;
 
 import com.google.common.collect.Lists;
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
-import com.sun.jna.ptr.NativeLongByReference;
 import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.ShortByReference;
 import org.blackdread.camerabinding.jna.*;
@@ -57,8 +55,8 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
 
     private final List<EdsCameraRef> camerasConnected = Lists.newArrayList(new EdsCameraRef(), new EdsCameraRef());
 
-    private NativeLong returnOk() {
-        return new NativeLong(EdsdkError.EDS_ERR_OK.value());
+    private int returnOk() {
+        return EdsdkError.EDS_ERR_OK.value();
     }
 
     private void assertWasInitialized() {
@@ -66,19 +64,19 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
     }
 
     @Override
-    public NativeLong EdsInitializeSDK() {
+    public int EdsInitializeSDK() {
         sdkInitialized = true;
         return returnOk();
     }
 
     @Override
-    public NativeLong EdsTerminateSDK() {
+    public int EdsTerminateSDK() {
         sdkInitialized = false;
         return returnOk();
     }
 
     @Override
-    public NativeLong EdsRetain(final EdsBaseRef inRef) {
+    public int EdsRetain(final EdsBaseRef inRef) {
         assertWasInitialized();
         final Integer total = countRetain.compute(inRef, (edsBaseRef, integer) -> {
             if (integer == null)
@@ -86,11 +84,11 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
             else
                 return integer + 1;
         });
-        return new NativeLong(total);
+        return total;
     }
 
     @Override
-    public NativeLong EdsRelease(final EdsBaseRef inRef) {
+    public int EdsRelease(final EdsBaseRef inRef) {
         assertWasInitialized();
         final Integer total = countRetain.compute(inRef, (edsBaseRef, integer) -> {
             if (integer == null)
@@ -98,326 +96,326 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
             else
                 return integer - 1;
         });
-        return new NativeLong(total);
+        return total;
     }
 
     @Override
-    public NativeLong EdsGetChildCount(final EdsBaseRef inRef, final NativeLongByReference outCount) {
-        return null;
+    public int EdsGetChildCount(final EdsBaseRef inRef, final IntByReference outCount) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetChildAtIndex(final EdsBaseRef inRef, final NativeLong inIndex, final EdsBaseRef.ByReference outRef) {
-        return null;
+    public int EdsGetChildAtIndex(final EdsBaseRef inRef, final int inIndex, final EdsBaseRef.ByReference outRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetParent(final EdsBaseRef inRef, final EdsBaseRef.ByReference outParentRef) {
-        return null;
+    public int EdsGetParent(final EdsBaseRef inRef, final EdsBaseRef.ByReference outParentRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPropertySize(final EdsBaseRef inRef, final NativeLong inPropertyID, final NativeLong inParam, final IntByReference outDataType, final NativeLongByReference outSize) {
-        return null;
+    public int EdsGetPropertySize(final EdsBaseRef inRef, final int inPropertyID, final int inParam, final IntByReference outDataType, final IntByReference outSize) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPropertySize(final EdsBaseRef inRef, final NativeLong inPropertyID, final NativeLong inParam, final IntBuffer outDataType, final NativeLongByReference outSize) {
-        return null;
+    public int EdsGetPropertySize(final EdsBaseRef inRef, final int inPropertyID, final int inParam, final IntBuffer outDataType, final IntByReference outSize) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPropertyData(final EdsBaseRef inRef, final NativeLong inPropertyID, final NativeLong inParam, final NativeLong inPropertySize, final Pointer outPropertyData) {
-        return null;
+    public int EdsGetPropertyData(final EdsBaseRef inRef, final int inPropertyID, final int inParam, final int inPropertySize, final Pointer outPropertyData) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPropertyData(final EdsBaseRef inRef, final NativeLong inPropertyID, final NativeLong inParam, final NativeLong inPropertySize, final EdsVoid outPropertyData) {
-        return null;
+    public int EdsGetPropertyData(final EdsBaseRef inRef, final int inPropertyID, final int inParam, final int inPropertySize, final EdsVoid outPropertyData) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetPropertyData(final EdsBaseRef inRef, final NativeLong inPropertyID, final NativeLong inParam, final NativeLong inPropertySize, final Pointer inPropertyData) {
-        return null;
+    public int EdsSetPropertyData(final EdsBaseRef inRef, final int inPropertyID, final int inParam, final int inPropertySize, final Pointer inPropertyData) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetPropertyData(final EdsBaseRef inRef, final NativeLong inPropertyID, final NativeLong inParam, final NativeLong inPropertySize, final EdsVoid inPropertyData) {
-        return null;
+    public int EdsSetPropertyData(final EdsBaseRef inRef, final int inPropertyID, final int inParam, final int inPropertySize, final EdsVoid inPropertyData) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPropertyDesc(final EdsBaseRef inRef, final NativeLong inPropertyID, final EdsPropertyDesc outPropertyDesc) {
-        return null;
+    public int EdsGetPropertyDesc(final EdsBaseRef inRef, final int inPropertyID, final EdsPropertyDesc outPropertyDesc) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetCameraList(final EdsCameraListRef.ByReference outCameraListRef) {
-        return null;
+    public int EdsGetCameraList(final EdsCameraListRef.ByReference outCameraListRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetDeviceInfo(final EdsCameraRef inCameraRef, final EdsDeviceInfo outDeviceInfo) {
-        return null;
+    public int EdsGetDeviceInfo(final EdsCameraRef inCameraRef, final EdsDeviceInfo outDeviceInfo) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsOpenSession(final EdsCameraRef inCameraRef) {
-        return null;
+    public int EdsOpenSession(final EdsCameraRef inCameraRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCloseSession(final EdsCameraRef inCameraRef) {
-        return null;
+    public int EdsCloseSession(final EdsCameraRef inCameraRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSendCommand(final EdsCameraRef inCameraRef, final NativeLong inCommand, final NativeLong inParam) {
-        return null;
+    public int EdsSendCommand(final EdsCameraRef inCameraRef, final int inCommand, final int inParam) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSendStatusCommand(final EdsCameraRef inCameraRef, final NativeLong inStatusCommand, final NativeLong inParam) {
-        return null;
+    public int EdsSendStatusCommand(final EdsCameraRef inCameraRef, final int inStatusCommand, final int inParam) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetCapacity(final EdsCameraRef inCameraRef, final EdsCapacity.ByValue inCapacity) {
-        return null;
+    public int EdsSetCapacity(final EdsCameraRef inCameraRef, final EdsCapacity.ByValue inCapacity) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetVolumeInfo(final EdsVolumeRef inVolumeRef, final EdsVolumeInfo outVolumeInfo) {
-        return null;
+    public int EdsGetVolumeInfo(final EdsVolumeRef inVolumeRef, final EdsVolumeInfo outVolumeInfo) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsFormatVolume(final EdsVolumeRef inVolumeRef) {
-        return null;
+    public int EdsFormatVolume(final EdsVolumeRef inVolumeRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetDirectoryItemInfo(final EdsDirectoryItemRef inDirItemRef, final EdsDirectoryItemInfo outDirItemInfo) {
-        return null;
+    public int EdsGetDirectoryItemInfo(final EdsDirectoryItemRef inDirItemRef, final EdsDirectoryItemInfo outDirItemInfo) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsDeleteDirectoryItem(final EdsDirectoryItemRef inDirItemRef) {
-        return null;
+    public int EdsDeleteDirectoryItem(final EdsDirectoryItemRef inDirItemRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsDownload(final EdsDirectoryItemRef inDirItemRef, final long inReadSize, final EdsStreamRef outStream) {
-        return null;
+    public int EdsDownload(final EdsDirectoryItemRef inDirItemRef, final long inReadSize, final EdsStreamRef outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsDownloadCancel(final EdsDirectoryItemRef inDirItemRef) {
-        return null;
+    public int EdsDownloadCancel(final EdsDirectoryItemRef inDirItemRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsDownloadComplete(final EdsDirectoryItemRef inDirItemRef) {
-        return null;
+    public int EdsDownloadComplete(final EdsDirectoryItemRef inDirItemRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsDownloadThumbnail(final EdsDirectoryItemRef inDirItemRef, final EdsStreamRef outStream) {
-        return null;
+    public int EdsDownloadThumbnail(final EdsDirectoryItemRef inDirItemRef, final EdsStreamRef outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetAttribute(final EdsDirectoryItemRef inDirItemRef, final IntByReference outFileAttribute) {
-        return null;
+    public int EdsGetAttribute(final EdsDirectoryItemRef inDirItemRef, final IntByReference outFileAttribute) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetAttribute(final EdsDirectoryItemRef inDirItemRef, final IntBuffer outFileAttribute) {
-        return null;
+    public int EdsGetAttribute(final EdsDirectoryItemRef inDirItemRef, final IntBuffer outFileAttribute) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetAttribute(final EdsDirectoryItemRef inDirItemRef, final int inFileAttribute) {
-        return null;
+    public int EdsSetAttribute(final EdsDirectoryItemRef inDirItemRef, final int inFileAttribute) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateFileStream(final ByteBuffer inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateFileStream(final ByteBuffer inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateFileStream(final byte[] inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateFileStream(final byte[] inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateMemoryStream(final long inBufferSize, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateMemoryStream(final long inBufferSize, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateFileStreamEx(final short[] inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateFileStreamEx(final short[] inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateFileStreamEx(final ShortByReference inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateFileStreamEx(final ShortByReference inFileName, final int inCreateDisposition, final int inDesiredAccess, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateMemoryStreamFromPointer(final Pointer inUserBuffer, final long inBufferSize, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateMemoryStreamFromPointer(final Pointer inUserBuffer, final long inBufferSize, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateMemoryStreamFromPointer(final EdsVoid inUserBuffer, final long inBufferSize, final EdsStreamRef.ByReference outStream) {
-        return null;
+    public int EdsCreateMemoryStreamFromPointer(final EdsVoid inUserBuffer, final long inBufferSize, final EdsStreamRef.ByReference outStream) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPointer(final EdsStreamRef inStream, final PointerByReference outPointer) {
-        return null;
+    public int EdsGetPointer(final EdsStreamRef inStream, final PointerByReference outPointer) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsRead(final EdsStreamRef inStreamRef, final long inReadSize, final Pointer outBuffer, final LongByReference outReadSize) {
-        return null;
+    public int EdsRead(final EdsStreamRef inStreamRef, final long inReadSize, final Pointer outBuffer, final LongByReference outReadSize) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsRead(final EdsStreamRef inStreamRef, final long inReadSize, final EdsVoid outBuffer, final LongByReference outReadSize) {
-        return null;
+    public int EdsRead(final EdsStreamRef inStreamRef, final long inReadSize, final EdsVoid outBuffer, final LongByReference outReadSize) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsWrite(final EdsStreamRef inStreamRef, final long inWriteSize, final Pointer inBuffer, final LongByReference outWrittenSize) {
-        return null;
+    public int EdsWrite(final EdsStreamRef inStreamRef, final long inWriteSize, final Pointer inBuffer, final LongByReference outWrittenSize) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsWrite(final EdsStreamRef inStreamRef, final long inWriteSize, final EdsVoid inBuffer, final LongByReference outWrittenSize) {
-        return null;
+    public int EdsWrite(final EdsStreamRef inStreamRef, final long inWriteSize, final EdsVoid inBuffer, final LongByReference outWrittenSize) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSeek(final EdsStreamRef inStreamRef, final long inSeekOffset, final int inSeekOrigin) {
-        return null;
+    public int EdsSeek(final EdsStreamRef inStreamRef, final long inSeekOffset, final int inSeekOrigin) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetPosition(final EdsStreamRef inStreamRef, final LongByReference outPosition) {
-        return null;
+    public int EdsGetPosition(final EdsStreamRef inStreamRef, final LongByReference outPosition) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetLength(final EdsStreamRef inStreamRef, final LongByReference outLength) {
-        return null;
+    public int EdsGetLength(final EdsStreamRef inStreamRef, final LongByReference outLength) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCopyData(final EdsStreamRef inStreamRef, final long inWriteSize, final EdsStreamRef outStreamRef) {
-        return null;
+    public int EdsCopyData(final EdsStreamRef inStreamRef, final long inWriteSize, final EdsStreamRef outStreamRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetProgressCallback(final EdsBaseRef inRef, final EdsProgressCallback inProgressCallback, final int inProgressOption, final Pointer inContext) {
-        return null;
+    public int EdsSetProgressCallback(final EdsBaseRef inRef, final EdsProgressCallback inProgressCallback, final int inProgressOption, final Pointer inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetProgressCallback(final EdsBaseRef inRef, final EdsProgressCallback inProgressCallback, final int inProgressOption, final EdsVoid inContext) {
-        return null;
+    public int EdsSetProgressCallback(final EdsBaseRef inRef, final EdsProgressCallback inProgressCallback, final int inProgressOption, final EdsVoid inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateImageRef(final EdsStreamRef inStreamRef, final EdsImageRef.ByReference outImageRef) {
-        return null;
+    public int EdsCreateImageRef(final EdsStreamRef inStreamRef, final EdsImageRef.ByReference outImageRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetImageInfo(final EdsImageRef inImageRef, final int inImageSource, final EdsImageInfo outImageInfo) {
-        return null;
+    public int EdsGetImageInfo(final EdsImageRef inImageRef, final int inImageSource, final EdsImageInfo outImageInfo) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetImage(final EdsImageRef inImageRef, final int inImageSource, final int inImageType, final EdsRect.ByValue inSrcRect, final EdsSize.ByValue inDstSize, final EdsStreamRef outStreamRef) {
-        return null;
+    public int EdsGetImage(final EdsImageRef inImageRef, final int inImageSource, final int inImageType, final EdsRect.ByValue inSrcRect, final EdsSize.ByValue inDstSize, final EdsStreamRef outStreamRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSaveImage(final EdsImageRef inImageRef, final int inImageType, final EdsSaveImageSetting.ByValue inSaveSetting, final EdsStreamRef outStreamRef) {
-        return null;
+    public int EdsSaveImage(final EdsImageRef inImageRef, final int inImageType, final EdsSaveImageSetting.ByValue inSaveSetting, final EdsStreamRef outStreamRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCacheImage(final EdsImageRef inImageRef, final int inUseCache) {
-        return null;
+    public int EdsCacheImage(final EdsImageRef inImageRef, final int inUseCache) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsReflectImageProperty(final EdsImageRef inImageRef) {
-        return null;
+    public int EdsReflectImageProperty(final EdsImageRef inImageRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateEvfImageRef(final EdsStreamRef inStreamRef, final EdsEvfImageRef.ByReference outEvfImageRef) {
-        return null;
+    public int EdsCreateEvfImageRef(final EdsStreamRef inStreamRef, final EdsEvfImageRef.ByReference outEvfImageRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsDownloadEvfImage(final EdsCameraRef inCameraRef, final EdsEvfImageRef inEvfImageRef) {
-        return null;
+    public int EdsDownloadEvfImage(final EdsCameraRef inCameraRef, final EdsEvfImageRef inEvfImageRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetCameraAddedHandler(final EdsCameraAddedHandler inCameraAddedHandler, final Pointer inContext) {
-        return null;
+    public int EdsSetCameraAddedHandler(final EdsCameraAddedHandler inCameraAddedHandler, final Pointer inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetCameraAddedHandler(final EdsCameraAddedHandler inCameraAddedHandler, final EdsVoid inContext) {
-        return null;
+    public int EdsSetCameraAddedHandler(final EdsCameraAddedHandler inCameraAddedHandler, final EdsVoid inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetPropertyEventHandler(final EdsCameraRef inCameraRef, final NativeLong inEvnet, final EdsPropertyEventHandler inPropertyEventHandler, final Pointer inContext) {
-        return null;
+    public int EdsSetPropertyEventHandler(final EdsCameraRef inCameraRef, final int inEvnet, final EdsPropertyEventHandler inPropertyEventHandler, final Pointer inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetPropertyEventHandler(final EdsCameraRef inCameraRef, final NativeLong inEvnet, final EdsPropertyEventHandler inPropertyEventHandler, final EdsVoid inContext) {
-        return null;
+    public int EdsSetPropertyEventHandler(final EdsCameraRef inCameraRef, final int inEvnet, final EdsPropertyEventHandler inPropertyEventHandler, final EdsVoid inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetObjectEventHandler(final EdsCameraRef inCameraRef, final NativeLong inEvnet, final EdsObjectEventHandler inObjectEventHandler, final Pointer inContext) {
-        return null;
+    public int EdsSetObjectEventHandler(final EdsCameraRef inCameraRef, final int inEvnet, final EdsObjectEventHandler inObjectEventHandler, final Pointer inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetObjectEventHandler(final EdsCameraRef inCameraRef, final NativeLong inEvnet, final EdsObjectEventHandler inObjectEventHandler, final EdsVoid inContext) {
-        return null;
+    public int EdsSetObjectEventHandler(final EdsCameraRef inCameraRef, final int inEvnet, final EdsObjectEventHandler inObjectEventHandler, final EdsVoid inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetCameraStateEventHandler(final EdsCameraRef inCameraRef, final NativeLong inEvnet, final EdsStateEventHandler inStateEventHandler, final Pointer inContext) {
-        return null;
+    public int EdsSetCameraStateEventHandler(final EdsCameraRef inCameraRef, final int inEvnet, final EdsStateEventHandler inStateEventHandler, final Pointer inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsSetCameraStateEventHandler(final EdsCameraRef inCameraRef, final NativeLong inEvnet, final EdsStateEventHandler inStateEventHandler, final EdsVoid inContext) {
-        return null;
+    public int EdsSetCameraStateEventHandler(final EdsCameraRef inCameraRef, final int inEvnet, final EdsStateEventHandler inStateEventHandler, final EdsVoid inContext) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsCreateStream(final EdsIStream inStream, final EdsStreamRef.ByReference outStreamRef) {
-        return null;
+    public int EdsCreateStream(final EdsIStream inStream, final EdsStreamRef.ByReference outStreamRef) {
+        return 0;
     }
 
     @Override
-    public NativeLong EdsGetEvent() {
-        return null;
+    public int EdsGetEvent() {
+        return 0;
     }
 }

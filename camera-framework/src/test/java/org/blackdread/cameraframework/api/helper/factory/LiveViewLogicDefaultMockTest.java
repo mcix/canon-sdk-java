@@ -1,6 +1,5 @@
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsEvfImageRef;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsStreamRef;
@@ -156,11 +155,11 @@ class LiveViewLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void getLiveViewImageBuffer() {
         when(edsdkLibrary().EdsGetLength(any(), any()))
-            .thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()))
+            .thenReturn((int)(0));
         when(edsdkLibrary().EdsGetPointer(any(), any()))
-            .thenReturn(new NativeLong(EdsdkError.EDS_ERR_COMM_USB_BUS_ERR.value()))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(EdsdkError.EDS_ERR_COMM_USB_BUS_ERR.value()))
+            .thenReturn((int)(0));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> liveViewLogicDefaultExtended.getLiveViewImageBuffer(fakeCamera));
         Assertions.assertThrows(EdsdkCommUsbBusErrorException.class, () -> liveViewLogicDefaultExtended.getLiveViewImageBuffer(fakeCamera));
@@ -174,13 +173,13 @@ class LiveViewLogicDefaultMockTest extends AbstractMockTest {
         liveViewLogicDefaultExtended.setLiveViewReference(null);
 
         when(edsdkLibrary().EdsCreateMemoryStream(eq(0L), any(EdsStreamRef.ByReference.class)))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(0));
 //        when(edsdkLibrary().EdsCreateEvfImageRef(any(EdsStreamRef.class), any(EdsEvfImageRef.ByReference.class)))
         when(edsdkLibrary().EdsCreateEvfImageRef(isNull(), any(EdsEvfImageRef.ByReference.class)))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(0));
 //        when(edsdkLibrary().EdsDownloadEvfImage(eq(fakeCamera), any(EdsEvfImageRef.class)))
         when(edsdkLibrary().EdsDownloadEvfImage(eq(fakeCamera), isNull()))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(0));
 
         final LiveViewReference liveViewImageReference = liveViewLogicDefaultExtended.getLiveViewImageReference(fakeCamera);
 
@@ -194,14 +193,14 @@ class LiveViewLogicDefaultMockTest extends AbstractMockTest {
         liveViewLogicDefaultExtended.setLiveViewReference(null);
 
         when(edsdkLibrary().EdsCreateMemoryStream(eq(0L), any(EdsStreamRef.ByReference.class)))
-            .thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()))
+            .thenReturn((int)(0));
         when(edsdkLibrary().EdsCreateEvfImageRef(isNull(), any(EdsEvfImageRef.ByReference.class)))
-            .thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_NOT_FOUND.value()))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_NOT_FOUND.value()))
+            .thenReturn((int)(0));
         when(edsdkLibrary().EdsDownloadEvfImage(eq(fakeCamera), isNull()))
-            .thenReturn(new NativeLong(EdsdkError.EDS_ERR_COMM_USB_BUS_ERR.value()))
-            .thenReturn(new NativeLong(0));
+            .thenReturn((int)(EdsdkError.EDS_ERR_COMM_USB_BUS_ERR.value()))
+            .thenReturn((int)(0));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> liveViewLogicDefaultExtended.getLiveViewImageReference(fakeCamera));
         Assertions.assertThrows(EdsdkDeviceNotFoundErrorException.class, () -> liveViewLogicDefaultExtended.getLiveViewImageReference(fakeCamera));

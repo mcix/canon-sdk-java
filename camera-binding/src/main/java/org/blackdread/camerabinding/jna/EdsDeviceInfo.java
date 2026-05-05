@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -42,9 +41,9 @@ public class EdsDeviceInfo extends Structure {
 	/** C type : EdsChar[256] */
 	public byte[] szDeviceDescription = new byte[256];
 	/** C type : EdsUInt32 */
-	public NativeLong deviceSubType;
+	public int deviceSubType;
 	/** C type : EdsUInt32 */
-	public NativeLong reserved;
+	public int reserved;
 	public EdsDeviceInfo() {
 		super();
 	}
@@ -58,7 +57,7 @@ public class EdsDeviceInfo extends Structure {
 	 * @param deviceSubType C type : EdsUInt32<br>
 	 * @param reserved C type : EdsUInt32
 	 */
-	public EdsDeviceInfo(byte szPortName[], byte szDeviceDescription[], NativeLong deviceSubType, NativeLong reserved) {
+	public EdsDeviceInfo(byte szPortName[], byte szDeviceDescription[], int deviceSubType, int reserved) {
 		super();
 		if ((szPortName.length != this.szPortName.length))
 			throw new IllegalArgumentException("Wrong array size !");

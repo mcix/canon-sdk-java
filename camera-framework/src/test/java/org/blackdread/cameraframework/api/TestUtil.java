@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Platform;
 import org.blackdread.cameraframework.api.constant.EdsdkError;
 import org.junit.jupiter.api.Assertions;
@@ -71,7 +70,7 @@ public final class TestUtil {
         throw new AssertionFailedError(message);
     }
 
-    public static void assertNoError(final NativeLong error) {
+    public static void assertNoError(final int error) {
         Assertions.assertEquals(EdsdkError.EDS_ERR_OK, toEdsdkError(error));
     }
 

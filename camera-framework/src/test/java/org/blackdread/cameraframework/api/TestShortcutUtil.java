@@ -23,9 +23,8 @@
  */
 package org.blackdread.cameraframework.api;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.api.constant.EdsObjectEvent;
 import org.blackdread.cameraframework.api.constant.EdsPropertyEvent;
@@ -75,15 +74,15 @@ public final class TestShortcutUtil {
         final EdsdkLibrary.EdsCameraListRef.ByReference cameraListRef = new EdsdkLibrary.EdsCameraListRef.ByReference();
         assertNoError(edsdkLibrary().EdsGetCameraList(cameraListRef));
         try {
-            final NativeLongByReference outRef = new NativeLongByReference();
+            final IntByReference outRef = new IntByReference();
             assertNoError(edsdkLibrary().EdsGetChildCount(cameraListRef.getValue(), outRef));
 
-            final long numCams = outRef.getValue().longValue();
+            final long numCams = outRef.getValue() & 0xFFFFFFFFL;
             Assertions.assertTrue(numCams > 0, "No camera connected");
 
             final EdsdkLibrary.EdsCameraRef.ByReference cameraRef = new EdsdkLibrary.EdsCameraRef.ByReference();
 
-            assertNoError(edsdkLibrary().EdsGetChildAtIndex(cameraListRef.getValue(), new NativeLong(0), cameraRef));
+            assertNoError(edsdkLibrary().EdsGetChildAtIndex(cameraListRef.getValue(), (int)(0), cameraRef));
             return cameraRef;
         } finally {
             ReleaseUtil.release(cameraListRef);
@@ -95,15 +94,15 @@ public final class TestShortcutUtil {
     }
 
     public static void registerObjectEventHandler(final EdsdkLibrary.EdsCameraRef cameraRef, final EdsdkLibrary.EdsObjectEventHandler handler) {
-        CanonFactory.edsdkLibrary().EdsSetObjectEventHandler(cameraRef, new NativeLong(EdsObjectEvent.kEdsObjectEvent_All.value()), handler, Pointer.NULL);
+        CanonFactory.edsdkLibrary().EdsSetObjectEventHandler(cameraRef, (int)(EdsObjectEvent.kEdsObjectEvent_All.value()), handler, Pointer.NULL);
     }
 
     public static void registerPropertyEventHandler(final EdsdkLibrary.EdsCameraRef cameraRef, final EdsdkLibrary.EdsPropertyEventHandler handler) {
-        CanonFactory.edsdkLibrary().EdsSetPropertyEventHandler(cameraRef, new NativeLong(EdsPropertyEvent.kEdsPropertyEvent_All.value()), handler, Pointer.NULL);
+        CanonFactory.edsdkLibrary().EdsSetPropertyEventHandler(cameraRef, (int)(EdsPropertyEvent.kEdsPropertyEvent_All.value()), handler, Pointer.NULL);
     }
 
     public static void registerStateEventHandler(final EdsdkLibrary.EdsCameraRef cameraRef, final EdsdkLibrary.EdsStateEventHandler handler) {
-        CanonFactory.edsdkLibrary().EdsSetCameraStateEventHandler(cameraRef, new NativeLong(EdsStateEvent.kEdsStateEvent_All.value()), handler, Pointer.NULL);
+        CanonFactory.edsdkLibrary().EdsSetCameraStateEventHandler(cameraRef, (int)(EdsStateEvent.kEdsStateEvent_All.value()), handler, Pointer.NULL);
     }
 
     public static void openSession(final EdsdkLibrary.EdsCameraRef.ByReference camera) {

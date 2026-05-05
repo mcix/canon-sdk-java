@@ -1,6 +1,6 @@
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 
 /**
@@ -11,14 +11,14 @@ import org.blackdread.camerabinding.jna.EdsdkLibrary;
 public class CameraLogicDefaultExtended extends CameraLogicDefault {
 
     private EdsdkLibrary.EdsCameraListRef.ByReference cameraListRefByRef;
-    private NativeLongByReference nativeLongByReference;
+    private IntByReference nativeLongByReference;
     private EdsdkLibrary.EdsCameraRef.ByReference cameraRefByRef;
 
     public void setCameraListRefByRef(final EdsdkLibrary.EdsCameraListRef.ByReference cameraListRefByRef) {
         this.cameraListRefByRef = cameraListRefByRef;
     }
 
-    public void setNativeLongByReference(final NativeLongByReference nativeLongByReference) {
+    public void setIntByReference(final IntByReference nativeLongByReference) {
         this.nativeLongByReference = nativeLongByReference;
     }
 
@@ -34,10 +34,10 @@ public class CameraLogicDefaultExtended extends CameraLogicDefault {
     }
 
     @Override
-    protected NativeLongByReference buildNativeLongByReference() {
+    protected IntByReference buildIntByReference() {
         if (nativeLongByReference != null)
             return nativeLongByReference;
-        return super.buildNativeLongByReference();
+        return super.buildIntByReference();
     }
 
     @Override

@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,19 +37,19 @@ import java.util.List;
  */
 public class EdsImageInfo extends Structure {
 	/** C type : EdsUInt32 */
-	public NativeLong width;
+	public int width;
 	/** C type : EdsUInt32 */
-	public NativeLong height;
+	public int height;
 	/** C type : EdsUInt32 */
-	public NativeLong numOfComponents;
+	public int numOfComponents;
 	/** C type : EdsUInt32 */
-	public NativeLong componentDepth;
+	public int componentDepth;
 	/** C type : EdsRect */
 	public EdsRect effectiveRect;
 	/** C type : EdsUInt32 */
-	public NativeLong reserved1;
+	public int reserved1;
 	/** C type : EdsUInt32 */
-	public NativeLong reserved2;
+	public int reserved2;
 	public EdsImageInfo() {
 		super();
 	}
@@ -67,7 +66,7 @@ public class EdsImageInfo extends Structure {
 	 * @param reserved1 C type : EdsUInt32<br>
 	 * @param reserved2 C type : EdsUInt32
 	 */
-	public EdsImageInfo(NativeLong width, NativeLong height, NativeLong numOfComponents, NativeLong componentDepth, EdsRect effectiveRect, NativeLong reserved1, NativeLong reserved2) {
+	public EdsImageInfo(int width, int height, int numOfComponents, int componentDepth, EdsRect effectiveRect, int reserved1, int reserved2) {
 		super();
 		this.width = width;
 		this.height = height;

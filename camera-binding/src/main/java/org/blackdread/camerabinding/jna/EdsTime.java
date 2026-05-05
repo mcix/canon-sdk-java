@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,19 +37,19 @@ import java.util.List;
  */
 public class EdsTime extends Structure {
 	/** C type : EdsUInt32 */
-	public NativeLong year;
+	public int year;
 	/** C type : EdsUInt32 */
-	public NativeLong month;
+	public int month;
 	/** C type : EdsUInt32 */
-	public NativeLong day;
+	public int day;
 	/** C type : EdsUInt32 */
-	public NativeLong hour;
+	public int hour;
 	/** C type : EdsUInt32 */
-	public NativeLong minute;
+	public int minute;
 	/** C type : EdsUInt32 */
-	public NativeLong second;
+	public int second;
 	/** C type : EdsUInt32 */
-	public NativeLong milliseconds;
+	public int milliseconds;
 	public EdsTime() {
 		super();
 	}
@@ -67,7 +66,7 @@ public class EdsTime extends Structure {
 	 * @param second C type : EdsUInt32<br>
 	 * @param milliseconds C type : EdsUInt32
 	 */
-	public EdsTime(NativeLong year, NativeLong month, NativeLong day, NativeLong hour, NativeLong minute, NativeLong second, NativeLong milliseconds) {
+	public EdsTime(int year, int month, int day, int hour, int minute, int second, int milliseconds) {
 		super();
 		this.year = year;
 		this.month = month;

@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.cameraframework.AbstractMockTest;
@@ -352,7 +351,7 @@ class ShootLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void fetchEvents() {
-        when(edsdkLibrary().EdsGetEvent()).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetEvent()).thenReturn((int)(0));
 
         callMethod("fetchEvents", null);
 
@@ -361,7 +360,7 @@ class ShootLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void fetchEventsIgnoreReturnErrorCode() {
-        when(edsdkLibrary().EdsGetEvent()).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsGetEvent()).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         callMethod("fetchEvents", null);
 

@@ -1,7 +1,6 @@
 package org.blackdread.cameraframework.api.helper.factory;
 
 import com.sun.jna.Memory;
-import com.sun.jna.NativeLong;
 import org.apache.commons.lang3.NotImplementedException;
 import org.blackdread.camerabinding.jna.EdsFocusInfo;
 import org.blackdread.camerabinding.jna.EdsPictureStyleDesc;
@@ -65,7 +64,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
         // we throw quickly so real full test is done in getPropertyData() methods of test
         when(CanonFactory.propertyLogic().getPropertyTypeAndSize(fakeBaseRef, EdsPropertyID.kEdsPropID_ISOSpeed, 0L)).thenReturn(propertyInfo);
 
-        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq(new NativeLong(0)), eq(new NativeLong(4)), eq(mockMemory))).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq((int)(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq((int)(0)), eq((int)(4)), eq(mockMemory))).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> propertyGetLogicDefaultExtended.getPropertyDataLong(fakeBaseRef, EdsPropertyID.kEdsPropID_ISOSpeed));
     }
@@ -75,7 +74,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
         // we throw quickly so real full test is done in getPropertyData() methods of test
         when(CanonFactory.propertyLogic().getPropertyTypeAndSize(fakeBaseRef, EdsPropertyID.kEdsPropID_ISOSpeed, 1L)).thenReturn(propertyInfo);
 
-        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq(new NativeLong(1L)), eq(new NativeLong(4)), eq(mockMemory))).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq((int)(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq((int)(1L)), eq((int)(4)), eq(mockMemory))).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> propertyGetLogicDefaultExtended.getPropertyDataLong(fakeBaseRef, EdsPropertyID.kEdsPropID_ISOSpeed, 1L));
     }
@@ -97,13 +96,13 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
         returnNoErrorForEdsGetPropertyData(propertyID, inParam, inPropertySize);
 
         // mock actual result
-        when(mockMemory.getNativeLong(0)).thenReturn(new NativeLong(expectedResult));
+        when(mockMemory.getInt(0)).thenReturn(expectedResult.intValue());
 
         Assertions.assertThrows(IllegalStateException.class, () -> propertyGetLogicDefaultExtended.getPropertyData(fakeBaseRef, propertyID));
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -131,7 +130,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -159,7 +158,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -187,7 +186,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -215,7 +214,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -235,7 +234,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
         returnNoErrorForEdsGetPropertyData(propertyID, inParam, inPropertySize);
 
         // mock actual result
-        when(mockMemory.getNativeLong(0)).thenReturn(new NativeLong(expectedResult));
+        when(mockMemory.getInt(0)).thenReturn(expectedResult.intValue());
 
         final Long result = propertyGetLogicDefaultExtended.getPropertyData(fakeBaseRef, propertyID);
 
@@ -243,7 +242,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -263,7 +262,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
         returnNoErrorForEdsGetPropertyData(propertyID, inParam, inPropertySize);
 
         // mock actual result
-        when(mockMemory.getNativeLong(0)).thenReturn(new NativeLong(expectedResult));
+        when(mockMemory.getInt(0)).thenReturn(expectedResult.intValue());
 
         final Long result = propertyGetLogicDefaultExtended.getPropertyData(fakeBaseRef, propertyID);
 
@@ -271,7 +270,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -299,7 +298,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -327,7 +326,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -355,7 +354,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -383,7 +382,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -413,7 +412,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -444,7 +443,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -474,7 +473,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -506,7 +505,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -535,7 +534,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -563,7 +562,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -591,7 +590,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -619,7 +618,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -648,7 +647,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -678,7 +677,7 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     @Test
@@ -711,21 +710,21 @@ class PropertyGetLogicDefaultMockTest extends AbstractMockTest {
 
         verify(CanonFactory.propertyLogic()).getPropertyTypeAndSize(fakeBaseRef, propertyID, inParam);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory));
     }
 
     private void returnNoErrorForEdsGetPropertyData(final EdsPropertyID propertyID, final long inParam, final int inPropertySize) {
-        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(propertyID.value())), eq(new NativeLong(inParam)), eq(new NativeLong(inPropertySize)), eq(mockMemory))).thenReturn(new NativeLong(0));
+        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq((int)(propertyID.value())), eq((int)(inParam)), eq((int)(inPropertySize)), eq(mockMemory))).thenReturn((int)(0));
     }
 
     @Test
     void getPropertyDataAllData() {
-        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq(new NativeLong(0)), eq(new NativeLong(4)), eq(mockMemory))).thenReturn(new NativeLong(0));
+        when(CanonFactory.edsdkLibrary().EdsGetPropertyData(eq(fakeBaseRef), eq((int)(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq((int)(0)), eq((int)(4)), eq(mockMemory))).thenReturn((int)(0));
 
         final EdsdkError edsdkError = propertyGetLogicDefaultExtended.getPropertyData(fakeBaseRef, EdsPropertyID.kEdsPropID_ISOSpeed, 0L, 4L, mockMemory);
 
         Assertions.assertEquals(EdsdkError.EDS_ERR_OK, edsdkError);
 
-        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq(new NativeLong(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq(new NativeLong(0)), eq(new NativeLong(4)), eq(mockMemory));
+        verify(CanonFactory.edsdkLibrary()).EdsGetPropertyData(eq(fakeBaseRef), eq((int)(EdsPropertyID.kEdsPropID_ISOSpeed.value())), eq((int)(0)), eq((int)(4)), eq(mockMemory));
     }
 }

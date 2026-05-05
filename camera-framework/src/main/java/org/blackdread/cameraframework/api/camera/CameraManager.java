@@ -25,8 +25,7 @@ package org.blackdread.cameraframework.api.camera;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.sun.jna.NativeLong;
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.apache.commons.lang3.StringUtils;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.api.command.AbstractCanonCommand;
@@ -321,13 +320,13 @@ public final class CameraManager {
                         throw edsdkError.getException();
                     }
 
-                    final NativeLongByReference outRef = new NativeLongByReference();
+                    final IntByReference outRef = new IntByReference();
                     edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetChildCount(listRef.getValue(), outRef));
                     if (edsdkError != EdsdkError.EDS_ERR_OK) {
                         throw edsdkError.getException();
                     }
 
-                    final long numCams = outRef.getValue().longValue();
+                    final long numCams = outRef.getValue() & 0xFFFFFFFFL;
                     if (numCams <= 0) {
                         log.debug("No camera detected");
                         return null;
@@ -336,7 +335,7 @@ public final class CameraManager {
                     for (int i = 0; i < numCams; i++) {
                         final EdsdkLibrary.EdsCameraRef.ByReference cameraRef = new EdsdkLibrary.EdsCameraRef.ByReference();
 
-                        edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetChildAtIndex(listRef.getValue(), new NativeLong(i), cameraRef));
+                        edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetChildAtIndex(listRef.getValue(), i, cameraRef));
                         if (edsdkError != EdsdkError.EDS_ERR_OK) {
                             throw edsdkError.getException();
                         }

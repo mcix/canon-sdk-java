@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -40,11 +39,11 @@ public class EdsFocusInfo extends Structure {
 	/** C type : EdsRect */
 	public EdsRect imageRect;
 	/** C type : EdsUInt32 */
-	public NativeLong pointNumber;
+	public int pointNumber;
 	/** C type : EdsFocusPoint[1053] */
 	public EdsFrameDesc[] focusPoint = new EdsFrameDesc[1053];
 	/** C type : EdsUInt32 */
-	public NativeLong executeMode;
+	public int executeMode;
 	public EdsFocusInfo() {
 		super();
 	}
@@ -58,7 +57,7 @@ public class EdsFocusInfo extends Structure {
 	 * @param focusPoint C type : EdsFocusPoint[1053]<br>
 	 * @param executeMode C type : EdsUInt32
 	 */
-	public EdsFocusInfo(EdsRect imageRect, NativeLong pointNumber, EdsFrameDesc focusPoint[], NativeLong executeMode) {
+	public EdsFocusInfo(EdsRect imageRect, int pointNumber, EdsFrameDesc focusPoint[], int executeMode) {
 		super();
 		this.imageRect = imageRect;
 		this.pointNumber = pointNumber;

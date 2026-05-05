@@ -23,8 +23,7 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.cameraframework.AbstractMockTest;
@@ -58,6 +57,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.blackdread.cameraframework.api.helper.factory.CanonFactory.edsdkLibrary;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -75,7 +75,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     private CameraLogicDefaultExtended cameraLogicDefaultExtended;
 
     private EdsdkLibrary.EdsCameraListRef.ByReference mockCameraListRefByRef;
-    private NativeLongByReference mockNativeLongByReference;
+    private IntByReference mockIntByReference;
     private EdsdkLibrary.EdsCameraRef.ByReference mockCameraRefByRef;
 
     @BeforeEach
@@ -89,7 +89,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
         cameraLogicDefaultExtended = new CameraLogicDefaultExtended();
 
         mockCameraListRefByRef = mock(EdsdkLibrary.EdsCameraListRef.ByReference.class);
-        mockNativeLongByReference = mock(NativeLongByReference.class);
+        mockIntByReference = mock(IntByReference.class);
         mockCameraRefByRef = mock(EdsdkLibrary.EdsCameraRef.ByReference.class);
     }
 
@@ -99,7 +99,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void setCapacity() {
-        when(edsdkLibrary().EdsSetCapacity(eq(fakeCamera), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSetCapacity(eq(fakeCamera), any())).thenReturn((int)(0));
 
         spyCameraLogic.setCapacity(fakeCamera);
         spyCameraLogic.setCapacity(fakeCamera, 1000);
@@ -107,7 +107,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
         verify(edsdkLibrary(), times(3)).EdsSetCapacity(eq(fakeCamera), any());
 
-        when(edsdkLibrary().EdsSetCapacity(eq(fakeCamera), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsSetCapacity(eq(fakeCamera), any())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraLogic.setCapacity(fakeCamera));
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraLogic.setCapacity(fakeCamera, 1000));
@@ -138,7 +138,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void sendCommand() {
-        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(0));
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> spyCameraLogic.sendCommand(fakeCamera, EdsCameraCommand.kEdsCameraCommand_DoEvfAf));
         Assertions.assertThrows(IllegalArgumentException.class, () -> spyCameraLogic.sendCommand(fakeCamera, EdsCameraCommand.kEdsCameraCommand_DriveLensEvf));
@@ -150,76 +150,76 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
         spyCameraLogic.sendCommand(fakeCamera, EdsCameraCommand.kEdsCameraCommand_BulbStart);
         spyCameraLogic.sendCommand(fakeCamera, EdsCameraCommand.kEdsCameraCommand_BulbEnd);
 
-        verify(edsdkLibrary(), times(3)).EdsSendCommand(eq(fakeCamera), any(), any());
+        verify(edsdkLibrary(), times(3)).EdsSendCommand(eq(fakeCamera), anyInt(), anyInt());
     }
 
     @Test
     void sendCommandEdsShutterButton() {
-        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(0));
 
         spyCameraLogic.sendCommand(fakeCamera, EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely);
 
-        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq(new NativeLong(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value())), eq(new NativeLong(EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely.value())));
+        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq((int)(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value())), eq((int)(EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely.value())));
     }
 
     @Test
     void sendCommandEdsDcRemoteShootingMode() {
-        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(0));
 
         spyCameraLogic.sendCommand(fakeCamera, EdsDcRemoteShootingMode.kDcRemoteShootingModeStart);
 
-        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq(new NativeLong(EdsCameraCommand.kEdsCameraCommand_SetRemoteShootingMode.value())), eq(new NativeLong(EdsDcRemoteShootingMode.kDcRemoteShootingModeStart.value())));
+        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq((int)(EdsCameraCommand.kEdsCameraCommand_SetRemoteShootingMode.value())), eq((int)(EdsDcRemoteShootingMode.kDcRemoteShootingModeStart.value())));
     }
 
     @Test
     void sendCommandEdsEvfAf() {
-        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(0));
 
         spyCameraLogic.sendCommand(fakeCamera, EdsEvfAf.kEdsCameraCommand_EvfAf_ON);
 
-        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq(new NativeLong(EdsCameraCommand.kEdsCameraCommand_DoEvfAf.value())), eq(new NativeLong(EdsEvfAf.kEdsCameraCommand_EvfAf_ON.value())));
+        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq((int)(EdsCameraCommand.kEdsCameraCommand_DoEvfAf.value())), eq((int)(EdsEvfAf.kEdsCameraCommand_EvfAf_ON.value())));
     }
 
     @Test
     void sendCommandEdsEvfDriveLens() {
-        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(0));
 
         spyCameraLogic.sendCommand(fakeCamera, EdsEvfDriveLens.kEdsEvfDriveLens_Far1);
 
-        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq(new NativeLong(EdsCameraCommand.kEdsCameraCommand_DriveLensEvf.value())), eq(new NativeLong(EdsEvfDriveLens.kEdsEvfDriveLens_Far1.value())));
+        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), eq((int)(EdsCameraCommand.kEdsCameraCommand_DriveLensEvf.value())), eq((int)(EdsEvfDriveLens.kEdsEvfDriveLens_Far1.value())));
     }
 
     @Test
     void sendCommandThrowsOnError() {
-        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsSendCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraLogic.sendCommand(fakeCamera, EdsCameraCommand.kEdsCameraCommand_TakePicture));
 
-        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), any(), any());
+        verify(edsdkLibrary()).EdsSendCommand(eq(fakeCamera), anyInt(), anyInt());
     }
 
     @Test
     void sendStatusCommand() {
-        when(edsdkLibrary().EdsSendStatusCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsSendStatusCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(0));
 
         spyCameraLogic.sendStatusCommand(fakeCamera, EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock);
 
-        verify(edsdkLibrary()).EdsSendStatusCommand(eq(fakeCamera), eq(new NativeLong(EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock.value())), eq(new NativeLong(0)));
+        verify(edsdkLibrary()).EdsSendStatusCommand(eq(fakeCamera), eq((int)(EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock.value())), eq((int)(0)));
     }
 
     @Test
     void sendStatusCommandThrowsOnError() {
-        when(edsdkLibrary().EdsSendStatusCommand(eq(fakeCamera), any(), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsSendStatusCommand(eq(fakeCamera), anyInt(), anyInt())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraLogic.sendStatusCommand(fakeCamera, EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock));
 
-        verify(edsdkLibrary()).EdsSendStatusCommand(eq(fakeCamera), eq(new NativeLong(EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock.value())), eq(new NativeLong(0)));
+        verify(edsdkLibrary()).EdsSendStatusCommand(eq(fakeCamera), eq((int)(EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock.value())), eq((int)(0)));
     }
 
     @Test
     void getCameraConnectedCount() {
-        when(edsdkLibrary().EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class))).thenReturn(new NativeLong(0));
-        when(edsdkLibrary().EdsGetChildCount(any(), any(NativeLongByReference.class))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class))).thenReturn((int)(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), any(IntByReference.class))).thenReturn((int)(0));
 
         final int cameraConnectedCount = spyCameraLogic.getCameraConnectedCount();
 
@@ -228,19 +228,19 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getCameraConnectedCountThrowsOnError() {
-        when(edsdkLibrary().EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class))).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class))).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraLogic.getCameraConnectedCount());
 
         // Second test
 
-        when(edsdkLibrary().EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class))).thenReturn(new NativeLong(0));
-        when(edsdkLibrary().EdsGetChildCount(any(), any(NativeLongByReference.class))).thenReturn(new NativeLong(EdsdkError.EDS_ERR_COMM_USB_BUS_ERR.value()));
+        when(edsdkLibrary().EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class))).thenReturn((int)(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), any(IntByReference.class))).thenReturn((int)(EdsdkError.EDS_ERR_COMM_USB_BUS_ERR.value()));
 
         Assertions.assertThrows(EdsdkCommUsbBusErrorException.class, () -> spyCameraLogic.getCameraConnectedCount());
 
         verify(edsdkLibrary(), times(2)).EdsGetCameraList(any(EdsdkLibrary.EdsCameraListRef.ByReference.class));
-        verify(edsdkLibrary(), times(1)).EdsGetChildCount(any(), any(NativeLongByReference.class));
+        verify(edsdkLibrary(), times(1)).EdsGetChildCount(any(), any(IntByReference.class));
     }
 
     @Test
@@ -266,7 +266,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void openSessionOpenSessionOnly() {
-        when(edsdkLibrary().EdsOpenSession(fakeCamera)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsOpenSession(fakeCamera)).thenReturn((int)(0));
 
         final OpenSessionOption option = new OpenSessionOptionBuilder()
             .setOpenSessionOnly(true)
@@ -285,7 +285,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void openSessionOpenSessionOnlyThrowsOnError() {
-        when(edsdkLibrary().EdsOpenSession(fakeCamera)).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsOpenSession(fakeCamera)).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         final OpenSessionOption option = new OpenSessionOptionBuilder()
             .setOpenSessionOnly(true)
@@ -312,15 +312,15 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
             .setCameraBySerialNumber(serial)
             .build();
 
-        when(edsdkLibrary().EdsGetCameraList(any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsGetCameraList(any())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyCameraLogic.openSession(option));
 
         // Second test
 
-        when(edsdkLibrary().EdsGetCameraList(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_COMM_BUFFER_FULL.value()));
+        when(edsdkLibrary().EdsGetChildCount(any(), any())).thenReturn((int)(EdsdkError.EDS_ERR_COMM_BUFFER_FULL.value()));
 
         Assertions.assertThrows(EdsdkCommBufferFullErrorException.class, () -> spyCameraLogic.openSession(option));
 
@@ -329,29 +329,29 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionDefaultGetsFirstCamera() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
         cameraLogicDefaultExtended.setCameraRefByRef(mockCameraRefByRef);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(3));
+        when(mockIntByReference.getValue()).thenReturn((int)(3));
 
         when(mockCameraRefByRef.getValue()).thenReturn(fakeCamera);
 
-        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), any(NativeLong.class), same(mockCameraRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), anyInt(), same(mockCameraRefByRef))).thenReturn((int)(0));
 
         when(CanonFactory.propertyGetShortcutLogic().getBodyIDEx(fakeCamera))
             .thenThrow(EdsdkCommDisconnectedErrorException.class)
             .thenReturn("any");
 
-        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn((int)(0));
 
         final EdsCameraRef result = cameraLogicDefaultExtended.openSession();
 
@@ -372,29 +372,29 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionThrowsIfBodyIDExIsNull() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
         cameraLogicDefaultExtended.setCameraRefByRef(mockCameraRefByRef);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(3));
+        when(mockIntByReference.getValue()).thenReturn((int)(3));
 
         when(mockCameraRefByRef.getValue()).thenReturn(fakeCamera);
 
-        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), any(NativeLong.class), same(mockCameraRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), anyInt(), same(mockCameraRefByRef))).thenReturn((int)(0));
 
         when(CanonFactory.propertyGetShortcutLogic().getBodyIDEx(fakeCamera))
             .thenThrow(EdsdkCommDisconnectedErrorException.class)
             .thenReturn(null);
 
-        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn((int)(0));
 
         Assertions.assertThrows(IllegalStateException.class, () -> cameraLogicDefaultExtended.openSession());
 
@@ -412,29 +412,29 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionRethrowOnSecondGetBodyIDEx() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
         cameraLogicDefaultExtended.setCameraRefByRef(mockCameraRefByRef);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(3));
+        when(mockIntByReference.getValue()).thenReturn((int)(3));
 
         when(mockCameraRefByRef.getValue()).thenReturn(fakeCamera);
 
-        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), any(NativeLong.class), same(mockCameraRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), anyInt(), same(mockCameraRefByRef))).thenReturn((int)(0));
 
         when(CanonFactory.propertyGetShortcutLogic().getBodyIDEx(fakeCamera))
             .thenThrow(EdsdkCommDisconnectedErrorException.class)
             .thenThrow(EdsdkDeviceInvalidErrorException.class);
 
-        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn((int)(0));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> cameraLogicDefaultExtended.openSession());
 
@@ -452,23 +452,23 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionByBodyIDEx() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
         cameraLogicDefaultExtended.setCameraRefByRef(mockCameraRefByRef);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(3));
+        when(mockIntByReference.getValue()).thenReturn((int)(3));
 
         when(mockCameraRefByRef.getValue()).thenReturn(fakeCamera);
 
-        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), any(NativeLong.class), same(mockCameraRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), anyInt(), same(mockCameraRefByRef))).thenReturn((int)(0));
 
         final String serial = "serial999";
 
@@ -477,7 +477,7 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
             .thenReturn("firstCameraIsOther")
             .thenReturn("serial999");
 
-        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn((int)(0));
 
 
         final OpenSessionOption option = new OpenSessionOptionBuilder()
@@ -506,29 +506,29 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionByBodyIDExThrowsIfNotFoundAfterAll() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
         cameraLogicDefaultExtended.setCameraRefByRef(mockCameraRefByRef);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(3));
+        when(mockIntByReference.getValue()).thenReturn((int)(3));
 
         when(mockCameraRefByRef.getValue()).thenReturn(fakeCamera);
 
-        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), any(NativeLong.class), same(mockCameraRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), anyInt(), same(mockCameraRefByRef))).thenReturn((int)(0));
 
         when(CanonFactory.propertyGetShortcutLogic().getBodyIDEx(fakeCamera))
             .thenThrow(EdsdkCommDisconnectedErrorException.class)
             .thenReturn("anyThatWillNotBeFound");
 
-        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn((int)(0));
 
         final String serial = "serial999";
 
@@ -555,18 +555,18 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionThrowsIfCameraCountIsZero() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(0));
+        when(mockIntByReference.getValue()).thenReturn((int)(0));
 
         Assertions.assertThrows(EdsdkDeviceNotFoundErrorException.class, () -> cameraLogicDefaultExtended.openSession());
 
@@ -584,18 +584,18 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionThrowsIfIndexDesiredIsTooBig() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(5));
+        when(mockIntByReference.getValue()).thenReturn((int)(5));
 
         final OpenSessionOption option = new OpenSessionOptionBuilder()
             .setCameraByIndex(5)
@@ -618,28 +618,28 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
     @Test
     void openSessionThrowsWhenFailToOpenSession() {
         cameraLogicDefaultExtended.setCameraListRefByRef(mockCameraListRefByRef);
-        cameraLogicDefaultExtended.setNativeLongByReference(mockNativeLongByReference);
+        cameraLogicDefaultExtended.setIntByReference(mockIntByReference);
         cameraLogicDefaultExtended.setCameraRefByRef(mockCameraRefByRef);
 
-        when(edsdkLibrary().EdsRelease(any())).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsRelease(any())).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetCameraList(same(mockCameraListRefByRef))).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsGetChildCount(any(), same(mockNativeLongByReference))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildCount(any(), same(mockIntByReference))).thenReturn((int)(0));
 
         final EdsdkLibrary.EdsCameraListRef cameraListRef = new EdsdkLibrary.EdsCameraListRef();
         when(mockCameraListRefByRef.getValue()).thenReturn(cameraListRef);
 
-        when(mockNativeLongByReference.getValue()).thenReturn(new NativeLong(3));
+        when(mockIntByReference.getValue()).thenReturn((int)(3));
 
         when(mockCameraRefByRef.getValue()).thenReturn(fakeCamera);
 
-        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), any(NativeLong.class), same(mockCameraRefByRef))).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsGetChildAtIndex(eq(cameraListRef), anyInt(), same(mockCameraRefByRef))).thenReturn((int)(0));
 
         when(CanonFactory.propertyGetShortcutLogic().getBodyIDEx(fakeCamera))
             .thenThrow(EdsdkCommDisconnectedErrorException.class);
 
-        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsOpenSession(same(fakeCamera))).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> cameraLogicDefaultExtended.openSession());
 
@@ -710,9 +710,9 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void closeSession() {
-        when(edsdkLibrary().EdsCloseSession(fakeCamera)).thenReturn(new NativeLong(0));
+        when(edsdkLibrary().EdsCloseSession(fakeCamera)).thenReturn((int)(0));
 
-        when(edsdkLibrary().EdsRelease(fakeCamera)).thenReturn(new NativeLong(0L));
+        when(edsdkLibrary().EdsRelease(fakeCamera)).thenReturn((int)(0L));
 
         final CloseSessionOption option = new CloseSessionOptionBuilder()
             .setCameraRef(fakeCamera)
@@ -725,9 +725,9 @@ class CameraLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void closeSessionThrowsOnError() {
-        when(edsdkLibrary().EdsCloseSession(fakeCamera)).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(edsdkLibrary().EdsCloseSession(fakeCamera)).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
-        when(edsdkLibrary().EdsRelease(fakeCamera)).thenReturn(new NativeLong(0L));
+        when(edsdkLibrary().EdsRelease(fakeCamera)).thenReturn((int)(0L));
 
         final CloseSessionOption option = new CloseSessionOptionBuilder()
             .setCameraRef(fakeCamera)

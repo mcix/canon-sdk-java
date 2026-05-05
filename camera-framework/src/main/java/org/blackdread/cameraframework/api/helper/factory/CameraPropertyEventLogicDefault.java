@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsPropertyEventHandler;
@@ -85,8 +84,8 @@ public class CameraPropertyEventLogicDefault implements CameraPropertyEventLogic
                 throw new IllegalStateException("Received an event from a camera ref that is not referenced in the code anymore");
                 // we throw or we just return doing nothing
             }
-            this.handle(new CanonPropertyEventImpl(edsCameraRef, EdsPropertyEvent.ofValue(inEvent.intValue()), EdsPropertyID.ofValue(inPropertyID.intValue()), inParam.longValue()));
-            return new NativeLong(0);
+            this.handle(new CanonPropertyEventImpl(edsCameraRef, EdsPropertyEvent.ofValue(inEvent), EdsPropertyID.ofValue(inPropertyID), inParam & 0xFFFFFFFFL));
+            return 0;
         };
     }
 
@@ -116,7 +115,7 @@ public class CameraPropertyEventLogicDefault implements CameraPropertyEventLogic
         handlerLock.writeLock().lock();
         try {
             handlerMap.put(cameraRef, propertyEventHandler);
-            final EdsdkError edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsSetPropertyEventHandler(cameraRef, new NativeLong(EdsPropertyEvent.kEdsPropertyEvent_All.value()), propertyEventHandler, Pointer.NULL));
+            final EdsdkError edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsSetPropertyEventHandler(cameraRef, EdsPropertyEvent.kEdsPropertyEvent_All.value(), propertyEventHandler, Pointer.NULL));
             if (edsdkError != EdsdkError.EDS_ERR_OK) {
                 throw edsdkError.getException();
             }
@@ -130,7 +129,7 @@ public class CameraPropertyEventLogicDefault implements CameraPropertyEventLogic
         Objects.requireNonNull(cameraRef);
         handlerLock.writeLock().lock();
         try {
-            final EdsdkError edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsSetPropertyEventHandler(cameraRef, new NativeLong(EdsPropertyEvent.kEdsPropertyEvent_All.value()), null, Pointer.NULL));
+            final EdsdkError edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsSetPropertyEventHandler(cameraRef, EdsPropertyEvent.kEdsPropertyEvent_All.value(), null, Pointer.NULL));
             handlerMap.remove(cameraRef);
 
             if (edsdkError != EdsdkError.EDS_ERR_OK) {

@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.CameraIsConnected;
 import org.blackdread.cameraframework.api.constant.EdsISOSpeed;
@@ -86,25 +85,25 @@ public class Event2CameraTest {
         TestShortcutUtil.registerCameraAddedHandler(inContext -> {
             log.warn("Camera added called {}", inContext);
             cameraEventCalledCount.incrementAndGet();
-            return new NativeLong(0);
+            return (int)(0);
         });
 
         TestShortcutUtil.registerPropertyEventHandler(cameraRef, (inEvent, inPropertyID, inParam, inContext) -> {
-            log.warn("Camera property called {}, {}, {}", EdsPropertyEvent.ofValue(inEvent.intValue()), EdsPropertyID.ofValue(inPropertyID.intValue()), inContext);
+            log.warn("Camera property called {}, {}, {}", EdsPropertyEvent.ofValue(inEvent), EdsPropertyID.ofValue(inPropertyID), inContext);
             propertyEventCalledCount.incrementAndGet();
-            return new NativeLong(0);
+            return (int)(0);
         });
 
         TestShortcutUtil.registerObjectEventHandler(cameraRef, (inEvent, inRef, inContext) -> {
             log.warn("Camera object called {}, {}, {}", inEvent, inRef, inContext);
             objectEventCalledCount.incrementAndGet();
-            return new NativeLong(0);
+            return (int)(0);
         });
 
         TestShortcutUtil.registerStateEventHandler(cameraRef, (inEvent, inEventData, inContext) -> {
             log.warn("Camera state called {}, {}, {}", inEvent, inEventData, inContext);
             stateEventCalledCount.incrementAndGet();
-            return new NativeLong(0);
+            return (int)(0);
         });
         resetCounts();
     }

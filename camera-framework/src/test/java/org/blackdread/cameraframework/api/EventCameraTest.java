@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinUser;
 import org.blackdread.cameraframework.CameraIsConnected;
@@ -69,7 +68,7 @@ public class EventCameraTest {
         TestShortcutUtil.registerCameraAddedHandler(inContext -> {
             log.warn("Camera added called {}", inContext);
             cameraEventCalled.set(true);
-            return new NativeLong(0);
+            return (int)(0);
         });
 
         for (int i = 0; i < 100; i++) {
@@ -92,7 +91,7 @@ public class EventCameraTest {
         TestShortcutUtil.registerCameraAddedHandler(inContext -> {
             log.warn("Camera added called {}", inContext);
             cameraEventCalled.set(true);
-            return new NativeLong(0);
+            return (int)(0);
         });
 
         final WinUser.MSG msg = new WinUser.MSG();

@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.logic;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsBaseRef;
 import org.blackdread.cameraframework.api.constant.EdsPropertyID;
@@ -81,7 +80,7 @@ public interface PropertySetLogic {
 
     default EdsdkError setPropertyData(final EdsBaseRef ref, final EdsPropertyID property,
                                        final long inParam, final int size, final Pointer data) {
-        return toEdsdkError(edsdkLibrary().EdsSetPropertyData(ref, new NativeLong(property.value()), new NativeLong(inParam), new NativeLong(size), data));
+        return toEdsdkError(edsdkLibrary().EdsSetPropertyData(ref, property.value(), (int) inParam, size, data));
     }
 
 }

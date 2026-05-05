@@ -1,6 +1,5 @@
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsPropertyDesc;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.cameraframework.AbstractMockTest;
@@ -80,13 +79,13 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
     @MethodSource("compatibleNatives")
     @ParameterizedTest
     void getPropertyDescCompatibleNative(final EdsPropertyID propertyID, final NativeEnum<Integer> v1, final NativeEnum<Integer> v2) {
-        final NativeLong[] desc = new NativeLong[128];
-        desc[0] = new NativeLong(v1.value());
-        desc[1] = new NativeLong(v2.value());
+        final int[] desc = new int[128];
+        desc[0] = (int)(v1.value());
+        desc[1] = (int)(v2.value());
         final EdsPropertyDesc propertyDesc = new EdsPropertyDesc(
-            new NativeLong(0),
-            new NativeLong(0),
-            new NativeLong(2),
+            (int)(0),
+            (int)(0),
+            (int)(2),
             desc
         );
 
@@ -101,15 +100,15 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getPropertyDesc() {
-        final NativeLong[] desc = new NativeLong[128];
-        desc[0] = new NativeLong(EdsISOSpeed.kEdsISOSpeed_50.value());
-        desc[1] = new NativeLong(EdsISOSpeed.kEdsISOSpeed_100.value());
-        desc[2] = new NativeLong(EdsISOSpeed.kEdsISOSpeed_160.value());
-        desc[3] = new NativeLong(EdsISOSpeed.kEdsISOSpeed_200.value());
+        final int[] desc = new int[128];
+        desc[0] = (int)(EdsISOSpeed.kEdsISOSpeed_50.value());
+        desc[1] = (int)(EdsISOSpeed.kEdsISOSpeed_100.value());
+        desc[2] = (int)(EdsISOSpeed.kEdsISOSpeed_160.value());
+        desc[3] = (int)(EdsISOSpeed.kEdsISOSpeed_200.value());
         final EdsPropertyDesc propertyDesc = new EdsPropertyDesc(
-            new NativeLong(0),
-            new NativeLong(0),
-            new NativeLong(4),
+            (int)(0),
+            (int)(0),
+            (int)(4),
             desc
         );
 
@@ -142,13 +141,13 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
         incompatible.remove(EdsPropertyID.kEdsPropID_DC_Zoom);
 
         for (final EdsPropertyID propertyID : incompatible) {
-            final NativeLong[] desc = new NativeLong[128];
-            desc[0] = new NativeLong(0);
+            final int[] desc = new int[128];
+            desc[0] = (int)(0);
 
             final EdsPropertyDesc propertyDesc = new EdsPropertyDesc(
-                new NativeLong(0),
-                new NativeLong(0),
-                new NativeLong(1),
+                (int)(0),
+                (int)(0),
+                (int)(1),
                 desc
             );
 
@@ -161,16 +160,16 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getPropertyDescColorTemperature() {
-        final NativeLong[] desc = new NativeLong[128];
-        desc[0] = new NativeLong(100);
-        desc[1] = new NativeLong(1000);
-        desc[2] = new NativeLong(2000);
-        desc[3] = new NativeLong(3000);
-        desc[4] = new NativeLong(6500);
+        final int[] desc = new int[128];
+        desc[0] = (int)(100);
+        desc[1] = (int)(1000);
+        desc[2] = (int)(2000);
+        desc[3] = (int)(3000);
+        desc[4] = (int)(6500);
         final EdsPropertyDesc propertyDesc = new EdsPropertyDesc(
-            new NativeLong(0),
-            new NativeLong(0),
-            new NativeLong(5),
+            (int)(0),
+            (int)(0),
+            (int)(5),
             desc
         );
 
@@ -185,15 +184,15 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getPropertyDescEvfColorTemperature() {
-        final NativeLong[] desc = new NativeLong[128];
-        desc[0] = new NativeLong(100);
-        desc[1] = new NativeLong(1000);
-        desc[2] = new NativeLong(2000);
-        desc[3] = new NativeLong(3000);
+        final int[] desc = new int[128];
+        desc[0] = (int)(100);
+        desc[1] = (int)(1000);
+        desc[2] = (int)(2000);
+        desc[3] = (int)(3000);
         final EdsPropertyDesc propertyDesc = new EdsPropertyDesc(
-            new NativeLong(0),
-            new NativeLong(0),
-            new NativeLong(4),
+            (int)(0),
+            (int)(0),
+            (int)(4),
             desc
         );
 
@@ -208,11 +207,11 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getPropertyDescValues() {
-        final NativeLong[] desc = new NativeLong[128];
+        final int[] desc = new int[128];
         final EdsPropertyDesc propertyDesc = new EdsPropertyDesc(
-            new NativeLong(0),
-            new NativeLong(0),
-            new NativeLong(0),
+            (int)(0),
+            (int)(0),
+            (int)(0),
             desc
         );
 
@@ -225,7 +224,7 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getPropertyDescStructure() {
-        when(CanonFactory.edsdkLibrary().EdsGetPropertyDesc(eq(fakeCamera), eq(new NativeLong(EdsPropertyID.kEdsPropID_ISOSpeed.value())), any())).thenReturn(new NativeLong(0));
+        when(CanonFactory.edsdkLibrary().EdsGetPropertyDesc(eq(fakeCamera), eq((int)(EdsPropertyID.kEdsPropID_ISOSpeed.value())), any())).thenReturn((int)(0));
 
         final EdsPropertyDesc propertyDesc = spyPropertyDescLogic.getPropertyDescStructure(fakeCamera, EdsPropertyID.kEdsPropID_ISOSpeed);
 
@@ -234,7 +233,7 @@ class PropertyDescLogicDefaultMockTest extends AbstractMockTest {
 
     @Test
     void getPropertyDescStructureThrowsOnError() {
-        when(CanonFactory.edsdkLibrary().EdsGetPropertyDesc(eq(fakeCamera), eq(new NativeLong(EdsPropertyID.kEdsPropID_ISOSpeed.value())), any())).thenReturn(new NativeLong(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
+        when(CanonFactory.edsdkLibrary().EdsGetPropertyDesc(eq(fakeCamera), eq((int)(EdsPropertyID.kEdsPropID_ISOSpeed.value())), any())).thenReturn((int)(EdsdkError.EDS_ERR_DEVICE_INVALID.value()));
 
         Assertions.assertThrows(EdsdkDeviceInvalidErrorException.class, () -> spyPropertyDescLogic.getPropertyDescStructure(fakeCamera, EdsPropertyID.kEdsPropID_ISOSpeed));
 

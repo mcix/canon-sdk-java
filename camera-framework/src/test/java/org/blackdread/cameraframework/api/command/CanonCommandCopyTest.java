@@ -24,7 +24,6 @@
 package org.blackdread.cameraframework.api.command;
 
 import com.google.common.collect.Sets;
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsPictureStyleDesc;
 import org.blackdread.camerabinding.jna.EdsPoint;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
@@ -129,7 +128,7 @@ class CanonCommandCopyTest {
             new SetPropertyCommand.IsoSpeed(EdsISOSpeed.kEdsISOSpeed_100),
             new SetPropertyCommand.JpegQuality(1),
             new SetPropertyCommand.LiveViewZoomRatio(EdsEvfZoom.kEdsEvfZoom_x5),
-            new SetPropertyCommand.LiveViewZoomPosition(new EdsPoint(new NativeLong(1), new NativeLong(1))),
+            new SetPropertyCommand.LiveViewZoomPosition(new EdsPoint((int)(1), (int)(1))),
             new SetPropertyCommand.LiveViewZoomPosition(1, 1),
             new SetPropertyCommand.LiveViewWhiteBalance(EdsWhiteBalance.kEdsWhiteBalance_ColorTemp),
             new SetPropertyCommand.LiveViewOutputDevice(EdsEvfOutputDevice.kEdsEvfOutputDevice_PC),

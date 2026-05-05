@@ -24,7 +24,6 @@
 package org.blackdread.cameraframework.api.helper.factory;
 
 import com.google.common.collect.Lists;
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
 import org.blackdread.cameraframework.AbstractMockTest;
@@ -45,6 +44,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -90,7 +90,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
         mockEdsdkLibrary();
 
-        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(error.value()));
+        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(error.value()));
 
         Assertions.assertThrows(exceptionClass, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
         Assertions.assertThrows(exceptionClass, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -137,7 +137,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
         mockEdsdkLibrary();
 
-        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -155,7 +155,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
             mockEdsdkLibrary();
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -179,7 +179,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, inParam, nativeEnum));
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, inParam, nativeEnum.value().longValue()));
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             propertySetLogic.setPropertyDataAdvanced(cameraRef, propertyID, (short) 0x5);
             propertySetLogic.setPropertyDataAdvanced(cameraRef, propertyID, inParam, (short) 0x6);
@@ -196,7 +196,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
             mockEdsdkLibrary();
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum);
             propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue());
@@ -215,7 +215,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
             mockEdsdkLibrary();
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum);
             propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue());
@@ -234,7 +234,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
         mockEdsdkLibrary();
 
-        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -252,7 +252,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
         mockEdsdkLibrary();
 
-        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -270,7 +270,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
         mockEdsdkLibrary();
 
-        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
         Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -288,7 +288,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
             mockEdsdkLibrary();
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -307,7 +307,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
             mockEdsdkLibrary();
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -326,7 +326,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
             mockEdsdkLibrary();
 
-            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+            when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
             Assertions.assertThrows(ClassCastException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));
@@ -345,7 +345,7 @@ class PropertySetLogicDefaultMockTest extends AbstractMockTest {
 
         mockEdsdkLibrary();
 
-        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), any(NativeLong.class), any(NativeLong.class), any(NativeLong.class), any(Pointer.class))).thenReturn(new NativeLong(0));
+        when(canonLibrary.edsdkLibrary().EdsSetPropertyData(eq(cameraRef), anyInt(), anyInt(), anyInt(), any(Pointer.class))).thenReturn((int)(0));
 
         Assertions.assertThrows(IllegalStateException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum));
         Assertions.assertThrows(IllegalStateException.class, () -> propertySetLogic.setPropertyData(cameraRef, propertyID, nativeEnum.value().longValue()));

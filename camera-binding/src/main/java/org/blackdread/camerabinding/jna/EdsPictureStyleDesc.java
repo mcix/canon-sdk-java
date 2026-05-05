@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,21 +37,21 @@ import java.util.List;
  */
 public class EdsPictureStyleDesc extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong contrast;
+	public int contrast;
 	/** C type : EdsUInt32 */
-	public NativeLong sharpness;
+	public int sharpness;
 	/** C type : EdsInt32 */
-	public NativeLong saturation;
+	public int saturation;
 	/** C type : EdsInt32 */
-	public NativeLong colorTone;
+	public int colorTone;
 	/** C type : EdsUInt32 */
-	public NativeLong filterEffect;
+	public int filterEffect;
 	/** C type : EdsUInt32 */
-	public NativeLong toningEffect;
+	public int toningEffect;
 	/** C type : EdsUInt32 */
-	public NativeLong sharpFineness;
+	public int sharpFineness;
 	/** C type : EdsUInt32 */
-	public NativeLong sharpThreshold;
+	public int sharpThreshold;
 	public EdsPictureStyleDesc() {
 		super();
 	}
@@ -70,7 +69,7 @@ public class EdsPictureStyleDesc extends Structure {
 	 * @param sharpFineness C type : EdsUInt32<br>
 	 * @param sharpThreshold C type : EdsUInt32
 	 */
-	public EdsPictureStyleDesc(NativeLong contrast, NativeLong sharpness, NativeLong saturation, NativeLong colorTone, NativeLong filterEffect, NativeLong toningEffect, NativeLong sharpFineness, NativeLong sharpThreshold) {
+	public EdsPictureStyleDesc(int contrast, int sharpness, int saturation, int colorTone, int filterEffect, int toningEffect, int sharpFineness, int sharpThreshold) {
 		super();
 		this.contrast = contrast;
 		this.sharpness = sharpness;

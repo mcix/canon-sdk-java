@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraAddedHandler;
 import org.blackdread.cameraframework.api.constant.EdsdkError;
@@ -57,7 +56,7 @@ public class CameraAddedEventLogicDefault implements CameraAddedEventLogic {
 
     private final EdsCameraAddedHandler handler = inContext -> {
         this.handle(new EmptyEvent());
-        return new NativeLong(0);
+        return 0;
     };
 
     /**

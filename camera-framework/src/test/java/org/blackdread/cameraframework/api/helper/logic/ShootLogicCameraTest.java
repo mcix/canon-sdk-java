@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.helper.logic;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Ole32;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
@@ -109,9 +108,9 @@ class ShootLogicCameraTest {
     void testShoot() throws InterruptedException {
         log.warn("Camera: {} , {}, {}, {}", camera, camera.getPointer(), cameraRef, cameraRef.getPointer());
         final EdsdkLibrary.EdsObjectEventHandler eventHandler = (inEvent, inRef, inContext) -> {
-            log.warn("event {}, {}, {}", EdsObjectEvent.ofValue(inEvent.intValue()), inRef, inRef.getPointer());
+            log.warn("event {}, {}, {}", EdsObjectEvent.ofValue(inEvent), inRef, inRef.getPointer());
             CanonFactory.edsdkLibrary().EdsDownloadCancel(new EdsDirectoryItemRef(inRef.getPointer()));
-            return new NativeLong(0);
+            return (int)(0);
         };
         TestShortcutUtil.registerObjectEventHandler(cameraRef, eventHandler);
 
@@ -121,7 +120,7 @@ class ShootLogicCameraTest {
         for (int i = 0; i < 2; i++) {
             CanonFactory.cameraLogic().setCapacity(cameraRef);
 
-            final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, new NativeLong(EdsCameraCommand.kEdsCameraCommand_TakePicture.value()), new NativeLong(0)));
+            final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, (int)(EdsCameraCommand.kEdsCameraCommand_TakePicture.value()), (int)(0)));
 
             log.warn("Error: {}", error);
 
@@ -138,9 +137,9 @@ class ShootLogicCameraTest {
                     Ole32.INSTANCE.CoInitializeEx(Pointer.NULL, Ole32.COINIT_MULTITHREADED);
                 }
                 log.warn("Run in");
-                CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, new NativeLong(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), new NativeLong(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely));
+                CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, (int)(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), (int)(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely));
                 log.warn("Middle Run in");
-                CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, new NativeLong(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), new NativeLong(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_OFF));
+                CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, (int)(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), (int)(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_OFF));
                 Ole32.INSTANCE.CoUninitialize();
                 log.warn("End Run in");
             });
@@ -167,13 +166,13 @@ class ShootLogicCameraTest {
 
             Thread.sleep(1000);
 
-            CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, new NativeLong(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), new NativeLong(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely_NonAF));
-            CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, new NativeLong(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), new NativeLong(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_OFF));
+            CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, (int)(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), (int)(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_Completely_NonAF));
+            CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, (int)(EdsCameraCommand.kEdsCameraCommand_PressShutterButton.value()), (int)(EdsdkLibrary.EdsShutterButton.kEdsCameraCommand_ShutterButton_OFF));
 
             getEvents();
             Thread.sleep(1000);
 
-            CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, new NativeLong(EdsCameraCommand.kEdsCameraCommand_TakePicture.value()), new NativeLong(0));
+            CanonFactory.edsdkLibrary().EdsSendCommand(cameraRef, (int)(EdsCameraCommand.kEdsCameraCommand_TakePicture.value()), (int)(0));
 
             getEvents();
             Thread.sleep(2000);

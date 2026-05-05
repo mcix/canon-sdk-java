@@ -24,7 +24,6 @@
 package org.blackdread.cameraframework.api;
 
 import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.DllOnPath;
 import org.blackdread.cameraframework.util.DllUtil;
@@ -88,12 +87,12 @@ class DllTest {
 
     private static void loadLibraryBasics(final String libPath) {
         final EdsdkLibrary library = Native.loadLibrary(libPath, EdsdkLibrary.class, new HashMap<>());
-        NativeLong result = library.EdsInitializeSDK();
-        if (result.intValue() != 0)
+        int result = library.EdsInitializeSDK();
+        if (result != 0)
             fail("Failed to init SDK");
 
         result = library.EdsTerminateSDK();
-        if (result.intValue() != 0)
+        if (result != 0)
             fail("Failed to terminate SDK");
     }
 

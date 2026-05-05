@@ -23,8 +23,7 @@
  */
 package org.blackdread.cameraframework.api.helper.logic;
 
-import com.sun.jna.NativeLong;
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.api.command.builder.CloseSessionOption;
 import org.blackdread.cameraframework.api.command.builder.OpenSessionOption;
@@ -138,12 +137,12 @@ public interface CameraLogic {
                 throw cameraListError.getException();
             }
 
-            final NativeLongByReference outRef = new NativeLongByReference();
+            final IntByReference outRef = new IntByReference();
             final EdsdkError childCountError = toEdsdkError(edsdkLibrary().EdsGetChildCount(listRef.getValue(), outRef));
             if (childCountError != EdsdkError.EDS_ERR_OK) {
                 throw childCountError.getException();
             }
-            final long numCams = outRef.getValue().longValue();
+            final long numCams = outRef.getValue() & 0xFFFFFFFFL;
             return numCams < 0 ? 0 : (int) numCams;
         } finally {
             ReleaseUtil.release(listRef);
@@ -251,7 +250,7 @@ public interface CameraLogic {
      * @throws EdsdkErrorException if a command to the library result with a return value different than {@link org.blackdread.cameraframework.api.constant.EdsdkError#EDS_ERR_OK}
      */
     default void sendCommand(final EdsCameraRef camera, final EdsCameraCommand command, final long inParam) {
-        final EdsdkError error = toEdsdkError(edsdkLibrary().EdsSendCommand(camera, new NativeLong(command.value()), new NativeLong(inParam)));
+        final EdsdkError error = toEdsdkError(edsdkLibrary().EdsSendCommand(camera, command.value(), (int) inParam));
         if (error != EdsdkError.EDS_ERR_OK)
             throw error.getException();
     }
@@ -264,7 +263,7 @@ public interface CameraLogic {
      * @throws EdsdkErrorException if a command to the library result with a return value different than {@link org.blackdread.cameraframework.api.constant.EdsdkError#EDS_ERR_OK}
      */
     default void sendStatusCommand(final EdsCameraRef camera, final EdsCameraStatusCommand statusCommand) {
-        final EdsdkError error = toEdsdkError(edsdkLibrary().EdsSendStatusCommand(camera, new NativeLong(statusCommand.value()), new NativeLong(0)));
+        final EdsdkError error = toEdsdkError(edsdkLibrary().EdsSendStatusCommand(camera, statusCommand.value(), 0));
         if (error != EdsdkError.EDS_ERR_OK)
             throw error.getException();
     }

@@ -23,7 +23,6 @@
  */
 package org.blackdread.cameraframework.api.command;
 
-import com.sun.jna.NativeLong;
 import org.apache.commons.lang3.NotImplementedException;
 import org.blackdread.camerabinding.jna.EdsPictureStyleDesc;
 import org.blackdread.camerabinding.jna.EdsPoint;
@@ -315,7 +314,7 @@ public abstract class SetPropertyCommand<R> extends AbstractCanonCommand<R> {
         }
 
         public LiveViewZoomPosition(final long x, final long y) {
-            super(EdsPropertyID.kEdsPropID_Evf_ZoomPosition, new EdsPoint(new NativeLong(x), new NativeLong(y)));
+            super(EdsPropertyID.kEdsPropID_Evf_ZoomPosition, new EdsPoint((int) x, (int) y));
         }
 
         public LiveViewZoomPosition(final LiveViewZoomPosition toCopy) {

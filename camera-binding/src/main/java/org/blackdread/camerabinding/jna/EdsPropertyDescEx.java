@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -42,11 +41,11 @@ import java.util.List;
  */
 public class EdsPropertyDescEx extends Structure {
     /** C type : EdsInt32 */
-    public NativeLong form;
+    public int form;
     /** C type : EdsInt32 */
-    public NativeLong access;
+    public int access;
     /** C type : EdsInt32 */
-    public NativeLong numElements;
+    public int numElements;
     /** C type : EdsInt64[2048] */
     public long[] propDesc = new long[2048];
 
@@ -59,7 +58,7 @@ public class EdsPropertyDescEx extends Structure {
         return Arrays.asList("form", "access", "numElements", "propDesc");
     }
 
-    public EdsPropertyDescEx(NativeLong form, NativeLong access, NativeLong numElements, long[] propDesc) {
+    public EdsPropertyDescEx(int form, int access, int numElements, long[] propDesc) {
         super();
         this.form = form;
         this.access = access;

@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -39,13 +38,13 @@ import java.util.List;
  */
 public class EdsCameraPos extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong status;
+	public int status;
 	/** C type : EdsInt32 */
-	public NativeLong position;
+	public int position;
 	/** C type : EdsInt32 */
-	public NativeLong rolling;
+	public int rolling;
 	/** C type : EdsInt32 */
-	public NativeLong pitching;
+	public int pitching;
 	public EdsCameraPos() {
 		super();
 	}
@@ -59,7 +58,7 @@ public class EdsCameraPos extends Structure {
 	 * @param rolling C type : EdsInt32<br>
 	 * @param pitching C type : EdsInt32
 	 */
-	public EdsCameraPos(NativeLong status, NativeLong position, NativeLong rolling, NativeLong pitching) {
+	public EdsCameraPos(int status, int position, int rolling, int pitching) {
 		super();
 		this.status = status;
 		this.position = position;

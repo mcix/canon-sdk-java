@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,9 +37,9 @@ import java.util.List;
  */
 public class EdsFramePoint extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong x;
+	public int x;
 	/** C type : EdsInt32 */
-	public NativeLong y;
+	public int y;
 	public EdsFramePoint() {
 		super();
 	}
@@ -52,7 +51,7 @@ public class EdsFramePoint extends Structure {
 	 * @param x C type : EdsInt32<br>
 	 * @param y C type : EdsInt32
 	 */
-	public EdsFramePoint(NativeLong x, NativeLong y) {
+	public EdsFramePoint(int x, int y) {
 		super();
 		this.x = x;
 		this.y = y;

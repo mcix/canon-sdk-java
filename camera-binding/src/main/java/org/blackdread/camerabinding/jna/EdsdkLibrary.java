@@ -24,13 +24,11 @@
 package org.blackdread.camerabinding.jna;
 
 import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
 import com.sun.jna.ptr.ByReference;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
-import com.sun.jna.ptr.NativeLongByReference;
 import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.ShortByReference;
 import com.sun.jna.win32.StdCallLibrary;
@@ -3440,56 +3438,56 @@ public interface EdsdkLibrary extends StdCallLibrary {
      */
     public interface EdsProgressCallback extends com.sun.jna.Callback {
 
-        NativeLong apply(NativeLong inPercent, Pointer inContext, IntByReference outCancel);
+        int apply(int inPercent, Pointer inContext, IntByReference outCancel);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(NativeLong inPercent, EdsVoid inContext, IntByReference outCancel);
+//        int apply(int inPercent, EdsVoid inContext, IntByReference outCancel);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
     public interface EdsCameraAddedHandler extends com.sun.jna.Callback {
-        NativeLong apply(Pointer inContext);
+        int apply(Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(EdsVoid inContext);
+//        int apply(EdsVoid inContext);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
     public interface EdsPropertyEventHandler extends com.sun.jna.Callback {
-        NativeLong apply(NativeLong inEvent, NativeLong inPropertyID, NativeLong inParam, Pointer inContext);
+        int apply(int inEvent, int inPropertyID, int inParam, Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(NativeLong inEvent, NativeLong inPropertyID, NativeLong inParam, EdsVoid inContext);
+//        int apply(int inEvent, int inPropertyID, int inParam, EdsVoid inContext);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
     public interface EdsObjectEventHandler extends com.sun.jna.Callback {
-        NativeLong apply(NativeLong inEvent, EdsBaseRef inRef, Pointer inContext);
+        int apply(int inEvent, EdsBaseRef inRef, Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(NativeLong inEvent, EdsBaseRef inRef, EdsVoid inContext);
-//        NativeLong apply(NativeLong inEvent, Pointer inRef, EdsVoid inContext);
+//        int apply(int inEvent, EdsBaseRef inRef, EdsVoid inContext);
+//        int apply(int inEvent, Pointer inRef, EdsVoid inContext);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
     public interface EdsStateEventHandler extends com.sun.jna.Callback {
-        NativeLong apply(NativeLong inEvent, NativeLong inEventData, Pointer inContext);
+        int apply(int inEvent, int inEventData, Pointer inContext);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(NativeLong inEvent, NativeLong inEventData, EdsVoid inContext);
+//        int apply(int inEvent, int inEventData, EdsVoid inContext);
     }
 
     /**
@@ -3497,43 +3495,43 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * <i>native declaration : sdk-header\EDSDKTypes.h:1368</i>
      */
     public interface EdsReadStream extends com.sun.jna.Callback {
-        NativeLong apply(Pointer inContext, NativeLong inReadSize, Pointer outBuffer, NativeLongByReference outReadSize);
+        int apply(Pointer inContext, int inReadSize, Pointer outBuffer, IntByReference outReadSize);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(Pointer inContext, NativeLong inReadSize, EdsVoid outBuffer, NativeLongByReference outReadSize);
+//        int apply(Pointer inContext, int inReadSize, EdsVoid outBuffer, IntByReference outReadSize);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1369</i>
      */
     public interface EdsWriteStream extends com.sun.jna.Callback {
-        NativeLong apply(Pointer inContext, NativeLong inWriteSize, Pointer inBuffer, NativeLongByReference outWrittenSize);
+        int apply(Pointer inContext, int inWriteSize, Pointer inBuffer, IntByReference outWrittenSize);
 
         // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
 //        @Deprecated
-//        NativeLong apply(Pointer inContext, NativeLong inWriteSize, EdsVoid inBuffer, NativeLongByReference outWrittenSize);
+//        int apply(Pointer inContext, int inWriteSize, EdsVoid inBuffer, IntByReference outWrittenSize);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1370</i>
      */
     public interface EdsSeekStream extends com.sun.jna.Callback {
-        NativeLong apply(Pointer inContext, NativeLong inSeekOffset, int inSeekOrigin);
+        int apply(Pointer inContext, int inSeekOffset, int inSeekOrigin);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1371</i>
      */
     public interface EdsTellStream extends com.sun.jna.Callback {
-        NativeLong apply(Pointer inContext, NativeLongByReference outPosition);
+        int apply(Pointer inContext, IntByReference outPosition);
     }
 
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h:1372</i>
      */
     public interface EdsGetStreamLength extends com.sun.jna.Callback {
-        NativeLong apply(Pointer inContext, NativeLongByReference outLength);
+        int apply(Pointer inContext, IntByReference outLength);
     }
 
     /**
@@ -3557,7 +3555,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      *
      * @return any of the sdk errors
      */
-    NativeLong EdsInitializeSDK();
+    int EdsInitializeSDK();
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3580,7 +3578,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      *
      * @return any of the sdk errors
      */
-    NativeLong EdsTerminateSDK();
+    int EdsTerminateSDK();
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3602,7 +3600,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inRef the reference for the item
      * @return any of the sdk errors
      */
-    NativeLong EdsRetain(EdsBaseRef inRef);
+    int EdsRetain(EdsBaseRef inRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3624,7 +3622,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inRef the reference of the item
      * @return any of the sdk errors
      */
-    NativeLong EdsRelease(EdsBaseRef inRef);
+    int EdsRelease(EdsBaseRef inRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3648,7 +3646,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outCount number of elements in this list
      * @return any of the sdk errors
      */
-    NativeLong EdsGetChildCount(EdsBaseRef inRef, NativeLongByReference outCount);
+    int EdsGetChildCount(EdsBaseRef inRef, IntByReference outCount);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3674,8 +3672,8 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outRef  the pointer which receives reference of the specified index
      * @return any of the sdk errors
      */
-    NativeLong EdsGetChildAtIndex(EdsBaseRef inRef, NativeLong inIndex, @ImplicitRetain EdsBaseRef.ByReference outRef);
-//    NativeLong EdsGetChildAtIndex(EdsBaseRef inRef, NativeLong inIndex, PointerByReference outRef);
+    int EdsGetChildAtIndex(EdsBaseRef inRef, int inIndex, @ImplicitRetain EdsBaseRef.ByReference outRef);
+//    int EdsGetChildAtIndex(EdsBaseRef inRef, int inIndex, PointerByReference outRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3698,8 +3696,8 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outParentRef the pointer which receives reference
      * @return any of the sdk errors
      */
-    NativeLong EdsGetParent(EdsBaseRef inRef, @ImplicitRetain EdsBaseRef.ByReference outParentRef);
-//    NativeLong EdsGetParent(EdsBaseRef inRef, PointerByReference outParentRef);
+    int EdsGetParent(EdsBaseRef inRef, @ImplicitRetain EdsBaseRef.ByReference outParentRef);
+//    int EdsGetParent(EdsBaseRef inRef, PointerByReference outParentRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3732,10 +3730,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outDataType  pointer to the buffer that is to receive the property type data
      * @param outSize      pointer to the buffer that is to receive the property size
      * @return any of the sdk errors
-     * @deprecated use the safer methods {@link #EdsGetPropertySize(EdsdkLibrary.EdsBaseRef, NativeLong, NativeLong, IntBuffer, NativeLongByReference)} and {@link #EdsGetPropertySize(EdsBaseRef, NativeLong, NativeLong, IntByReference, NativeLongByReference)} instead
+     * @deprecated use the safer methods {@link #EdsGetPropertySize(EdsdkLibrary.EdsBaseRef, int, int, IntBuffer, IntByReference)} and {@link #EdsGetPropertySize(EdsBaseRef, int, int, IntByReference, IntByReference)} instead
      */
     @Deprecated
-    NativeLong EdsGetPropertySize(EdsBaseRef inRef, NativeLong inPropertyID, NativeLong inParam, IntByReference outDataType, NativeLongByReference outSize);
+    int EdsGetPropertySize(EdsBaseRef inRef, int inPropertyID, int inParam, IntByReference outDataType, IntByReference outSize);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3769,7 +3767,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outSize      pointer to the buffer that is to receive the property size
      * @return any of the sdk errors
      */
-    NativeLong EdsGetPropertySize(EdsBaseRef inRef, NativeLong inPropertyID, NativeLong inParam, IntBuffer outDataType, NativeLongByReference outSize);
+    int EdsGetPropertySize(EdsBaseRef inRef, int inPropertyID, int inParam, IntBuffer outDataType, IntByReference outSize);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3801,11 +3799,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outPropertyData The buffer pointer to receive property-value
      * @return any of the sdk errors
      */
-    NativeLong EdsGetPropertyData(EdsBaseRef inRef, NativeLong inPropertyID, NativeLong inParam, NativeLong inPropertySize, Pointer outPropertyData);
+    int EdsGetPropertyData(EdsBaseRef inRef, int inPropertyID, int inParam, int inPropertySize, Pointer outPropertyData);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsGetPropertyData(EdsBaseRef inRef, NativeLong inPropertyID, NativeLong inParam, NativeLong inPropertySize, EdsVoid outPropertyData);
+    int EdsGetPropertyData(EdsBaseRef inRef, int inPropertyID, int inParam, int inPropertySize, EdsVoid outPropertyData);
 
 
     /**
@@ -3837,11 +3835,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inPropertyData The buffer pointer to set property-value
      * @return any of the sdk errors
      */
-    NativeLong EdsSetPropertyData(EdsBaseRef inRef, NativeLong inPropertyID, NativeLong inParam, NativeLong inPropertySize, Pointer inPropertyData);
+    int EdsSetPropertyData(EdsBaseRef inRef, int inPropertyID, int inParam, int inPropertySize, Pointer inPropertyData);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsSetPropertyData(EdsBaseRef inRef, NativeLong inPropertyID, NativeLong inParam, NativeLong inPropertySize, EdsVoid inPropertyData);
+    int EdsSetPropertyData(EdsBaseRef inRef, int inPropertyID, int inParam, int inPropertySize, EdsVoid inPropertyData);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3868,7 +3866,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outPropertyDesc Array of the value which can be set up
      * @return any of the sdk errors
      */
-    NativeLong EdsGetPropertyDesc(EdsBaseRef inRef, NativeLong inPropertyID, EdsPropertyDesc outPropertyDesc);
+    int EdsGetPropertyDesc(EdsBaseRef inRef, int inPropertyID, EdsPropertyDesc outPropertyDesc);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3890,8 +3888,8 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outCameraListRef Pointer to the camera-list
      * @return any of the sdk errors
      */
-    NativeLong EdsGetCameraList(@ImplicitRetain EdsCameraListRef.ByReference outCameraListRef);
-//    NativeLong EdsGetCameraList(PointerByReference outCameraListRef);
+    int EdsGetCameraList(@ImplicitRetain EdsCameraListRef.ByReference outCameraListRef);
+//    int EdsGetCameraList(PointerByReference outCameraListRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3918,7 +3916,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outDeviceInfo Information as device of camera
      * @return any of the sdk errors
      */
-    NativeLong EdsGetDeviceInfo(EdsCameraRef inCameraRef, EdsDeviceInfo outDeviceInfo);
+    int EdsGetDeviceInfo(EdsCameraRef inCameraRef, EdsDeviceInfo outDeviceInfo);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3941,7 +3939,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inCameraRef The reference of the camera
      * @return any of the sdk errors
      */
-    NativeLong EdsOpenSession(EdsCameraRef inCameraRef);
+    int EdsOpenSession(EdsCameraRef inCameraRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3963,7 +3961,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inCameraRef The reference of the camera
      * @return any of the sdk errors
      */
-    NativeLong EdsCloseSession(EdsCameraRef inCameraRef);
+    int EdsCloseSession(EdsCameraRef inCameraRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -3990,7 +3988,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inParam     Specifies additional command-specific information
      * @return any of the sdk errors
      */
-    NativeLong EdsSendCommand(EdsCameraRef inCameraRef, NativeLong inCommand, NativeLong inParam);
+    int EdsSendCommand(EdsCameraRef inCameraRef, int inCommand, int inParam);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4017,7 +4015,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inParam         Specifies additional command-specific information
      * @return any of the sdk errors
      */
-    NativeLong EdsSendStatusCommand(EdsCameraRef inCameraRef, NativeLong inStatusCommand, NativeLong inParam);
+    int EdsSendStatusCommand(EdsCameraRef inCameraRef, int inStatusCommand, int inParam);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4052,7 +4050,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inCapacity  The remaining capacity of a transmission place
      * @return any of the sdk errors
      */
-    NativeLong EdsSetCapacity(EdsCameraRef inCameraRef, EdsCapacity.ByValue inCapacity);
+    int EdsSetCapacity(EdsCameraRef inCameraRef, EdsCapacity.ByValue inCapacity);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4075,7 +4073,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outVolumeInfo information of  the volume
      * @return any of the sdk errors
      */
-    NativeLong EdsGetVolumeInfo(EdsVolumeRef inVolumeRef, EdsVolumeInfo outVolumeInfo);
+    int EdsGetVolumeInfo(EdsVolumeRef inVolumeRef, EdsVolumeInfo outVolumeInfo);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4096,7 +4094,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inVolumeRef The reference of volume
      * @return any of the sdk errors
      */
-    NativeLong EdsFormatVolume(EdsVolumeRef inVolumeRef);
+    int EdsFormatVolume(EdsVolumeRef inVolumeRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4120,7 +4118,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outDirItemInfo information of the directory item
      * @return any of the sdk errors
      */
-    NativeLong EdsGetDirectoryItemInfo(EdsDirectoryItemRef inDirItemRef, EdsDirectoryItemInfo outDirItemInfo);
+    int EdsGetDirectoryItemInfo(EdsDirectoryItemRef inDirItemRef, EdsDirectoryItemInfo outDirItemInfo);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4146,10 +4144,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inDirItemRef The reference of the directory item
      * @return any of the sdk errors
      */
-    NativeLong EdsDeleteDirectoryItem(EdsDirectoryItemRef inDirItemRef);
+    int EdsDeleteDirectoryItem(EdsDirectoryItemRef inDirItemRef);
 
     /**
-     * TODO no need NativeLong for inReadSize (EdsUInt64)
+     * TODO no need int for inReadSize (EdsUInt64)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsDownload<br>
@@ -4178,7 +4176,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream    The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsDownload(EdsDirectoryItemRef inDirItemRef, long inReadSize, EdsStreamRef outStream);
+    int EdsDownload(EdsDirectoryItemRef inDirItemRef, long inReadSize, EdsStreamRef outStream);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4202,7 +4200,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inDirItemRef The reference of the directory item
      * @return any of the sdk errors
      */
-    NativeLong EdsDownloadCancel(EdsDirectoryItemRef inDirItemRef);
+    int EdsDownloadCancel(EdsDirectoryItemRef inDirItemRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4228,7 +4226,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inDirItemRef The reference of the directory item
      * @return any of the sdk errors
      */
-    NativeLong EdsDownloadComplete(EdsDirectoryItemRef inDirItemRef);
+    int EdsDownloadComplete(EdsDirectoryItemRef inDirItemRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4255,7 +4253,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream    The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsDownloadThumbnail(EdsDirectoryItemRef inDirItemRef, EdsStreamRef outStream);
+    int EdsDownloadThumbnail(EdsDirectoryItemRef inDirItemRef, EdsStreamRef outStream);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4284,7 +4282,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @deprecated use the safer methods {@link #EdsGetAttribute(EdsdkLibrary.EdsDirectoryItemRef, IntBuffer)} and {@link #EdsGetAttribute(EdsDirectoryItemRef, IntByReference)} instead
      */
     @Deprecated
-    NativeLong EdsGetAttribute(EdsDirectoryItemRef inDirItemRef, IntByReference outFileAttribute);
+    int EdsGetAttribute(EdsDirectoryItemRef inDirItemRef, IntByReference outFileAttribute);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4311,7 +4309,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outFileAttribute Indicates the file attributes
      * @return any of the sdk errors
      */
-    NativeLong EdsGetAttribute(EdsDirectoryItemRef inDirItemRef, IntBuffer outFileAttribute);
+    int EdsGetAttribute(EdsDirectoryItemRef inDirItemRef, IntBuffer outFileAttribute);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4337,7 +4335,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inFileAttribute Indicates the file attributes
      * @return any of the sdk errors
      */
-    NativeLong EdsSetAttribute(EdsDirectoryItemRef inDirItemRef, int inFileAttribute);
+    int EdsSetAttribute(EdsDirectoryItemRef inDirItemRef, int inFileAttribute);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4370,7 +4368,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream           The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateFileStream(ByteBuffer inFileName, int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
+    int EdsCreateFileStream(ByteBuffer inFileName, int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4403,10 +4401,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream           The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateFileStream(byte inFileName[], int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
+    int EdsCreateFileStream(byte inFileName[], int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
 
     /**
-     * TODO no need NativeLong for inBufferSize (EdsUInt64)
+     * TODO no need int for inBufferSize (EdsUInt64)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsCreateMemoryStream<br>
@@ -4429,7 +4427,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream    The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateMemoryStream(long inBufferSize, EdsStreamRef.ByReference outStream);
+    int EdsCreateMemoryStream(long inBufferSize, EdsStreamRef.ByReference outStream);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4460,7 +4458,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream           The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateFileStreamEx(short inFileName[], int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
+    int EdsCreateFileStreamEx(short inFileName[], int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4493,10 +4491,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @deprecated use safer method {@link #EdsCreateFileStreamEx(short[], int, int, EdsStreamRef.ByReference)}
      */
     @Deprecated
-    NativeLong EdsCreateFileStreamEx(ShortByReference inFileName, int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
+    int EdsCreateFileStreamEx(ShortByReference inFileName, int inCreateDisposition, int inDesiredAccess, EdsStreamRef.ByReference outStream);
 
     /**
-     * TODO no need NativeLong for inBufferSize (EdsUInt64)
+     * TODO no need int for inBufferSize (EdsUInt64)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsCreateMemoryStreamFromPointer<br>
@@ -4522,12 +4520,12 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStream    The reference of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateMemoryStreamFromPointer(Pointer inUserBuffer, long inBufferSize, EdsStreamRef.ByReference outStream);
+    int EdsCreateMemoryStreamFromPointer(Pointer inUserBuffer, long inBufferSize, EdsStreamRef.ByReference outStream);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsCreateMemoryStreamFromPointer(EdsVoid inUserBuffer, long inBufferSize, EdsStreamRef.ByReference outStream);
-//    NativeLong EdsCreateMemoryStreamFromPointer(EdsVoid inUserBuffer, long inBufferSize, PointerByReference outStream);
+    int EdsCreateMemoryStreamFromPointer(EdsVoid inUserBuffer, long inBufferSize, EdsStreamRef.ByReference outStream);
+//    int EdsCreateMemoryStreamFromPointer(EdsVoid inUserBuffer, long inBufferSize, PointerByReference outStream);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4558,11 +4556,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outPointer If successful, returns the pointer to the buffer written in the memory stream
      * @return any of the sdk errors
      */
-    NativeLong EdsGetPointer(EdsStreamRef inStream, PointerByReference outPointer);
+    int EdsGetPointer(EdsStreamRef inStream, PointerByReference outPointer);
 
     /**
-     * TODO no need NativeLong for inReadSize (EdsUInt64)
-     * TODO no need NativeLongByReference for outWrittenSize (EdsUInt64*)
+     * TODO no need int for inReadSize (EdsUInt64)
+     * TODO no need IntByReference for outWrittenSize (EdsUInt64*)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsRead<br>
@@ -4590,17 +4588,17 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outReadSize The actually read number of bytes
      * @return any of the sdk errors
      */
-    NativeLong EdsRead(EdsStreamRef inStreamRef, long inReadSize, Pointer outBuffer, LongByReference outReadSize);
+    int EdsRead(EdsStreamRef inStreamRef, long inReadSize, Pointer outBuffer, LongByReference outReadSize);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsRead(EdsStreamRef inStreamRef, long inReadSize, EdsVoid outBuffer, LongByReference outReadSize);
-//    NativeLong EdsRead(EdsStreamRef inStreamRef, long inReadSize, EdsVoid outBuffer, NativeLongByReference outReadSize);
-//    NativeLong EdsRead(EdsStreamRef inStreamRef, long inReadSize, EdsVoid outBuffer, LongBuffer outReadSize);
+    int EdsRead(EdsStreamRef inStreamRef, long inReadSize, EdsVoid outBuffer, LongByReference outReadSize);
+//    int EdsRead(EdsStreamRef inStreamRef, long inReadSize, EdsVoid outBuffer, IntByReference outReadSize);
+//    int EdsRead(EdsStreamRef inStreamRef, long inReadSize, EdsVoid outBuffer, LongBuffer outReadSize);
 
     /**
-     * TODO no need NativeLong for inWriteSize (EdsUInt64)
-     * TODO no need NativeLongByReference for outWrittenSize (EdsUInt64*)
+     * TODO no need int for inWriteSize (EdsUInt64)
+     * TODO no need IntByReference for outWrittenSize (EdsUInt64*)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsWrite<br>
@@ -4627,16 +4625,16 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outWrittenSize The actually written-in number of bytes
      * @return any of the sdk errors
      */
-    NativeLong EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, Pointer inBuffer, LongByReference outWrittenSize);
+    int EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, Pointer inBuffer, LongByReference outWrittenSize);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, EdsVoid inBuffer, LongByReference outWrittenSize);
-//    NativeLong EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, EdsVoid inBuffer, NativeLongByReference outWrittenSize);
-//    NativeLong EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, EdsVoid inBuffer, LongBuffer outWrittenSize);
+    int EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, EdsVoid inBuffer, LongByReference outWrittenSize);
+//    int EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, EdsVoid inBuffer, IntByReference outWrittenSize);
+//    int EdsWrite(EdsStreamRef inStreamRef, long inWriteSize, EdsVoid inBuffer, LongBuffer outWrittenSize);
 
     /**
-     * TODO no need NativeLong for inSeekOffset (EdsInt64)
+     * TODO no need int for inSeekOffset (EdsInt64)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsSeek<br>
@@ -4667,10 +4665,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inSeekOrigin Pointer movement mode
      * @return any of the sdk errors
      */
-    NativeLong EdsSeek(EdsStreamRef inStreamRef, long inSeekOffset, int inSeekOrigin);
+    int EdsSeek(EdsStreamRef inStreamRef, long inSeekOffset, int inSeekOrigin);
 
     /**
-     * TODO no need NativeLongByReference for outPosition (EdsUInt64*)
+     * TODO no need IntByReference for outPosition (EdsUInt64*)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsGetPosition<br>
@@ -4692,12 +4690,12 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outPosition The current stream pointer
      * @return any of the sdk errors
      */
-    NativeLong EdsGetPosition(EdsStreamRef inStreamRef, LongByReference outPosition);
-//    NativeLong EdsGetPosition(EdsStreamRef inStreamRef, NativeLongByReference outPosition);
-//    NativeLong EdsGetPosition(EdsStreamRef inStreamRef, LongBuffer outPosition);
+    int EdsGetPosition(EdsStreamRef inStreamRef, LongByReference outPosition);
+//    int EdsGetPosition(EdsStreamRef inStreamRef, IntByReference outPosition);
+//    int EdsGetPosition(EdsStreamRef inStreamRef, LongBuffer outPosition);
 
     /**
-     * TODO no need NativeLongByReference for outLength (EdsUInt64*)
+     * TODO no need IntByReference for outLength (EdsUInt64*)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsGetLength<br>
@@ -4718,12 +4716,12 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outLength   The length of the stream
      * @return any of the sdk errors
      */
-    NativeLong EdsGetLength(EdsStreamRef inStreamRef, LongByReference outLength);
-//    NativeLong EdsGetLength(EdsStreamRef inStreamRef, NativeLongByReference outLength);
-//    NativeLong EdsGetLength(EdsStreamRef inStreamRef, LongBuffer outLength);
+    int EdsGetLength(EdsStreamRef inStreamRef, LongByReference outLength);
+//    int EdsGetLength(EdsStreamRef inStreamRef, IntByReference outLength);
+//    int EdsGetLength(EdsStreamRef inStreamRef, LongBuffer outLength);
 
     /**
-     * TODO no need NativeLong for inWriteSize (EdsUInt64)
+     * TODO no need int for inWriteSize (EdsUInt64)
      * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsCopyData<br>
@@ -4751,7 +4749,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStreamRef The reference of the stream or image
      * @return any of the sdk errors
      */
-    NativeLong EdsCopyData(EdsStreamRef inStreamRef, long inWriteSize, EdsStreamRef outStreamRef);
+    int EdsCopyData(EdsStreamRef inStreamRef, long inWriteSize, EdsStreamRef outStreamRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4793,11 +4791,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inContext          Application information, passed in the argument when the callback function is called. Any information required for your program may be added
      * @return any of the sdk errors
      */
-    NativeLong EdsSetProgressCallback(EdsBaseRef inRef, EdsProgressCallback inProgressCallback, int inProgressOption, Pointer inContext);
+    int EdsSetProgressCallback(EdsBaseRef inRef, EdsProgressCallback inProgressCallback, int inProgressOption, Pointer inContext);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsSetProgressCallback(EdsBaseRef inRef, EdsProgressCallback inProgressCallback, int inProgressOption, EdsVoid inContext);
+    int EdsSetProgressCallback(EdsBaseRef inRef, EdsProgressCallback inProgressCallback, int inProgressOption, EdsVoid inContext);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4827,8 +4825,8 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outImageRef The reference of the image
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateImageRef(EdsStreamRef inStreamRef, EdsImageRef.ByReference outImageRef);
-//    NativeLong EdsCreateImageRef(EdsStreamRef inStreamRef, PointerByReference outImageRef);
+    int EdsCreateImageRef(EdsStreamRef inStreamRef, EdsImageRef.ByReference outImageRef);
+//    int EdsCreateImageRef(EdsStreamRef inStreamRef, PointerByReference outImageRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4870,7 +4868,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outImageInfo  Stores the image data information designated in inImageSource
      * @return any of the sdk errors
      */
-    NativeLong EdsGetImageInfo(EdsImageRef inImageRef, int inImageSource, EdsImageInfo outImageInfo);
+    int EdsGetImageInfo(EdsImageRef inImageRef, int inImageSource, EdsImageInfo outImageInfo);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4924,7 +4922,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStreamRef  Designate the memory or file stream for output of
      * @return any of the sdk errors
      */
-    NativeLong EdsGetImage(EdsImageRef inImageRef, int inImageSource, int inImageType, EdsRect.ByValue inSrcRect, EdsSize.ByValue inDstSize, EdsStreamRef outStreamRef);
+    int EdsGetImage(EdsImageRef inImageRef, int inImageSource, int inImageType, EdsRect.ByValue inSrcRect, EdsSize.ByValue inDstSize, EdsStreamRef outStreamRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4961,7 +4959,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @return any of the sdk errors
      * @deprecated edsdk removed in 13.9.10 (API not functional since 3.5)
      */
-    NativeLong EdsSaveImage(EdsImageRef inImageRef, int inImageType, EdsSaveImageSetting.ByValue inSaveSetting, EdsStreamRef outStreamRef);
+    int EdsSaveImage(EdsImageRef inImageRef, int inImageType, EdsSaveImageSetting.ByValue inSaveSetting, EdsStreamRef outStreamRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -4991,7 +4989,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @return any of the sdk errors
      * @deprecated edsdk removed in 13.9.10 (API not functional since 3.5)
      */
-    NativeLong EdsCacheImage(EdsImageRef inImageRef, int inUseCache);
+    int EdsCacheImage(EdsImageRef inImageRef, int inUseCache);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5014,7 +5012,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @return any of the sdk errors
      * @deprecated edsdk removed in 13.9.10 (API not functional since 3.5)
      */
-    NativeLong EdsReflectImageProperty(EdsImageRef inImageRef);
+    int EdsReflectImageProperty(EdsImageRef inImageRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5036,8 +5034,8 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outEvfImageRef The EVFData reference
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateEvfImageRef(EdsStreamRef inStreamRef, EdsEvfImageRef.ByReference outEvfImageRef);
-//    NativeLong EdsCreateEvfImageRef(EdsStreamRef inStreamRef, PointerByReference outEvfImageRef);
+    int EdsCreateEvfImageRef(EdsStreamRef inStreamRef, EdsEvfImageRef.ByReference outEvfImageRef);
+//    int EdsCreateEvfImageRef(EdsStreamRef inStreamRef, PointerByReference outEvfImageRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5066,7 +5064,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inEvfImageRef The EVFData reference
      * @return any of the sdk errors
      */
-    NativeLong EdsDownloadEvfImage(EdsCameraRef inCameraRef, EdsEvfImageRef inEvfImageRef);
+    int EdsDownloadEvfImage(EdsCameraRef inCameraRef, EdsEvfImageRef inEvfImageRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5092,11 +5090,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inContext            Specifies an application-defined value to be sent to he callback function pointed to by CallBack parameter
      * @return any of the sdk errors
      */
-    NativeLong EdsSetCameraAddedHandler(EdsCameraAddedHandler inCameraAddedHandler, Pointer inContext);
+    int EdsSetCameraAddedHandler(EdsCameraAddedHandler inCameraAddedHandler, Pointer inContext);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsSetCameraAddedHandler(EdsCameraAddedHandler inCameraAddedHandler, EdsVoid inContext);
+    int EdsSetCameraAddedHandler(EdsCameraAddedHandler inCameraAddedHandler, EdsVoid inContext);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5128,11 +5126,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inContext              Designate application information to be passed by means of the callback function. Any data needed for your application can be passed
      * @return any of the sdk errors
      */
-    NativeLong EdsSetPropertyEventHandler(EdsCameraRef inCameraRef, NativeLong inEvnet, EdsPropertyEventHandler inPropertyEventHandler, Pointer inContext);
+    int EdsSetPropertyEventHandler(EdsCameraRef inCameraRef, int inEvnet, EdsPropertyEventHandler inPropertyEventHandler, Pointer inContext);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsSetPropertyEventHandler(EdsCameraRef inCameraRef, NativeLong inEvnet, EdsPropertyEventHandler inPropertyEventHandler, EdsVoid inContext);
+    int EdsSetPropertyEventHandler(EdsCameraRef inCameraRef, int inEvnet, EdsPropertyEventHandler inPropertyEventHandler, EdsVoid inContext);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5166,11 +5164,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inContext            Passes inContext without modification, as designated as an EdsSetObjectEventHandler argument
      * @return any of the sdk errors
      */
-    NativeLong EdsSetObjectEventHandler(EdsCameraRef inCameraRef, NativeLong inEvnet, EdsObjectEventHandler inObjectEventHandler, Pointer inContext);
+    int EdsSetObjectEventHandler(EdsCameraRef inCameraRef, int inEvnet, EdsObjectEventHandler inObjectEventHandler, Pointer inContext);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsSetObjectEventHandler(EdsCameraRef inCameraRef, NativeLong inEvnet, EdsObjectEventHandler inObjectEventHandler, EdsVoid inContext);
+    int EdsSetObjectEventHandler(EdsCameraRef inCameraRef, int inEvnet, EdsObjectEventHandler inObjectEventHandler, EdsVoid inContext);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5203,11 +5201,11 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param inContext           Designate application information to be passed by means of the callback function. Any data needed for your application can be passed
      * @return any of the sdk errors
      */
-    NativeLong EdsSetCameraStateEventHandler(EdsCameraRef inCameraRef, NativeLong inEvnet, EdsStateEventHandler inStateEventHandler, Pointer inContext);
+    int EdsSetCameraStateEventHandler(EdsCameraRef inCameraRef, int inEvnet, EdsStateEventHandler inStateEventHandler, Pointer inContext);
 
     // will remove as it requires to do "new EdsVoid(new Memory(size expected))", instead we simply have with Pointer "new Memory(size expected)"
     @Deprecated
-    NativeLong EdsSetCameraStateEventHandler(EdsCameraRef inCameraRef, NativeLong inEvnet, EdsStateEventHandler inStateEventHandler, EdsVoid inContext);
+    int EdsSetCameraStateEventHandler(EdsCameraRef inCameraRef, int inEvnet, EdsStateEventHandler inStateEventHandler, EdsVoid inContext);
 
     /**
      * ----------------------------------------------------------------------------<br>
@@ -5218,8 +5216,8 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @param outStreamRef Out stream ref
      * @return any of the sdk errors
      */
-    NativeLong EdsCreateStream(EdsIStream inStream, EdsStreamRef.ByReference outStreamRef);
-//    NativeLong EdsCreateStream(EdsIStream inStream, PointerByReference outStreamRef);
+    int EdsCreateStream(EdsIStream inStream, EdsStreamRef.ByReference outStreamRef);
+//    int EdsCreateStream(EdsIStream inStream, PointerByReference outStreamRef);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5242,7 +5240,7 @@ public interface EdsdkLibrary extends StdCallLibrary {
      *
      * @return any of the sdk errors
      */
-    NativeLong EdsGetEvent();
+    int EdsGetEvent();
 
     public abstract class EdsObjectByReference<T extends EdsBaseRef> extends ByReference {
 

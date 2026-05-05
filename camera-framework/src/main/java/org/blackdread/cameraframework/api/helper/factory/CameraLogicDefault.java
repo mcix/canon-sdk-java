@@ -23,8 +23,7 @@
  */
 package org.blackdread.cameraframework.api.helper.factory;
 
-import com.sun.jna.NativeLong;
-import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.IntByReference;
 import org.blackdread.camerabinding.jna.EdsCapacity;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsCameraRef;
@@ -57,8 +56,8 @@ public class CameraLogicDefault implements CameraLogic {
     @Override
     public void setCapacity(final EdsCameraRef camera, final int capacity, final int bytesPerSector) {
         final EdsCapacity.ByValue edsCapacity = new EdsCapacity.ByValue();
-        edsCapacity.bytesPerSector = new NativeLong(bytesPerSector);
-        edsCapacity.numberOfFreeClusters = new NativeLong(capacity / edsCapacity.bytesPerSector.intValue());
+        edsCapacity.bytesPerSector = bytesPerSector;
+        edsCapacity.numberOfFreeClusters = capacity / edsCapacity.bytesPerSector;
         //  To make sure that flag is reset at each set capacity, so can keep shooting images
         edsCapacity.reset = 1;
         final EdsdkError error = toEdsdkError(CanonFactory.edsdkLibrary().EdsSetCapacity(camera, edsCapacity));
@@ -89,10 +88,10 @@ public class CameraLogicDefault implements CameraLogic {
     /**
      * Provided only to be able to test methods
      *
-     * @return native long by ref
+     * @return int by ref (EdsUInt32 is fixed 32-bit on every platform)
      */
-    protected NativeLongByReference buildNativeLongByReference() {
-        return new NativeLongByReference();
+    protected IntByReference buildIntByReference() {
+        return new IntByReference();
     }
 
     /**
@@ -127,13 +126,13 @@ public class CameraLogicDefault implements CameraLogic {
                 throw edsdkError.getException();
             }
 
-            final NativeLongByReference outRef = buildNativeLongByReference();
+            final IntByReference outRef = buildIntByReference();
             edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetChildCount(listRef.getValue(), outRef));
             if (edsdkError != EdsdkError.EDS_ERR_OK) {
                 throw edsdkError.getException();
             }
 
-            final long numCams = outRef.getValue().longValue();
+            final long numCams = outRef.getValue() & 0xFFFFFFFFL;
             if (numCams <= 0) {
                 throw EdsdkError.EDS_ERR_DEVICE_NOT_FOUND.getException();
             }
@@ -149,7 +148,7 @@ public class CameraLogicDefault implements CameraLogic {
 
                 final EdsdkLibrary.EdsCameraRef.ByReference cameraRef = buildCameraRefByRef();
 
-                edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetChildAtIndex(listRef.getValue(), new NativeLong(i), cameraRef));
+                edsdkError = toEdsdkError(CanonFactory.edsdkLibrary().EdsGetChildAtIndex(listRef.getValue(), i, cameraRef));
                 if (edsdkError != EdsdkError.EDS_ERR_OK) {
                     throw edsdkError.getException();
                 }

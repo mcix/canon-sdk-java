@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -49,13 +48,13 @@ public class EdsDirectoryItemInfo extends Structure {
 	/** C type : EdsUInt32
      * A non-zero integer. The same group ID is assigned to files that belong to the same group, such as RAW+JPEG images or RAW+AVI images
      */
-	public NativeLong groupID;
+	public int groupID;
 	/** C type : EdsUInt32
      * An option when a direct transfer request is received (a kEdsObjectEvent_DirItemRequestTransferDT event).
      * kEdsTransferOptionToDesktop is set when [Wallpaper] in the direct transfer is executed by means of camera operations.
      * Prohibit it under other timing conditions.
      */
-	public NativeLong option;
+	public int option;
 	/** C type : EdsChar[256]
      * Returns the directory name or file name if successful.
      * Example: "_MG_0060.JPG"
@@ -65,9 +64,9 @@ public class EdsDirectoryItemInfo extends Structure {
      * Returns the directory item type.
      * Note:This type is defined in EdsImageType.
      * */
-	public NativeLong format;
+	public int format;
 	/** C type : EdsUInt32 */
-	public NativeLong dateTime;
+	public int dateTime;
 	public EdsDirectoryItemInfo() {
 		super();
 	}
@@ -84,7 +83,7 @@ public class EdsDirectoryItemInfo extends Structure {
 	 * @param format C type : EdsUInt32<br>
 	 * @param dateTime C type : EdsUInt32
 	 */
-	public EdsDirectoryItemInfo(long size, int isFolder, NativeLong groupID, NativeLong option, byte szFileName[], NativeLong format, NativeLong dateTime) {
+	public EdsDirectoryItemInfo(long size, int isFolder, int groupID, int option, byte szFileName[], int format, int dateTime) {
 		super();
 		this.size = size;
 		this.isFolder = isFolder;

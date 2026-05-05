@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,9 +37,9 @@ import java.util.List;
  */
 public class EdsCapacity extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong numberOfFreeClusters;
+	public int numberOfFreeClusters;
 	/** C type : EdsInt32 */
-	public NativeLong bytesPerSector;
+	public int bytesPerSector;
 	/** C type : EdsBool */
 	public int reset;
 	public EdsCapacity() {
@@ -55,7 +54,7 @@ public class EdsCapacity extends Structure {
 	 * @param bytesPerSector C type : EdsInt32<br>
 	 * @param reset C type : EdsBool
 	 */
-	public EdsCapacity(NativeLong numberOfFreeClusters, NativeLong bytesPerSector, int reset) {
+	public EdsCapacity(int numberOfFreeClusters, int bytesPerSector, int reset) {
 		super();
 		this.numberOfFreeClusters = numberOfFreeClusters;
 		this.bytesPerSector = bytesPerSector;

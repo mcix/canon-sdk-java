@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -39,15 +38,15 @@ import java.util.List;
  */
 public class EdsFocusShiftSet extends Structure {
 	/** C type : EdsInt32 */
-	public NativeLong version;
+	public int version;
 	/** C type : EdsInt32 */
-	public NativeLong focusShiftFunction;
+	public int focusShiftFunction;
 	/** C type : EdsInt32 */
-	public NativeLong shootingNumber;
+	public int shootingNumber;
 	/** C type : EdsInt32 */
-	public NativeLong stepWidth;
+	public int stepWidth;
 	/** C type : EdsInt32 */
-	public NativeLong exposureSmoothing;
+	public int exposureSmoothing;
 	public EdsFocusShiftSet() {
 		super();
 	}
@@ -62,7 +61,7 @@ public class EdsFocusShiftSet extends Structure {
 	 * @param stepWidth C type : EdsInt32<br>
 	 * @param exposureSmoothing C type : EdsInt32
 	 */
-	public EdsFocusShiftSet(NativeLong version, NativeLong focusShiftFunction, NativeLong shootingNumber, NativeLong stepWidth, NativeLong exposureSmoothing) {
+	public EdsFocusShiftSet(int version, int focusShiftFunction, int shootingNumber, int stepWidth, int exposureSmoothing) {
 		super();
 		this.version = version;
 		this.focusShiftFunction = focusShiftFunction;

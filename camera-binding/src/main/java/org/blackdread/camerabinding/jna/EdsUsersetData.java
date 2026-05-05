@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,9 +37,9 @@ import java.util.List;
  */
 public class EdsUsersetData extends Structure {
 	/** C type : EdsUInt32 */
-	public NativeLong valid;
+	public int valid;
 	/** C type : EdsUInt32 */
-	public NativeLong dataSize;
+	public int dataSize;
 	/** C type : EdsChar[32] */
 	public byte[] szCaption = new byte[32];
 	/** C type : EdsUInt8[1] */
@@ -58,7 +57,7 @@ public class EdsUsersetData extends Structure {
 	 * @param szCaption C type : EdsChar[32]<br>
 	 * @param data C type : EdsUInt8[1]
 	 */
-	public EdsUsersetData(NativeLong valid, NativeLong dataSize, byte szCaption[], byte data[]) {
+	public EdsUsersetData(int valid, int dataSize, byte szCaption[], byte data[]) {
 		super();
 		this.valid = valid;
 		this.dataSize = dataSize;

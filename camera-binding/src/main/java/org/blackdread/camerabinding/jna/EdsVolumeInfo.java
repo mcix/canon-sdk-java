@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -38,7 +37,7 @@ import java.util.List;
  */
 public class EdsVolumeInfo extends Structure {
 	/** C type : EdsUInt32 */
-	public NativeLong storageType;
+	public int storageType;
 	/** C type : EdsAccess */
 	public int access;
 	/** C type : EdsUInt64 */
@@ -61,7 +60,7 @@ public class EdsVolumeInfo extends Structure {
 	 * @param freeSpaceInBytes C type : EdsUInt64<br>
 	 * @param szVolumeLabel C type : EdsChar[256]
 	 */
-	public EdsVolumeInfo(NativeLong storageType, int access, long maxCapacity, long freeSpaceInBytes, byte szVolumeLabel[]) {
+	public EdsVolumeInfo(int storageType, int access, long maxCapacity, long freeSpaceInBytes, byte szVolumeLabel[]) {
 		super();
 		this.storageType = storageType;
 		this.access = access;

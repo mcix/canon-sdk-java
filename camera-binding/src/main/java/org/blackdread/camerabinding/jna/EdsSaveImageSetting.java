@@ -23,7 +23,6 @@
  */
 package org.blackdread.camerabinding.jna;
 
-import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsStreamRef;
@@ -39,11 +38,11 @@ import java.util.List;
  */
 public class EdsSaveImageSetting extends Structure {
 	/** C type : EdsUInt32 */
-	public NativeLong JPEGQuality;
+	public int JPEGQuality;
 	/** C type : EdsStreamRef */
 	public EdsStreamRef iccProfileStream;
 	/** C type : EdsUInt32 */
-	public NativeLong reserved;
+	public int reserved;
 	public EdsSaveImageSetting() {
 		super();
 	}
@@ -56,7 +55,7 @@ public class EdsSaveImageSetting extends Structure {
 	 * @param iccProfileStream C type : EdsStreamRef<br>
 	 * @param reserved C type : EdsUInt32
 	 */
-	public EdsSaveImageSetting(NativeLong JPEGQuality, EdsStreamRef iccProfileStream, NativeLong reserved) {
+	public EdsSaveImageSetting(int JPEGQuality, EdsStreamRef iccProfileStream, int reserved) {
 		super();
 		this.JPEGQuality = JPEGQuality;
 		this.iccProfileStream = iccProfileStream;
