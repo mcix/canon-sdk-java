@@ -3875,6 +3875,35 @@ public interface EdsdkLibrary extends StdCallLibrary {
 
     /**
      * -----------------------------------------------------------------------------<br>
+     * //  <br>
+     * //  Function:   EdsGetPropertyDescEx<br>
+     * //<br>
+     * //  Description:<br>
+     * //      Gets a list of property data that can be set for the object<br>
+     * //          designated in inRef, as well as maximum and minimum values.<br>
+     * //      Like {@link #EdsGetPropertyDesc} but uses 64-bit values and supports<br>
+     * //      properties whose descriptor list does not fit in EdsPropertyDesc<br>
+     * //      (introduced in EDSDK 13.19.0 for properties such as kEdsPropID_MovieParamEx).<br>
+     * //<br>
+     * //  Parameters:<br>
+     * //       In:    inRef - The reference of the camera.<br>
+     * //              inPropertyID - The Property ID.<br>
+     * //       Out:   outPropertyDesc - Extended array of the values which can be set up.<br>
+     * //<br>
+     * //  Returns:    Any of the sdk errors.<br>
+     * -----------------------------------------------------------------------------<br>
+     * Original signature : <code>EdsError EdsGetPropertyDescEx(EdsBaseRef, EdsPropertyID, EdsPropertyDescEx*)</code><br>
+     *
+     * @param inRef           The reference of the camera
+     * @param inPropertyID    The Property ID
+     * @param outPropertyDesc Extended array of the values which can be set up
+     * @return any of the sdk errors
+     * @since edsdk 13.19.0
+     */
+    int EdsGetPropertyDescEx(EdsBaseRef inRef, int inPropertyID, EdsPropertyDescEx outPropertyDesc);
+
+    /**
+     * -----------------------------------------------------------------------------<br>
      * //<br>
      * //  Function:   EdsGetCameraList<br>
      * //<br>
@@ -4124,6 +4153,53 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * @return any of the sdk errors
      */
     int EdsGetDirectoryItemInfo(EdsDirectoryItemRef inDirItemRef, EdsDirectoryItemInfo outDirItemInfo);
+
+    /**
+     * -----------------------------------------------------------------------------<br>
+     * //<br>
+     * //  Function:   EdsCreateFolder<br>
+     * //<br>
+     * //  Description:<br>
+     * //      Creates a folder on the storage media of the specified camera.<br>
+     * //<br>
+     * //  Parameters:<br>
+     * //       In:    inCameraRef - The reference of the camera.<br>
+     * //<br>
+     * //  Returns:    Any of the sdk errors.<br>
+     * -----------------------------------------------------------------------------<br>
+     * Original signature : <code>EdsError EdsCreateFolder(EdsCameraRef)</code><br>
+     *
+     * @param inCameraRef The reference of the camera
+     * @return any of the sdk errors
+     */
+    int EdsCreateFolder(EdsCameraRef inCameraRef);
+
+    /**
+     * -----------------------------------------------------------------------------<br>
+     * //<br>
+     * //  Function:   EdsSetMetaImage<br>
+     * //<br>
+     * //  Description:<br>
+     * //      Embeds a meta image (e.g. a thumbnail or screennail) into the<br>
+     * //      designated directory item.<br>
+     * //<br>
+     * //  Parameters:<br>
+     * //       In:    inDirItemRef    - The reference of the directory item.<br>
+     * //              inMetaType      - Type of meta data to set.<br>
+     * //              inMetaDataSize  - Size in bytes of the meta data buffer.<br>
+     * //              inMetaData      - Pointer to the meta data buffer.<br>
+     * //<br>
+     * //  Returns:    Any of the sdk errors.<br>
+     * -----------------------------------------------------------------------------<br>
+     * Original signature : <code>EdsError EdsSetMetaImage(EdsDirectoryItemRef, EdsUInt32, EdsUInt32, const EdsVoid*)</code><br>
+     *
+     * @param inDirItemRef   The reference of the directory item
+     * @param inMetaType     Type of meta data to set
+     * @param inMetaDataSize Size in bytes of the meta data buffer
+     * @param inMetaData     Pointer to the meta data buffer
+     * @return any of the sdk errors
+     */
+    int EdsSetMetaImage(EdsDirectoryItemRef inDirItemRef, int inMetaType, int inMetaDataSize, Pointer inMetaData);
 
     /**
      * -----------------------------------------------------------------------------<br>
@@ -5157,6 +5233,54 @@ public interface EdsdkLibrary extends StdCallLibrary {
      */
     int EdsGetEvent();
 
+    /**
+     * -----------------------------------------------------------------------------<br>
+     * //<br>
+     * //  Function:   EdsCreateFlashSettingRef<br>
+     * //<br>
+     * //  Description:<br>
+     * //      Creates a flash settings object so that flash-related properties<br>
+     * //      may be queried and updated via EdsGetPropertyData / EdsSetPropertyData.<br>
+     * //<br>
+     * //  Parameters:<br>
+     * //       In:    inCameraRef - The reference of the camera.<br>
+     * //      Out:    outFlashRef - The reference of the Flash settings object.<br>
+     * //<br>
+     * //  Returns:    Any of the sdk errors.<br>
+     * -----------------------------------------------------------------------------<br>
+     * Original signature : <code>EdsError EdsCreateFlashSettingRef(EdsCameraRef, EdsFlashRef*)</code><br>
+     *
+     * @param inCameraRef The reference of the camera
+     * @param outFlashRef The reference of the Flash settings object
+     * @return any of the sdk errors
+     */
+    int EdsCreateFlashSettingRef(EdsCameraRef inCameraRef, @ImplicitRetain EdsFlashRef.ByReference outFlashRef);
+
+    /**
+     * -----------------------------------------------------------------------------<br>
+     * //<br>
+     * //  Function:   EdsSetFramePoint<br>
+     * //<br>
+     * //  Description:<br>
+     * //      Sets the AF frame point on a live-view stream.<br>
+     * //<br>
+     * //  Parameters:<br>
+     * //       In:    inCameraRef    - The reference of the camera.<br>
+     * //              inFramepoint   - The new AF frame coordinates.<br>
+     * //              inLockAfFrame  - When true, locks the AF frame to that point.<br>
+     * //<br>
+     * //  Returns:    Any of the sdk errors.<br>
+     * -----------------------------------------------------------------------------<br>
+     * Original signature : <code>EdsError EdsSetFramePoint(EdsCameraRef, EdsPoint, bool)</code><br>
+     *
+     * @param inCameraRef   The reference of the camera
+     * @param inFramepoint  The new AF frame coordinates (passed by value)
+     * @param inLockAfFrame When true, locks the AF frame to that point
+     * @return any of the sdk errors
+     * @since edsdk 13.13.20
+     */
+    int EdsSetFramePoint(EdsCameraRef inCameraRef, EdsPoint.ByValue inFramepoint, boolean inLockAfFrame);
+
     public abstract class EdsObjectByReference<T extends EdsBaseRef> extends ByReference {
 
         public EdsObjectByReference() {
@@ -5427,6 +5551,35 @@ public interface EdsdkLibrary extends StdCallLibrary {
                     return null;
                 }
                 return new EdsEvfImageRef(p);
+            }
+        }
+    }
+
+    /**
+     * Reference to flash-related settings on a camera.
+     * Created via {@link #EdsCreateFlashSettingRef} and used as the target ref for
+     * {@code EdsGetPropertyData} / {@code EdsSetPropertyData} when working with
+     * flash properties.
+     */
+    public static class EdsFlashRef extends EdsBaseRef {
+
+        public EdsFlashRef() {
+            super();
+        }
+
+        public EdsFlashRef(final Pointer address) {
+            super(address);
+        }
+
+        public static class ByReference extends EdsBaseRef.ByReference {
+
+            @Override
+            public EdsFlashRef getValue() {
+                final Pointer p = getPointer().getPointer(0);
+                if (p == null) {
+                    return null;
+                }
+                return new EdsFlashRef(p);
             }
         }
     }

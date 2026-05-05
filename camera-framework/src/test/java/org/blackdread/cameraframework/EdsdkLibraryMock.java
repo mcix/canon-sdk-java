@@ -150,6 +150,11 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
     }
 
     @Override
+    public int EdsGetPropertyDescEx(final EdsBaseRef inRef, final int inPropertyID, final EdsPropertyDescEx outPropertyDesc) {
+        return 0;
+    }
+
+    @Override
     public int EdsGetCameraList(final EdsCameraListRef.ByReference outCameraListRef) {
         return 0;
     }
@@ -196,6 +201,16 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
 
     @Override
     public int EdsGetDirectoryItemInfo(final EdsDirectoryItemRef inDirItemRef, final EdsDirectoryItemInfo outDirItemInfo) {
+        return 0;
+    }
+
+    @Override
+    public int EdsCreateFolder(final EdsCameraRef inCameraRef) {
+        return 0;
+    }
+
+    @Override
+    public int EdsSetMetaImage(final EdsDirectoryItemRef inDirItemRef, final int inMetaType, final int inMetaDataSize, final Pointer inMetaData) {
         return 0;
     }
 
@@ -401,6 +416,16 @@ public class EdsdkLibraryMock implements EdsdkLibrary {
 
     @Override
     public int EdsGetEvent() {
+        return 0;
+    }
+
+    @Override
+    public int EdsCreateFlashSettingRef(final EdsCameraRef inCameraRef, final EdsFlashRef.ByReference outFlashRef) {
+        return 0;
+    }
+
+    @Override
+    public int EdsSetFramePoint(final EdsCameraRef inCameraRef, final EdsPoint.ByValue inFramepoint, final boolean inLockAfFrame) {
         return 0;
     }
 }
