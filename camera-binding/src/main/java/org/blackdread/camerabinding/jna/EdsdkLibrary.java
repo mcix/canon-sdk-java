@@ -1305,7 +1305,12 @@ public interface EdsdkLibrary extends StdCallLibrary {
         /**
          * <i>native declaration : sdk-header\EDSDKTypes.h:878</i>
          */
-        public static final int kEdsWhiteBalance_Tangsten = 3;
+        public static final int kEdsWhiteBalance_Tungsten = 3;
+        /**
+         * @deprecated typo, use {@link #kEdsWhiteBalance_Tungsten} instead.
+         */
+        @Deprecated
+        public static final int kEdsWhiteBalance_Tangsten = kEdsWhiteBalance_Tungsten;
         /**
          * <i>native declaration : sdk-header\EDSDKTypes.h:879</i>
          */

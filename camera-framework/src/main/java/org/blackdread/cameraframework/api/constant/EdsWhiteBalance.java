@@ -42,7 +42,7 @@ public enum EdsWhiteBalance implements NativeEnum<Integer> {
     kEdsWhiteBalance_Auto("Auto: Ambiance priority"),
     kEdsWhiteBalance_Daylight("Daylight"),
     kEdsWhiteBalance_Cloudy("Cloudy"),
-    kEdsWhiteBalance_Tangsten("Tungsten"),
+    kEdsWhiteBalance_Tungsten("Tungsten"),
     kEdsWhiteBalance_Fluorescent("Fluorescent"),
     kEdsWhiteBalance_Strobe("Flash"),
     kEdsWhiteBalance_WhitePaper("Manual (set by shooting a white card or paper)"),
