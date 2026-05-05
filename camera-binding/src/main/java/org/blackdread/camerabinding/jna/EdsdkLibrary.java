@@ -345,6 +345,22 @@ public interface EdsdkLibrary extends StdCallLibrary {
          * <i>native declaration : sdk-header\EDSDKTypes.h:608</i>
          */
         public static final int kEdsImageType_CR2 = 0x00000006;
+        /**
+         * EDSDK 13.20.10 (HEIF still image)
+         */
+        public static final int kEdsImageType_HEIF = 0x00000008;
+    }
+
+    /**
+     * EDSDK object format identifiers (introduced in 13.20.10).
+     */
+    public static interface EdsObjectFormat {
+        public static final int kEdsObjectFormat_Unknown = 0x00000000;
+        public static final int kEdsObjectFormat_Jpeg = 0x3801;
+        public static final int kEdsObjectFormat_CR2 = 0xB103;
+        public static final int kEdsObjectFormat_MP4 = 0xB982;
+        public static final int kEdsObjectFormat_CR3 = 0xB108;
+        public static final int kEdsObjectFormat_HEIF_CODE = 0xB10B;
     }
 
     /**
@@ -1283,6 +1299,38 @@ public interface EdsdkLibrary extends StdCallLibrary {
          * <i>native declaration : sdk-header\EDSDKTypes.h:866</i>
          */
         public static final int kEdsStorageType_CFast = 5;
+        /**
+         * EDSDK 13.20.10 (CFexpress)
+         */
+        public static final int kEdsStorageType_CFe = 7;
+    }
+
+    /**
+     * Mirror lock-up state (DSLR bodies). EDSDK 13.20.10.
+     */
+    public static interface EdsMirrorLockupState {
+        public static final int kEdsMirrorLockupStateDisable = 0;
+        public static final int kEdsMirrorLockupStateEnable = 1;
+        public static final int kEdsMirrorLockupStateDuringShooting = 2;
+    }
+
+    /**
+     * Mirror up setting (DSLR bodies). EDSDK 13.20.10.
+     */
+    public static interface EdsMirrorUpSetting {
+        public static final int kEdsMirrorUpSettingOff = 0;
+        public static final int kEdsMirrorUpSettingOn = 1;
+    }
+
+    /**
+     * Power-zoom drive direction and limit. EDSDK 13.20.10.
+     */
+    public static interface EdsDrivePowerZoom {
+        public static final int kEdsDrivePowerZoom_Stop = 0x00000000;
+        public static final int kEdsDrivePowerZoom_LimitOff_Wide = 0x00000001;
+        public static final int kEdsDrivePowerZoom_LimitOff_Tele = 0x00000002;
+        public static final int kEdsDrivePowerZoom_LimitOn_Wide = 0x00000011;
+        public static final int kEdsDrivePowerZoom_LimitOn_Tele = 0x00000012;
     }
 
     /**
@@ -1893,12 +1941,18 @@ public interface EdsdkLibrary extends StdCallLibrary {
          */
         public static final int kEdsEvfOutputDevice_PC = 2;
         /**
-         * <i>native declaration : sdk-header\EDSDKTypes.h:1071</i>
+         * @deprecated removed by Canon; the value (4) is no longer reserved.
          */
+        @Deprecated
         public static final int kEdsEvfOutputDevice_MOBILE = 4;
         /**
-         * <i>native declaration : sdk-header\EDSDKTypes.h:1072</i>
+         * EDSDK 13.20.10 (downscaled live view stream to PC).
          */
+        public static final int kEdsEvfOutputDevice_PC_Small = 8;
+        /**
+         * @deprecated removed by Canon; the value (8) is now {@link #kEdsEvfOutputDevice_PC_Small}.
+         */
+        @Deprecated
         public static final int kEdsEvfOutputDevice_MOBILE2 = 8;
     }
 
@@ -1916,9 +1970,17 @@ public interface EdsdkLibrary extends StdCallLibrary {
          */
         public static final int kEdsEvfZoom_x5 = 5;
         /**
+         * EDSDK 13.20.10
+         */
+        public static final int kEdsEvfZoom_x6 = 6;
+        /**
          * <i>native declaration : sdk-header\EDSDKTypes.h:1082</i>
          */
         public static final int kEdsEvfZoom_x10 = 10;
+        /**
+         * EDSDK 13.20.10
+         */
+        public static final int kEdsEvfZoom_x15 = 15;
     }
 
     /**
@@ -3250,6 +3312,73 @@ public interface EdsdkLibrary extends StdCallLibrary {
      */
     public static final int kEdsPropID_MovieSoundRecord = 0x01000436;
 
+    // -----------------------------------------------------------------------------
+    // Property IDs added in EDSDK 13.20.10
+    // -----------------------------------------------------------------------------
+
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_AfLockState = 0x00000480;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_AFTrackingObject = 0x01000468;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_ApertureLockSetting = 0x01000476;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_BrightnessSetting = 0x00000483;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_ColorFilter = 0x0000047f;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_ContinuousAfMode = 0x01000433;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_DigitalZoomSetting = 0x00000477;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_DriveFocusToEdge = 0x0100046d;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_Evf_FocalLength = 0x01000555;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_Flash_Firing = 0x0000200d;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_Flash_Target = 0x0000201e;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_FocusPosition = 0x0100046e;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_IBIS_HighResoShot = 0x000004e0;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_LensIsSetting = 0x010004c0;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieFileNameClipNo = 0x000004e7;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieFileNameIndex = 0x000004e5;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieFileNameReelNo = 0x000004e6;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieFileNameUserDef = 0x000004e8;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieParamEx = 0x011004c6;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieRecVolume_Acc = 0x0100048b;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieRecVolume_ExtMic = 0x0100048a;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_MovieRecVolume_IntMic = 0x01000489;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_RegisterFocusEdge = 0x0100046c;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_ScreenDimmerTime = 0x010004c1;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_ScreenOffTime = 0x010004c2;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_SlowFastMode = 0x010004c7;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_StillFileNameSetting = 0x000004e1;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_StillFileNameUserSet1 = 0x000004e2;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_StillFileNameUserSet2 = 0x000004e3;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_StillFolderName = 0x000004e4;
+    /** @since edsdk 13.20.10 */
+    public static final int kEdsPropID_ViewfinderOffTime = 0x010004c3;
+
     /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
@@ -3346,6 +3475,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      */
     public static final int kEdsPropertyEvent_PropertyDescChanged = 0x00000102;
     /**
+     * EDSDK 13.20.10
+     */
+    public static final int kEdsPropertyEvent_PropertyDescExChanged = 0x00000110;
+    /**
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
     public static final int kEdsObjectEvent_All = 0x00000200;
@@ -3433,6 +3566,10 @@ public interface EdsdkLibrary extends StdCallLibrary {
      * <i>native declaration : sdk-header\EDSDKTypes.h</i>
      */
     public static final int kEdsStateEvent_BulbExposureTime = 0x00000310;
+    /**
+     * EDSDK 13.20.10 (fired when power-zoom info changes)
+     */
+    public static final int kEdsStateEvent_PowerZoomInfoChanged = 0x00000311;
     /**
      * <i>native declaration : sdk-header\EDSDK.h</i>
      */
