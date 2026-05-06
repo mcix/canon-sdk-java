@@ -32,6 +32,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -85,20 +86,22 @@ class CameraObjectEventLogicCameraTest {
         cameraObjectEventLogic().clearCameraObjectListeners();
     }
 
+    @Disabled("Incomplete: registers a listener and asserts an event has fired without ever triggering one. Re-enable once the TODO is filled in (likely: take a picture with kEdsSaveTo_Host then poll for kEdsObjectEvent_DirItemRequestTransfer).")
     @Test
     void getNotifiedWhileRegisteringForAnyCamera() {
         cameraObjectEventLogic().addCameraObjectListener(cameraObjectListener);
 
-        // TODO
+        // TODO trigger an object event (e.g. take a picture with SaveTo=Host) and pump events.
 
         Assertions.assertEquals(1, countEvent.get());
     }
 
+    @Disabled("Incomplete: see getNotifiedWhileRegisteringForAnyCamera. Same TODO applies.")
     @Test
     void getNotifiedWhileRegisteringForSpecificCamera() {
         cameraObjectEventLogic().addCameraObjectListener(cameraRef, cameraObjectListener);
 
-        // TODO
+        // TODO trigger an object event for this specific camera ref and pump events.
 
         Assertions.assertEquals(1, countEvent.get());
     }
