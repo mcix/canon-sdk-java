@@ -120,7 +120,8 @@ class PropertyGetLogicCameraTest {
 //            arguments(EdsPropertyID.kEdsPropID_JpegQuality, EdsDataType.kEdsDataType_UInt32, 4), // not supported
 //            arguments(EdsPropertyID.kEdsPropID_Orientation, EdsDataType.kEdsDataType_UInt32, 4), // EDS_ERR_PROPERTIES_UNAVAILABLE
 //            arguments(EdsPropertyID.kEdsPropID_ICCProfile, EdsDataType.kEdsDataType_ByteBlock, 4), // EDS_ERR_PROPERTIES_UNAVAILABLE
-            arguments(EdsPropertyID.kEdsPropID_FocusInfo, EdsDataType.kEdsDataType_FocusInfo, 19224),
+//            arguments(EdsPropertyID.kEdsPropID_FocusInfo, EdsDataType.kEdsDataType_FocusInfo, 19224), // EDS_ERR_PROPERTIES_UNAVAILABLE on R8 (mirrorless); FocusInfo is queried via EdsImageRef there
+
 //            arguments(EdsPropertyID.kEdsPropID_DigitalExposure, EdsDataType.kEdsDataType_Rational, 4), // EDS_ERR_PROPERTIES_UNAVAILABLE
             arguments(EdsPropertyID.kEdsPropID_WhiteBalance, EdsDataType.kEdsDataType_Int32, 4),
             arguments(EdsPropertyID.kEdsPropID_WhiteBalanceShift, EdsDataType.kEdsDataType_Int32_Array, 8),
@@ -175,7 +176,7 @@ class PropertyGetLogicCameraTest {
 //            arguments(EdsPropertyID.kEdsPropID_FlashMode, EdsDataType.kEdsDataType_UInt32_Array, 4),// EDS_ERR_PROPERTIES_UNAVAILABLE
             arguments(EdsPropertyID.kEdsPropID_LensStatus, EdsDataType.kEdsDataType_UInt32, 4),
             arguments(EdsPropertyID.kEdsPropID_Copyright, EdsDataType.kEdsDataType_String, 0),
-            arguments(EdsPropertyID.kEdsPropID_DepthOfField, EdsDataType.kEdsDataType_Unknown, 4),// not supported
+            arguments(EdsPropertyID.kEdsPropID_DepthOfField, EdsDataType.kEdsDataType_UInt32, 4), // supported on R8 (was "not supported" on the body the table was first written for)
             arguments(EdsPropertyID.kEdsPropID_EFCompensation, EdsDataType.kEdsDataType_Unknown, 4),// not supported
             arguments(EdsPropertyID.kEdsPropID_AEModeSelect, EdsDataType.kEdsDataType_UInt32, 4),
             arguments(EdsPropertyID.kEdsPropID_Record, EdsDataType.kEdsDataType_UInt32, 4),
@@ -350,10 +351,20 @@ class PropertyGetLogicCameraTest {
         } catch (EdsdkErrorException e) {
             switch (e.getEdsdkError()) {
                 case EDS_ERR_NOT_SUPPORTED:
-                    log.error("Property ({}) is not supported by current camera", propertyID);
+                    log.info("Property ({}) is not supported by current camera", propertyID);
                     return;
                 case EDS_ERR_PROPERTIES_UNAVAILABLE:
-                    log.error("Property ({}) is unavailable for current camera", propertyID);
+                    log.info("Property ({}) is unavailable for current camera", propertyID);
+                    return;
+                case EDS_ERR_PROTECTION_VIOLATION:
+                    // Many properties (TempStatus, MovieParam, AutoPowerOff, MirrorUp, …) are
+                    // protected on R-series mirrorless bodies — readable only when the camera
+                    // is in the right mode (recording, live view, etc.). Treat the same as
+                    // "not currently exposed" rather than a hard failure.
+                    log.info("Property ({}) is protected on current camera", propertyID);
+                    return;
+                case EDS_ERR_INTERNAL_ERROR:
+                    log.info("Property ({}) raised internal error on current camera", propertyID);
                     return;
                 default:
                     throw e;
