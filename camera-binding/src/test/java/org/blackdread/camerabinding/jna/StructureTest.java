@@ -300,4 +300,46 @@ class StructureTest {
         new EdsVolumeInfo.ByValue();
     }
 
+    @Test
+    void edsApertureLockSetting() {
+        final EdsApertureLockSetting eds1 = new EdsApertureLockSetting();
+        Assertions.assertNotNull(eds1.getFieldOrder());
+        Assertions.assertFalse(eds1.getFieldOrder().isEmpty());
+
+        new EdsApertureLockSetting(new Pointer(0));
+        new EdsApertureLockSetting(0, 0);
+        new EdsApertureLockSetting.ByReference();
+        new EdsApertureLockSetting.ByValue();
+    }
+
+    @Test
+    void edsMovieFileNoSet() {
+        final EdsMovieFileNoSet eds1 = new EdsMovieFileNoSet();
+        Assertions.assertNotNull(eds1.getFieldOrder());
+        Assertions.assertFalse(eds1.getFieldOrder().isEmpty());
+
+        new EdsMovieFileNoSet(new Pointer(0));
+        new EdsMovieFileNoSet((short) 0, (short) 0);
+        new EdsMovieFileNoSet.ByReference();
+        new EdsMovieFileNoSet.ByValue();
+    }
+
+    @Test
+    void edsGpsMetaData() {
+        final EdsGpsMetaData eds1 = new EdsGpsMetaData();
+        Assertions.assertNotNull(eds1.getFieldOrder());
+        Assertions.assertFalse(eds1.getFieldOrder().isEmpty());
+        // Pre-allocated EdsRational arrays must not be null (JNA layout requires it).
+        Assertions.assertNotNull(eds1.latitude);
+        Assertions.assertEquals(3, eds1.latitude.length);
+        Assertions.assertNotNull(eds1.longitude);
+        Assertions.assertEquals(3, eds1.longitude.length);
+        Assertions.assertNotNull(eds1.timeStamp);
+        Assertions.assertEquals(3, eds1.timeStamp.length);
+
+        new EdsGpsMetaData(new Pointer(0));
+        new EdsGpsMetaData.ByReference();
+        new EdsGpsMetaData.ByValue();
+    }
+
 }
