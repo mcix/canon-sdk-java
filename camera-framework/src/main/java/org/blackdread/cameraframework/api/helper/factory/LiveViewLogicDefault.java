@@ -87,9 +87,24 @@ public class LiveViewLogicDefault implements LiveViewLogic {
 
     @Override
     public boolean isLiveViewEnabled(final EdsCameraRef camera) {
-        // Can decide to catch errors and return false instead
-        final Long state = CanonFactory.propertyGetLogic().getPropertyData(camera, EdsPropertyID.kEdsPropID_Evf_Mode);
-        return 1L == state;
+        // kEdsPropID_Evf_Mode is the DSLR mirror-up flag (1 = mirror up for live view).
+        // Mirrorless R-series bodies don't have it and return EDS_ERR_INVALID_HANDLE; for
+        // those we fall back to "is the live view stream being routed somewhere?", which
+        // is what kEdsPropID_Evf_OutputDevice expresses (0 = stream off / TFT-only).
+        try {
+            final Long state = CanonFactory.propertyGetLogic().getPropertyData(camera, EdsPropertyID.kEdsPropID_Evf_Mode);
+            return 1L == state;
+        } catch (final EdsdkErrorException dslrPropMissing) {
+            log.debug("Evf_Mode unavailable ({}); falling back to Evf_OutputDevice (mirrorless)", dslrPropMissing.getMessage());
+            try {
+                final Long device = CanonFactory.propertyGetLogic().getPropertyData(camera, EdsPropertyID.kEdsPropID_Evf_OutputDevice);
+                // Anything other than 0 (off) or TFT-only is a live live view stream.
+                return device != null && device != 0L && device.intValue() != EdsEvfOutputDevice.kEdsEvfOutputDevice_TFT.value();
+            } catch (final EdsdkErrorException secondaryFallback) {
+                log.debug("Evf_OutputDevice also unavailable ({})", secondaryFallback.getMessage());
+                return false;
+            }
+        }
     }
 
     @Override
