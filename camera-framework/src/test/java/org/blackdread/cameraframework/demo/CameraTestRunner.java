@@ -40,6 +40,8 @@ public final class CameraTestRunner {
         "org.blackdread.cameraframework.api.helper.logic.PropertySetLogicCameraTest",
         "org.blackdread.cameraframework.api.helper.logic.LiveViewLogicCameraTest",
         "org.blackdread.cameraframework.api.helper.logic.LiveViewLogicOnCameraTest",
+        "org.blackdread.cameraframework.api.helper.logic.MirrorlessLiveViewCameraTest",
+        "org.blackdread.cameraframework.api.helper.logic.NewEdsdkBindingsCameraTest",
         "org.blackdread.cameraframework.api.helper.logic.ShootLogicCameraTest",
         "org.blackdread.cameraframework.api.helper.logic.ShootLogicWithEventFetcherCameraTest",
         "org.blackdread.cameraframework.api.helper.logic.event.CameraObjectEventLogicCameraTest",
