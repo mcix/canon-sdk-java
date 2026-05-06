@@ -25,6 +25,7 @@ package org.blackdread.cameraframework.api.helper.logic;
 
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.cameraframework.CameraIsConnected;
+import org.blackdread.cameraframework.CameraTypeUtil;
 import org.blackdread.cameraframework.api.TestShortcutUtil;
 import org.blackdread.cameraframework.api.constant.EdsdkError;
 import org.blackdread.cameraframework.exception.error.EdsdkErrorException;
@@ -32,6 +33,7 @@ import org.blackdread.cameraframework.util.ReleaseUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,12 +57,16 @@ class LiveViewLogicCameraTest {
 
     private static EdsdkLibrary.EdsCameraRef cameraRef;
 
+    private static boolean hasEvfMode;
+
     @BeforeAll
     static void setUpClass() {
         TestShortcutUtil.initLibrary();
         camera = TestShortcutUtil.getFirstCamera();
         TestShortcutUtil.openSession(camera);
         cameraRef = camera.getValue();
+        hasEvfMode = CameraTypeUtil.hasEvfMode(cameraRef);
+        log.info("Camera has Evf_Mode (DSLR): {}", hasEvfMode);
     }
 
     @AfterAll
@@ -84,12 +90,17 @@ class LiveViewLogicCameraTest {
 
     @Test
     void endLiveView() {
+        // enableLiveView writes Evf_Mode which only exists on DSLRs.
+        Assumptions.assumeTrue(hasEvfMode, "Evf_Mode is DSLR-only; mirrorless bodies use Evf_OutputDevice directly");
         liveViewLogic().enableLiveView(cameraRef);
         liveViewLogic().endLiveView(cameraRef);
     }
 
     @Test
     void endLiveViewFailsIfNotEnabledFirst() {
+        // On mirrorless, endLiveView's underlying disableLiveView is now swallowed,
+        // so the expected EDS_ERR_DEVICE_BUSY never surfaces.
+        Assumptions.assumeTrue(hasEvfMode, "Evf_Mode is DSLR-only");
         try {
             liveViewLogic().endLiveView(cameraRef);
         } catch (EdsdkErrorException e) {
@@ -109,6 +120,7 @@ class LiveViewLogicCameraTest {
 
     @Test
     void isLiveViewEnabledTrueWhenEnabled() {
+        Assumptions.assumeTrue(hasEvfMode, "enableLiveView writes Evf_Mode (DSLR-only)");
         liveViewLogic().enableLiveView(cameraRef);
         final boolean liveViewEnabled = liveViewLogic().isLiveViewEnabled(cameraRef);
         Assertions.assertTrue(liveViewEnabled, "Live view mode should be enabled");
@@ -116,6 +128,7 @@ class LiveViewLogicCameraTest {
 
     @Test
     void isLiveViewEnabledFalseWhenDisabled() {
+        Assumptions.assumeTrue(hasEvfMode, "disableLiveView writes Evf_Mode (DSLR-only)");
         liveViewLogic().disableLiveView(cameraRef);
         final boolean liveViewEnabled = liveViewLogic().isLiveViewEnabled(cameraRef);
         Assertions.assertFalse(liveViewEnabled, "Live view mode should be disabled");
