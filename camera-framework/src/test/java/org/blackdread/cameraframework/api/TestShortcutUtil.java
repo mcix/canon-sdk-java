@@ -50,19 +50,37 @@ public final class TestShortcutUtil {
     private static final Logger log = LoggerFactory.getLogger(TestShortcutUtil.class);
 
 
-    public static void initLibrary() {
+    /**
+     * EDSDK on macOS (and to a lesser extent on Windows) does not tolerate
+     * EdsTerminateSDK followed by another EdsInitializeSDK in the same process —
+     * the second init returns EDS_ERR_INTERNAL_ERROR. When test classes run
+     * back-to-back in one JVM (e.g. via CameraTestRunner) this caused every test
+     * class after the first to fail in setUpClass.
+     *
+     * Track init state at the JVM level: only call EdsInitializeSDK once, and
+     * make terminateLibrary a no-op so the SDK stays alive for the rest of the
+     * tests. Real shutdown happens via the framework's shutdown hook
+     * (CanonLibraryImpl.registerCanonShutdownHook).
+     */
+    private static volatile boolean sdkInitialized = false;
+
+    public static synchronized void initLibrary() {
+        if (sdkInitialized) {
+            return;
+        }
         final EdsdkError error = toEdsdkError(edsdkLibrary().EdsInitializeSDK());
         Assertions.assertEquals(EdsdkError.EDS_ERR_OK, error);
+        sdkInitialized = true;
     }
 
-    public static void terminateLibrary() {
-        final EdsdkError error = toEdsdkError(edsdkLibrary().EdsTerminateSDK());
-        Assertions.assertEquals(EdsdkError.EDS_ERR_OK, error);
+    public static synchronized void terminateLibrary() {
+        // Intentionally a no-op when running multiple test classes in the same
+        // JVM. The CanonLibraryImpl shutdown hook will terminate the SDK at JVM
+        // exit. If you need a hard reset, fork a fresh JVM.
     }
 
-    public static void reloadLibrary() {
-        terminateLibrary();
-        initLibrary();
+    public static synchronized void reloadLibrary() {
+        // Same rationale as terminateLibrary — leave the SDK alive across classes.
     }
 
     /**
