@@ -24,6 +24,7 @@
 package org.blackdread.cameraframework.api.helper.logic;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.Platform;
 import com.sun.jna.platform.win32.Ole32;
 import org.blackdread.camerabinding.jna.EdsdkLibrary;
 import org.blackdread.camerabinding.jna.EdsdkLibrary.EdsDirectoryItemRef;
@@ -77,7 +78,11 @@ class ShootLogicCameraTest {
 
     @BeforeAll
     static void setUpClass() throws InterruptedException {
-        Ole32.INSTANCE.CoInitializeEx(Pointer.NULL, Ole32.COINIT_MULTITHREADED);
+        // Win32 OLE only matters on Windows; on macOS the binding has no Ole32.dylib
+        // and even loading the JNA Ole32 class triggers an UnsatisfiedLinkError.
+        if (Platform.isWindows()) {
+            Ole32.INSTANCE.CoInitializeEx(Pointer.NULL, Ole32.COINIT_MULTITHREADED);
+        }
         TestShortcutUtil.initLibrary();
         camera = TestShortcutUtil.getFirstCamera();
         TestShortcutUtil.openSession(camera);
