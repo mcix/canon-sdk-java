@@ -1339,7 +1339,24 @@ public interface PropertyGetShortcutLogic {
      * @throws EdsdkErrorException if a command to the library result with a return value different than {@link org.blackdread.cameraframework.api.constant.EdsdkError#EDS_ERR_OK}
      */
     default EdsSize getEvfCoordinateSystem(final EdsEvfImageRef evfImage) {
-        return propertyGetLogic().getPropertyData(evfImage, EdsPropertyID.kEdsPropID_Evf_CoordinateSystem);
+        // Canon's API Reference 3.8 says kEdsPropID_Evf_CoordinateSystem returns
+        // EdsPoint where x = coord-system width, y = coord-system height. The
+        // public shape of this method has always been EdsSize (which is more
+        // intuitive on the Java side); remap rather than break the signature.
+        final Object raw = propertyGetLogic().getPropertyData(evfImage, EdsPropertyID.kEdsPropID_Evf_CoordinateSystem);
+        if (raw instanceof EdsSize) {
+            // Mocks may already return an EdsSize directly; pass through.
+            return (EdsSize) raw;
+        }
+        if (raw instanceof EdsPoint) {
+            final EdsPoint p = (EdsPoint) raw;
+            final EdsSize size = new EdsSize();
+            size.width = p.x;
+            size.height = p.y;
+            return size;
+        }
+        throw new IllegalStateException(
+            "Unexpected EVF coordinate system payload: " + (raw == null ? "null" : raw.getClass().getName()));
     }
 
     /**

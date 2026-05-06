@@ -398,23 +398,33 @@ public enum EdsPropertyID implements NativeEnum<Integer> {
     kEdsPropID_Evf_HistogramB("Gets the histogram for live view image data. The histogram can be used to obtain B", EdsDataType.kEdsDataType_ByteBlock, TargetRefAccessType.GROUP_EVF_IMAGE_READ),
 
     /**
-     * Live View Coordinate System
+     * Live View Coordinate System.
      * <br>
-     * API Reference 3.8 says kEdsDataType_Point EdsPoint, old project used EdsDataType.kEdsDataType_ByteBlock
+     * Canon API Reference 3.8 says kEdsDataType_Point (returns EdsPoint where x = width,
+     * y = height of the coordinate system used for AF/zoom/visible-rect coordinates on
+     * the EVF stream). The shortcut getter remaps that into an EdsSize because that's
+     * the more natural Java view; see PropertyGetShortcutLogic#getEvfCoordinateSystem.
+     * <br>
+     * Old project mis-registered this as ByteBlock, which caused the framework to
+     * extract an int[] and the shortcut getter to ClassCastException at the call site.
      */
-    kEdsPropID_Evf_CoordinateSystem("Get the coordinate system of the live view image", EdsDataType.kEdsDataType_ByteBlock, TargetRefAccessType.GROUP_EVF_IMAGE_READ),
+    kEdsPropID_Evf_CoordinateSystem("Get the coordinate system of the live view image", EdsDataType.kEdsDataType_Point, TargetRefAccessType.GROUP_EVF_IMAGE_READ),
     /**
-     * Live View Zoom Rectangle
+     * Live View Zoom Rectangle.
      * <br>
-     * API Reference 3.8 says kEdsDataType_Point EdsRect, old project used EdsDataType.kEdsDataType_ByteBlock
+     * Canon API Reference 3.8 says kEdsDataType_Rect (EdsRect; the focus / zoom border
+     * on the EVF stream). Old project mis-registered as ByteBlock.
      */
-    kEdsPropID_Evf_ZoomRect("Gets the focus and zoom border rectangle for live view", EdsDataType.kEdsDataType_ByteBlock, TargetRefAccessType.GROUP_EVF_IMAGE_READ),
+    kEdsPropID_Evf_ZoomRect("Gets the focus and zoom border rectangle for live view", EdsDataType.kEdsDataType_Rect, TargetRefAccessType.GROUP_EVF_IMAGE_READ),
     /**
-     * Live View Crop Rectangle
+     * Live View Crop Rectangle.
      * <br>
-     * Not specified in API Reference
+     * Returns an EdsRect describing the crop that the camera applies to the EVF
+     * stream. Canon doesn't document a data type for this one, but the byte layout
+     * is the same as a Rect (4 EdsInt32) and treating it as such gives callers a
+     * usable struct instead of a raw int[].
      */
-    kEdsPropID_Evf_ImageClipRect("Live View Crop Rectangle", EdsDataType.kEdsDataType_ByteBlock, TargetRefAccessType.GROUP_NONE),
+    kEdsPropID_Evf_ImageClipRect("Live View Crop Rectangle", EdsDataType.kEdsDataType_Rect, TargetRefAccessType.GROUP_NONE),
     /**
      * Indicates the zoom step
      * <br>
@@ -541,7 +551,7 @@ public enum EdsPropertyID implements NativeEnum<Integer> {
      * @since edsdk 13.11.10
      * @since 1.2.1
      */
-    kEdsPropID_Evf_VisibleRect("EVF visible rectangle", EdsDataType.kEdsDataType_ByteBlock, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
+    kEdsPropID_Evf_VisibleRect("EVF visible rectangle", EdsDataType.kEdsDataType_Rect, TargetRefAccessType.GROUP_CAMERA_READ_WRITE),
     /**
      * @since edsdk 13.11.10
      * @since 1.2.1
