@@ -244,6 +244,19 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--
+            junit-platform-launcher is needed by the standalone CameraTestRunner
+            (camera-framework demo) which programmatically drives JUnit from a
+            main() that has bootstrapped NSApplication. Surefire would normally
+            pull this in transitively, but the demo runs outside Surefire so
+            we declare it explicitly.
+        -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>6.0.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <distributionManagement>
