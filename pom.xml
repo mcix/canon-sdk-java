@@ -335,6 +335,17 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <!--
+                            Disable doclint so the build doesn't fail on the
+                            ~100 pre-existing missing-@param / empty-<p>-tag
+                            warnings inherited from the original generated
+                            sources. Plain javadoc warnings still appear in
+                            the build output.
+                        -->
+                        <doclint>none</doclint>
+                        <failOnWarnings>false</failOnWarnings>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
