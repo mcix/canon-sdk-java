@@ -1355,6 +1355,15 @@ public interface PropertyGetShortcutLogic {
             size.height = p.y;
             return size;
         }
+        if (raw instanceof int[]) {
+            // Defensive: if someone re-registers this property as ByteBlock the
+            // extractor would return raw int[]. Two ints = width, height.
+            final int[] a = (int[]) raw;
+            if (a.length >= 2) {
+                return new EdsSize(a[0], a[1]);
+            }
+            throw new IllegalStateException("Evf_CoordinateSystem int[] payload too short: length=" + a.length);
+        }
         throw new IllegalStateException(
             "Unexpected EVF coordinate system payload: " + (raw == null ? "null" : raw.getClass().getName()));
     }
