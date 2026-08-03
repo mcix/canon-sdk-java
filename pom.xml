@@ -2,40 +2,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.blackdread</groupId>
+    <!--
+        DeltaProto fork of Blackdread/canon-sdk-java.
+
+        Published under our own groupId so it can never collide in ~/.m2 with an
+        upstream build of the same artifacts — both projects share the
+        org.blackdread.* Java package names, and upstream is on 1.2.x.
+        Java packages are deliberately NOT renamed: keeping them identical means
+        our patches stay as clean cherry-picks to send back upstream.
+
+        Carries, on top of upstream master:
+          - macOS support (EDSDK.framework loading, NativeLong -> int for the
+            fixed-32-bit EDSDK types, C-convention callbacks, mirrorless/R8 fixes)
+          - EDSDK 13.20.10 bindings (missing functions, new structs, constants)
+    -->
+    <groupId>nl.bytesoflife</groupId>
     <artifactId>canon-sdk-java</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Canon sdk java parent POM</name>
-    <description>Canon EDSDK parent pom for modules</description>
-    <url>https://github.com/Blackdread/canon-sdk-java</url>
+    <name>Canon sdk java parent POM (DeltaProto fork)</name>
+    <description>Canon EDSDK parent pom for modules — DeltaProto fork with macOS support and EDSDK 13.20.10 bindings</description>
+    <url>https://github.com/mcix/canon-sdk-java</url>
 
     <scm>
-        <connection>scm:git:https://github.com/blackdread/canon-sdk-java.git</connection>
-        <developerConnection>scm:git:https://github.com/blackdread/canon-sdk-java.git</developerConnection>
-        <url>https://github.com/blackdread/canon-sdk-java</url>
+        <connection>scm:git:https://github.com/mcix/canon-sdk-java.git</connection>
+        <developerConnection>scm:git:https://github.com/mcix/canon-sdk-java.git</developerConnection>
+        <url>https://github.com/mcix/canon-sdk-java</url>
         <tag>HEAD</tag>
     </scm>
 
     <licenses>
         <license>
             <name>MIT</name>
-            <url>https://github.com/Blackdread/canon-sdk-java/blob/master/LICENSE</url>
+            <url>https://github.com/mcix/canon-sdk-java/blob/deltaproto/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
     <developers>
+        <!-- Original author. Retained per the MIT licence this fork inherits. -->
         <developer>
             <id>blackdread</id>
             <name>Yoann CAPLAIN</name>
             <url>http://www.blackdread.org/</url>
         </developer>
+        <developer>
+            <id>mcix</id>
+            <name>Arnoud van der Heijde</name>
+            <organization>DeltaProto</organization>
+            <url>https://deltaproto.com/</url>
+        </developer>
     </developers>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/Blackdread/canon-sdk-java/issues</url>
+        <url>https://github.com/mcix/canon-sdk-java/issues</url>
     </issueManagement>
 
     <inceptionYear>2018</inceptionYear>
@@ -150,13 +171,13 @@
                 <version>${jna.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.blackdread</groupId>
+                <groupId>nl.bytesoflife</groupId>
                 <artifactId>camera-binding</artifactId>
                 <!--<version>${camera-binding.version}</version>-->
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.blackdread</groupId>
+                <groupId>nl.bytesoflife</groupId>
                 <artifactId>camera-framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -259,18 +280,25 @@
         </dependency>
     </dependencies>
 
+    <!--
+        Upstream deploys to Sonatype OSS under org.blackdread. This fork must not:
+        we do not own the nl.bytesoflife coordinate on Maven Central, so a stray
+        `mvn deploy` would fail at best and publish under someone else's namespace
+        at worst. Consume this fork with `mvn install` (or point the block below at
+        a DeltaProto-internal repository if we ever host one).
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
-        <!--Only if not using sonatype staging plugin-->
-        <!--http://central.sonatype.org/pages/apache-maven.html-->
         <repository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+    -->
+
 
     <build>
         <pluginManagement>

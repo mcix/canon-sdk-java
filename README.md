@@ -5,6 +5,49 @@
 [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/Blackdread/canon-sdk-java)
 [![](https://img.shields.io/gitter/room/canon-sdk-java/Framework.svg)](https://gitter.im/canon-sdk-java/Framework)
 
+---
+
+# ⚠️ DeltaProto fork
+
+This is the **DeltaProto fork** of [Blackdread/canon-sdk-java](https://github.com/Blackdread/canon-sdk-java).
+The `deltaproto` branch is our line of development; the badges above belong to upstream.
+
+**Maven coordinates differ from upstream** — the Java packages are still
+`org.blackdread.*`, but the artifacts are published under our own groupId so a
+local build can never be confused with an upstream one:
+
+```xml
+<dependency>
+    <groupId>nl.bytesoflife</groupId>
+    <artifactId>camera-framework</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+</dependency>
+```
+
+Not on Maven Central — build it with `mvn install`.
+
+### What this fork adds on top of upstream
+
+| | |
+|---|---|
+| **macOS support** | Loads `EDSDK.framework` (probing `$user.dir`, `/Library/Frameworks`, `~/Library/Frameworks`, `/System/Library/Frameworks`); migrated the JNA bindings from `NativeLong` to fixed `int` for `EdsInt32`/`EdsUInt32` (`NativeLong` is 8 bytes on 64-bit macOS and was corrupting memory); C-convention callbacks |
+| **Mirrorless / R8** | `isLiveViewEnabled` falls back to `Evf_OutputDevice` on bodies with no `Evf_Mode`; tolerant begin/end live view; unknown enum values no longer throw |
+| **EDSDK 13.20.10** | Previously-unbound functions, three new structs (`EdsApertureLockSetting`, `EdsGpsMetaData`, `EdsMovieFileNoSet`), new constants and enums |
+| **Test tooling** | `CameraTestRunner` and `R8LiveViewDemo` — standalone launchers, because `mvn test` cannot drive EDSDK on macOS (EDSDK.framework links AppKit, and `dlopen` blocks forever in a process with no Cocoa run loop on the main thread) |
+
+### Branches
+
+- `deltaproto` — **default**, our line of development
+- `master` — tracks upstream, for occasional diffing
+- `macos-support-pr`, `edsdk-13.20.10-pr` — staged for upstream PRs, kept on
+  upstream's `org.blackdread` coordinates. **Do not** merge the groupId/version
+  change into these.
+
+Upstream is only lightly maintained (32 of its last 41 commits are dependabot
+bumps), but it does merge PRs, so keeping the PR branches clean is worth it.
+
+---
+
 # Canon EOS SDK (EDSDK)
 Canon EOS SDK in java (EDSDK).
 
