@@ -30,8 +30,11 @@ class CanonLibraryImplTest {
             Assertions.assertEquals(DllUtil.DEFAULT_LIB_64_PATH, canonLibrary.getLibPath().get());
         }
 
+        // 32-bit is refused, not resolved: the JNA callbacks are bound cdecl so that
+        // macOS works, while EDSDK declares them __stdcall — which only differs, and
+        // only corrupts the stack, on 32-bit Windows. Failing to load beats that.
         canonLibrary.setArchLibraryToUse(CanonLibrary.ArchLibrary.FORCE_32);
-        Assertions.assertEquals(DllUtil.DEFAULT_LIB_32_PATH, canonLibrary.getLibPath().get());
+        Assertions.assertThrows(UnsupportedOperationException.class, canonLibrary::getLibPath);
 
         canonLibrary.setArchLibraryToUse(CanonLibrary.ArchLibrary.FORCE_64);
         Assertions.assertEquals(DllUtil.DEFAULT_LIB_64_PATH, canonLibrary.getLibPath().get());

@@ -342,4 +342,30 @@ class StructureTest {
         new EdsGpsMetaData.ByValue();
     }
 
+    /**
+     * Pins the 13.20.10 layout. The binding shipped as the five-field 13.14.0
+     * struct long after the headers moved on, which is invisible until something
+     * writes it: EDSDK is handed a 20-byte payload for a 32-byte property, and
+     * either rejects it or silently misconfigures focus bracketing. The size
+     * assertion is the point of this test — field-order alone would not catch it.
+     */
+    @Test
+    void edsFocusShiftSet() {
+        final EdsFocusShiftSet eds1 = new EdsFocusShiftSet();
+        Assertions.assertEquals(8, eds1.getFieldOrder().size());
+        // 8 x EdsInt32, no padding.
+        Assertions.assertEquals(32, eds1.size());
+
+        // version must be 3 for the camera to composite the bracket itself.
+        final EdsFocusShiftSet eds2 = new EdsFocusShiftSet(3, 1, 5, 4, 1, 1, 1, 0);
+        Assertions.assertEquals(3, eds2.version);
+        Assertions.assertEquals(1, eds2.focusStackingFunction);
+        Assertions.assertEquals(1, eds2.focusStackingTrimming);
+        Assertions.assertEquals(0, eds2.flashInterval);
+
+        new EdsFocusShiftSet(new Pointer(0));
+        new EdsFocusShiftSet.ByReference();
+        new EdsFocusShiftSet.ByValue();
+    }
+
 }

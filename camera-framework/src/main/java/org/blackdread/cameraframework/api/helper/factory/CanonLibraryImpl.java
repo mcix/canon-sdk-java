@@ -125,17 +125,45 @@ class CanonLibraryImpl implements CanonLibrary {
                     log.info("Dll auto selected to 64 bit");
                     return Optional.of(DllUtil.DEFAULT_LIB_64_PATH);
                 }
-                log.info("Dll auto selected to 32 bit");
-                return Optional.of(DllUtil.DEFAULT_LIB_32_PATH);
+                throw unsupported32Bit("a 32-bit JVM was detected");
             case FORCE_32:
-                log.info("Dll forced to 32 bit");
-                return Optional.of(DllUtil.DEFAULT_LIB_32_PATH);
+                throw unsupported32Bit("ArchLibrary.FORCE_32 was requested");
             case FORCE_64:
                 log.info("Dll forced to 64 bit");
                 return Optional.of(DllUtil.DEFAULT_LIB_64_PATH);
             default:
                 throw new IllegalStateException("Enum unknown: " + archLibraryToUse);
         }
+    }
+
+    /**
+     * 32-bit Windows is not supported by this fork, and must fail loudly.
+     * <p>
+     * Adding macOS support required switching every JNA callback in
+     * {@code EdsdkLibrary} from {@code StdCallCallback} to a plain
+     * {@code Callback}: JNA rejects {@code StdCallCallback} outright on macOS
+     * ("Invalid calling convention"), and it decides a callback's convention
+     * <i>solely</i> from that marker interface — the library-level
+     * {@code OPTION_CALLING_CONVENTION} applies to function calls only, never to
+     * callbacks.
+     * <p>
+     * On x64 that is harmless: Windows x64 has a single calling convention, so
+     * {@code __stdcall} is ignored. On <b>32-bit</b> Windows, EDSDK declares its
+     * handlers {@code __stdcall} ({@code EDSDKTypes.h}: {@code EDSCALLBACK}), and
+     * invoking a cdecl trampoline through a {@code __stdcall} pointer drifts the
+     * stack pointer inside EDSDK's event dispatch — an intermittent corruption
+     * that surfaces far from its cause, on the first camera event.
+     * <p>
+     * Refusing to load is strictly better than corrupting memory. Restoring 32-bit
+     * support means giving the handlers Win32-only {@code StdCallCallback} twins,
+     * selected at registration time.
+     */
+    private static UnsupportedOperationException unsupported32Bit(final String reason) {
+        return new UnsupportedOperationException(
+                "32-bit Windows is not supported by this build (" + reason + "). "
+                        + "EDSDK declares its callbacks __stdcall, but they are bound as cdecl so that "
+                        + "macOS works, which would silently corrupt the stack on the first camera event. "
+                        + "Run a 64-bit JVM, or use ArchLibrary.FORCE_64.");
     }
 
     /**
