@@ -92,6 +92,8 @@ public final class SingleCommandDispatcher implements CommandDispatcher {
         // TODO There may be some multi-thread issue between timeout and interrupt, can see later to minimize it more
         try {
             CanonCommand<?> previousCommand = null;
+            // Last command we already interrupted, so it is not re-interrupted every pass.
+            CanonCommand<?> interruptedCommand = null;
             while (true) {
                 try {
                     if (previousCommand == null) {
@@ -125,9 +127,20 @@ public final class SingleCommandDispatcher implements CommandDispatcher {
                         final Duration executionDurationSinceNow = previousCommand.getExecutionDurationSinceNow();
 
                         if (executionDurationSinceNow.compareTo(timeout) > 0) {
-                            commandDispatcherThread.interrupt();
-                            log.warn("A command has exceeded timeout, interrupt was triggered");
-                            sleep(1);
+                            // Interrupt once per command, not once per millisecond.
+                            // A native EDSDK call that ignores interruption (the usual
+                            // case — it is blocked in the driver, not in a Java wait)
+                            // leaves currentCommand pointing here indefinitely, so the
+                            // unguarded version re-interrupted and logged on every pass:
+                            // ~800 lines/second until the process was killed, drowning
+                            // the log that would have explained the hang.
+                            if (interruptedCommand != previousCommand) {
+                                interruptedCommand = previousCommand;
+                                commandDispatcherThread.interrupt();
+                                log.warn("A command has exceeded its {} timeout, interrupt was triggered: {}",
+                                    timeout, previousCommand.getClass().getSimpleName());
+                            }
+                            sleep(50);
                         } else {
                             sleep(5);
                         }
